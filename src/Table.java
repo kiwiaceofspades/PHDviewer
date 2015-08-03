@@ -44,7 +44,7 @@ public class Table extends JPanel {
 		this.add(table,BorderLayout.CENTER);
 
 	}
-	private String[][] setupData() {
+	private String[][] setupData(){
 		ArrayList<String[]> Data = new ArrayList<String[]>();
 		String[] temp;
 		for(Student s: DATA){

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class Student {
@@ -66,7 +65,96 @@ public class Student {
 	}
 
 	public String[] getValues(String[] headers){
-		return null;
+		String[] values = new String[headers.length];
+		for(int i = 0; i<headers.length; i++){
+			String header = headers[i];
+			String value;
+			switch (header){
+				case "Name":
+					value = name;
+					break;
+				case "ID":
+					value = ""+id;
+					break;
+				case "Degree":
+					value = degree;
+					break;
+				case "EFTS":
+					value = efts;
+					break;
+				case "Primary Supervisor":
+					value = primarySupervisor;
+					break;
+				case "Supervision Split 1":
+					value = supervisionSplit1;
+					break;
+				case "Secondary Supervisor":
+					value = secondarySupervisor;
+					break;
+				case "Supervision Split 2":
+					value = supervisionSplit2;
+					break;
+				case "Third Supervisor":
+					value = thirdSupervisor;
+					break;
+				case "Supervision Split 3":
+					value = supervisionSplit3;
+					break;
+				case "Scholarship":
+					value = scholarship;
+					break;
+				case "Start Date":
+					value = startDate.toString();
+					break;
+				case "PhD Proposal Submission":
+					value = phdProposalSubmission;
+					break;
+				case "PhD Proposal Seminar":
+					value = phdProposalSeminar;
+					break;
+				case "PhD Proposal Confirmation Date":
+					value = phdProposalConfirmationDate.toString();
+					break;
+				case "Suspension Dates":
+					value = "";
+					for(int j = 0; j<suspensionDates.size(); j++){
+						if(j == 0){
+							value = suspensionDates.get(j).toString();
+						}
+						else if(j % 2 == 1){
+							value = value + " - " + suspensionDates.get(j);
+						}
+						else{
+							value = value + ", " + suspensionDates.get(j);
+						}
+					}
+					break;
+				case "Thesis Submission And Examiners Appointed Date":
+					value = thesisSubmissionAndExaminersAppointedDate;
+					break;
+				case "FGR Completes Examination":
+					value = fgrCompletesExamination;
+					break;
+				case "Revisions Finalised":
+					value = revisionsFinalised;
+					break;
+				case "Deposited in Library":
+					value = depositedInLibrary;
+					break;
+				case "Notes":
+					value = notes;
+					break;
+				case "Origin":
+					value = origin;
+					break;
+				default:
+					value = null; // added as null cause it will cause an error, which makes the issue easily identifiable
+					System.out.println("Could not find value for header " + header);
+					break;
+				}
+			values[i] = value;
+		}
+		return values;
 	}
 
 	public String getName() {
@@ -246,8 +334,4 @@ public class Student {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
-
-
-
-
 }
