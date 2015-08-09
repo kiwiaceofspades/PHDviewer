@@ -50,8 +50,7 @@ public class Parser {
 				splitLine[5], splitLine[6], splitLine[7], splitLine[8], splitLine[9], splitLine[10],
 				splitLine[11], startDate,
 				splitLine[13], splitLine[14], phdProposalConfirmationDate, suspensionDates, splitLine[17],
-				splitLine[18], splitLine[19], splitLine[20], splitLine[21], splitLine[22]
-				);
+				splitLine[18], splitLine[19], splitLine[20], splitLine[21], splitLine[22]);
 	}
 
 	private Date parseDate(String date) {
