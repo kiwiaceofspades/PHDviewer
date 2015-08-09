@@ -8,6 +8,34 @@ public class PhDViewer {
 	private OtherSchoolsAtVUW otherSchoolsAtVUW;
 	private OtherUniversities otherUniversities;
 
+	public PhDViewer(
+			UnderExamination underExamination,
+			CurrentFullyRegistered currentFullyRegistered,
+			CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents,
+			NotFullyAdmitted notFullyAdmitted,
+			OtherSchoolsAtVUW otherSchoolsAtVUW,
+			OtherUniversities otherUniversities) {
+		super();
+		this.underExamination = underExamination;
+		this.currentFullyRegistered = currentFullyRegistered;
+		this.currentProvisionallyRegisteredStudents = currentProvisionallyRegisteredStudents;
+		this.notFullyAdmitted = notFullyAdmitted;
+		this.otherSchoolsAtVUW = otherSchoolsAtVUW;
+		this.otherUniversities = otherUniversities;
+	}
+
+	public PhDViewer(
+			UnderExamination underExamination,
+			CurrentFullyRegistered currentFullyRegistered,
+			CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents,
+			NotFullyAdmitted notFullyAdmitted) {
+		super();
+		this.underExamination = underExamination;
+		this.currentFullyRegistered = currentFullyRegistered;
+		this.currentProvisionallyRegisteredStudents = currentProvisionallyRegisteredStudents;
+		this.notFullyAdmitted = notFullyAdmitted;
+	}
+
 	public UnderExamination getUnderExamination() {
 		return underExamination;
 	}
