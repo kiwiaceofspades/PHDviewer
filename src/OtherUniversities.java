@@ -1,20 +1,13 @@
 import java.util.ArrayList;
 
 
-public class OtherUniversities {
+public class OtherUniversities extends PhDTable {
 
-	private ArrayList<Student> students;
-
-	public OtherUniversities(ArrayList<Student> students){
-		this.setStudents(students);
+	public OtherUniversities(ArrayList<Student> students,
+			ArrayList<String> headers) {
+		super(students, headers);
 	}
 
-	public ArrayList<Student> getStudents() {
-		return students;
-	}
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
-	}
 
 }

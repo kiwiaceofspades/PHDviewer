@@ -1,19 +1,13 @@
 import java.util.ArrayList;
 
 
-public class OtherSchoolsAtVUW {
+public class OtherSchoolsAtVUW extends PhDTable{
 
-	private ArrayList<Student> students;
-
-	public OtherSchoolsAtVUW(ArrayList<Student> students){
-		this.students = students;
+	public OtherSchoolsAtVUW(ArrayList<Student> students,
+			ArrayList<String> headers) {
+		super(students, headers);
+		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<Student> getStudents() {
-		return students;
-	}
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
-	}
 }

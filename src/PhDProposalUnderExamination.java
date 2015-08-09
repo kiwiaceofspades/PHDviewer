@@ -1,20 +1,14 @@
 import java.util.ArrayList;
 
 
-public class PhDProposalUnderExamination {
+public class PhDProposalUnderExamination extends PhDTable {
 
-	private ArrayList<Student> students;
-
-	public PhDProposalUnderExamination(ArrayList<Student> students){
-		this.students = students;
+	public PhDProposalUnderExamination(ArrayList<Student> students,
+			ArrayList<String> headers) {
+		super(students, headers);
+		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<Student> getStudents() {
-		return students;
-	}
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
-	}
 
 }

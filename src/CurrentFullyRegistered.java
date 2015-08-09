@@ -1,20 +1,12 @@
 import java.util.ArrayList;
 
 
-public class CurrentFullyRegistered {
+public class CurrentFullyRegistered extends PhDTable {
 
-	private ArrayList<Student> students;
-
-
-	public CurrentFullyRegistered(ArrayList<Student> students){
-		this.students = students;
+	public CurrentFullyRegistered(ArrayList<Student> students,
+			ArrayList<String> headers) {
+		super(students, headers);
 	}
 
-	public ArrayList<Student> getStudents() {
-		return students;
-	}
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
-	}
 }

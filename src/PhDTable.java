@@ -1,49 +1,30 @@
+import java.util.ArrayList;
 
-public class PhDTable {
 
-	private UnderExamination underExamination;
-	private CurrentFullyRegistered currentFullyRegistered;
-	private CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents;
-	private NotFullyAdmitted notFullyAdmitted;
-	private OtherSchoolsAtVUW otherSchoolsAtVUW;
-	private OtherUniversities otherUniversities;
+public abstract class PhDTable {
 
-	public UnderExamination getUnderExamination() {
-		return underExamination;
+	private ArrayList<Student> students;
+	private ArrayList<String> headers;
+
+	public PhDTable(ArrayList<Student> students, ArrayList<String> headers){
+		this.students = students;
+		this.headers = headers;
 	}
-	public void setUnderExamination(UnderExamination underExamination) {
-		this.underExamination = underExamination;
+
+	public ArrayList<Student> getStudents() {
+		return students;
 	}
-	public CurrentFullyRegistered getCurrentFullyRegistered() {
-		return currentFullyRegistered;
+
+	public void setStudents(ArrayList<Student> students) {
+		this.students = students;
 	}
-	public void setCurrentFullyRegistered(CurrentFullyRegistered currentFullyRegistered) {
-		this.currentFullyRegistered = currentFullyRegistered;
+
+	public ArrayList<String> getHeaders() {
+		return headers;
 	}
-	public CurrentProvisionallyRegisteredStudents getCurrentProvisionallyRegisteredStudents() {
-		return currentProvisionallyRegisteredStudents;
-	}
-	public void setCurrentProvisionallyRegisteredStudents(
-			CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents) {
-		this.currentProvisionallyRegisteredStudents = currentProvisionallyRegisteredStudents;
-	}
-	public NotFullyAdmitted getNotFullyAdmitted() {
-		return notFullyAdmitted;
-	}
-	public void setNotFullyAdmitted(NotFullyAdmitted notFullyAdmitted) {
-		this.notFullyAdmitted = notFullyAdmitted;
-	}
-	public OtherSchoolsAtVUW getOtherSchoolsAtVUW() {
-		return otherSchoolsAtVUW;
-	}
-	public void setOtherSchoolsAtVUW(OtherSchoolsAtVUW otherSchoolsAtVUW) {
-		this.otherSchoolsAtVUW = otherSchoolsAtVUW;
-	}
-	public OtherUniversities getOtherUniversities() {
-		return otherUniversities;
-	}
-	public void setOtherUniversities(OtherUniversities otherUniversities) {
-		this.otherUniversities = otherUniversities;
+
+	public void setHeaders(ArrayList<String> headers) {
+		this.headers = headers;
 	}
 
 }

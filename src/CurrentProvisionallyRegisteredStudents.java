@@ -1,19 +1,12 @@
 import java.util.ArrayList;
 
 
-public class CurrentProvisionallyRegisteredStudents {
+public class CurrentProvisionallyRegisteredStudents extends PhDTable {
 
-	private ArrayList<Student> students;
-
-	public CurrentProvisionallyRegisteredStudents(ArrayList<Student> students){
-		this.students = students;
+	public CurrentProvisionallyRegisteredStudents(ArrayList<Student> students,
+			ArrayList<String> headers) {
+		super(students, headers);
 	}
 
-	public ArrayList<Student> getStudents() {
-		return students;
-	}
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
-	}
 }
