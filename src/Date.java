@@ -5,7 +5,7 @@ public class Date {
 	private int month;
 	private int year;
 
-	private String state;
+	private String date;
 
 	public Date(int day, int month, int year) {
 		this.day = day;
@@ -14,7 +14,7 @@ public class Date {
 	}
 
 	public Date(String state){
-		this.state = state;
+		this.date = state;
 	}
 
 	public String toString(){

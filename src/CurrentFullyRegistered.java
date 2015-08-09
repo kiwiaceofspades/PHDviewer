@@ -5,6 +5,7 @@ public class CurrentFullyRegistered {
 
 	private ArrayList<Student> students;
 
+
 	public CurrentFullyRegistered(ArrayList<Student> students){
 		this.students = students;
 	}
