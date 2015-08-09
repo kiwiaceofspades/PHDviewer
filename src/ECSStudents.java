@@ -1,74 +1,9 @@
 import java.util.ArrayList;
 
 
-public class Student {
+public class ECSStudents {
 
-	private String name;
-	private int id;
-	private String degree;
-	private String efts;
-
-	private String primarySupervisor;
-	private String supervisionSplit1;
-	private String secondarySupervisor;
-	private String supervisionSplit2;
-	private String thirdSupervisor;
-	private String supervisionSplit3;
-
-	private String scholarship;
-	private Date startDate;
-
-	private String phdProposalSubmission;
-	private String phdProposalSeminar;
-	private Date phdProposalConfirmationDate;
-	private ArrayList<Date> suspensionDates;
-	private String thesisSubmissionAndExaminersAppointedDate;
-
-	private String fgrCompletesExamination;
-	private String revisionsFinalised;
-	private String depositedInLibrary;
-	private String notes;
-	private String origin;
-
-
-
-
-
-
-	public Student(String name, int id, String degree, String efts,
-			String primarySupervisor, String supervisionSplit1,
-			String secondarySupervisor, String supervisionSplit2,
-			String thirdSupervisor, String supervisionSplit3,
-			String scholarship, Date startDate, String phdProposalSubmission,
-			String phdProposalSeminar, Date phdProposalConfirmationDate,
-			ArrayList<Date> suspensionDates,
-			String thesisSubmissionAndExaminersAppointedDate,
-			String fgrCompletesExamination, String revisionsFinalised,
-			String depositedInLibrary, String notes, String origin) {
-		super();
-		this.name = name;
-		this.id = id;
-		this.degree = degree;
-		this.efts = efts;
-		this.primarySupervisor = primarySupervisor;
-		this.supervisionSplit1 = supervisionSplit1;
-		this.secondarySupervisor = secondarySupervisor;
-		this.supervisionSplit2 = supervisionSplit2;
-		this.thirdSupervisor = thirdSupervisor;
-		this.supervisionSplit3 = supervisionSplit3;
-		this.scholarship = scholarship;
-		this.startDate = startDate;
-		this.phdProposalSubmission = phdProposalSubmission;
-		this.phdProposalSeminar = phdProposalSeminar;
-		this.phdProposalConfirmationDate = phdProposalConfirmationDate;
-		this.suspensionDates = suspensionDates;
-		this.thesisSubmissionAndExaminersAppointedDate = thesisSubmissionAndExaminersAppointedDate;
-		this.fgrCompletesExamination = fgrCompletesExamination;
-		this.revisionsFinalised = revisionsFinalised;
-		this.depositedInLibrary = depositedInLibrary;
-		this.notes = notes;
-		this.origin = origin;
-	}
+	/*
 
 	public String[] getValues(String[] headers){
 		String[] values = new String[headers.length];
@@ -163,181 +98,269 @@ public class Student {
 		return values;
 	}
 
+	@Override
 	public String getName() {
-		return name;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setName(String name) {
-		this.name = name;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public int getId() {
-		return id;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
+	@Override
 	public void setId(int id) {
-		this.id = id;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getDegree() {
-		return degree;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setDegree(String degree) {
-		this.degree = degree;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getEfts() {
-		return efts;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setEfts(String efts) {
-		this.efts = efts;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getPrimarySupervisor() {
-		return primarySupervisor;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setPrimarySupervisor(String primarySupervisor) {
-		this.primarySupervisor = primarySupervisor;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getSupervisionSplit1() {
-		return supervisionSplit1;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setSupervisionSplit1(String supervisionSplit1) {
-		this.supervisionSplit1 = supervisionSplit1;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getSecondarySupervisor() {
-		return secondarySupervisor;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setSecondarySupervisor(String secondarySupervisor) {
-		this.secondarySupervisor = secondarySupervisor;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getThirdSupervisor() {
-		return thirdSupervisor;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setThirdSupervisor(String thirdSupervisor) {
-		this.thirdSupervisor = thirdSupervisor;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getSupervisionSplit2() {
-		return supervisionSplit2;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setSupervisionSplit2(String supervisionSplit2) {
-		this.supervisionSplit2 = supervisionSplit2;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getSupervisionSplit3() {
-		return supervisionSplit3;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setSupervisionSplit3(String supervisionSplit3) {
-		this.supervisionSplit3 = supervisionSplit3;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getScholarship() {
-		return scholarship;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setScholarship(String scholarship) {
-		this.scholarship = scholarship;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public Date getStartDate() {
-		return startDate;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getPhdProposalSubmission() {
-		return phdProposalSubmission;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setPhdProposalSubmission(String phdProposalSubmission) {
-		this.phdProposalSubmission = phdProposalSubmission;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getPhdProposalSeminar() {
-		return phdProposalSeminar;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setPhdProposalSeminar(String phdProposalSeminar) {
-		this.phdProposalSeminar = phdProposalSeminar;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public Date getPhdProposalConfirmationDate() {
-		return phdProposalConfirmationDate;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setPhdProposalConfirmationDate(
-			Date phdProposalConfirmationDate) {
-		this.phdProposalConfirmationDate = phdProposalConfirmationDate;
+	@Override
+	public void setPhdProposalConfirmationDate(Date phdProposalConfirmationDate) {
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getThesisSubmissionAndExaminersAppointedDate() {
-		return thesisSubmissionAndExaminersAppointedDate;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setThesisSubmissionAndExaminersAppointedDate(
 			String thesisSubmissionAndExaminersAppointedDate) {
-		this.thesisSubmissionAndExaminersAppointedDate = thesisSubmissionAndExaminersAppointedDate;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public ArrayList<Date> getSuspensionDates() {
-		return suspensionDates;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setSuspensionDates(ArrayList<Date> suspensionDates) {
-		this.suspensionDates = suspensionDates;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getFgrCompletesExamination() {
-		return fgrCompletesExamination;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setFgrCompletesExamination(String fgrCompletesExamination) {
-		this.fgrCompletesExamination = fgrCompletesExamination;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getRevisionsFinalised() {
-		return revisionsFinalised;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setRevisionsFinalised(String revisionsFinalised) {
-		this.revisionsFinalised = revisionsFinalised;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getNotes() {
-		return notes;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setNotes(String notes) {
-		this.notes = notes;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getDepositedInLibrary() {
-		return depositedInLibrary;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setDepositedInLibrary(String depositedInLibrary) {
-		this.depositedInLibrary = depositedInLibrary;
+		// TODO Auto-generated method stub
+
 	}
 
+	@Override
 	public String getOrigin() {
-		return origin;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
+		// TODO Auto-generated method stub
+
+	}*/
+
 }
