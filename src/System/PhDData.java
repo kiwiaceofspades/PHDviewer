@@ -8,6 +8,10 @@ public class PhDData {
 	private OtherSchoolsAtVUW otherSchoolsAtVUW;
 	private OtherUniversities otherUniversities;
 
+	public PhDData(){
+
+	}
+
 	public UnderExamination getUnderExamination() {
 		return underExamination;
 	}
