@@ -28,4 +28,12 @@ public abstract class PhDTable {
 		this.headers = headers;
 	}
 
+	public int getSizeOfStudents(){
+		return students.size();
+	}
+
+	public int getSizeOfHeaders(){
+		return headers.size();
+	}
+
 }
