@@ -5,10 +5,16 @@ public class Date {
 	private int month;
 	private int year;
 
+	private String date;
+
 	public Date(int day, int month, int year) {
 		this.day = day;
 		this.month = month;
 		this.year = year;
+	}
+
+	public Date(String state){
+		this.date = state;
 	}
 
 	public String toString(){
