@@ -30,7 +30,13 @@ public class Parser {
 	private NotFullyAdmitted notFullyAdmitted;
 
 	public Parser(String fname, PhDData data) {
+		runParser(fname);
 
+		data.setUnderExamination(underExamination);
+		data.setCurrentFullyRegistered(currentFullyRegistered);
+		data.setPhDProposalUnderExamination(phdProposalUnderExamination);
+		data.setCurrentProvisionallyRegisteredStudents(currentProvisionallyRegisteredStudents);
+		data.setNotFullyAdmitted(notFullyAdmitted);
 	}
 
 	public Parser() {
@@ -39,10 +45,7 @@ public class Parser {
 
 	public void runParser(String filename) {
 		try {
-			//Scanner sc = new Scanner(new File(filename));
-			URL path = Parser.class.getResource("SanitizedStudentswNames.txt");
-			File f = new File(path.getFile());
-			Scanner sc = new Scanner(f);
+			Scanner sc = new Scanner(new File(filename));
 
 			parseTitling(sc);
 			parseHeaders(sc.nextLine());
