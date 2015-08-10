@@ -1,5 +1,5 @@
 
-public class PhDViewer {
+public class PhDSystem {
 
 	private UnderExamination underExamination;
 	private CurrentFullyRegistered currentFullyRegistered;
@@ -8,7 +8,7 @@ public class PhDViewer {
 	private OtherSchoolsAtVUW otherSchoolsAtVUW;
 	private OtherUniversities otherUniversities;
 
-	public PhDViewer(
+	public PhDSystem(
 			UnderExamination underExamination,
 			CurrentFullyRegistered currentFullyRegistered,
 			CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents,
@@ -24,7 +24,7 @@ public class PhDViewer {
 		this.otherUniversities = otherUniversities;
 	}
 
-	public PhDViewer(
+	public PhDSystem(
 			UnderExamination underExamination,
 			CurrentFullyRegistered currentFullyRegistered,
 			CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents,
