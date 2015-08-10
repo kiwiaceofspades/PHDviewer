@@ -8,8 +8,10 @@ public class PhDData {
 	private OtherSchoolsAtVUW otherSchoolsAtVUW;
 	private OtherUniversities otherUniversities;
 
-	public PhDData(){
+	private Parser parser;
 
+	public PhDData(String filename){
+		parser = new Parser(filename, this);
 	}
 
 	public UnderExamination getUnderExamination() {
