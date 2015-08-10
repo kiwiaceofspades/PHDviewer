@@ -40,6 +40,14 @@ public class Table extends JPanel {
 							"PhD Proposal Confirmation Date","Suspension Dates",
 							"Thesis Submission And Examiners Appointed Date", "FGR Completes Examination",
 							"Revisions Finalised", "Deposited in Library", "Origin", "Notes"};
+	String[] LabelHead = {"Name", "ID", "Degree","EFTS","Primary Supervisor", "Supervision Split 1",
+			"Secondary Supervisor","Supervision Split 2","Third Supervisor",
+			"Supervision Split 3","Scholarship", "Start Date",
+							"PhD Proposal Submission", "PhD Proposal Seminar",
+							"PhD Proposal Confirmation Date","Suspension Dates",
+							"Thesis Submission And Examiners Appointed Date", "FGR Completes Examination",
+							"Revisions Finalised", "Deposited in Library", "Origin", "Notes"};
+
 
 	String[] CurrentHead;
 	JTable table = new JTable();;

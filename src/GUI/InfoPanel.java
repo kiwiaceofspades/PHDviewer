@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class InfoPanel extends JPanel {
@@ -35,7 +36,10 @@ public class InfoPanel extends JPanel {
 		Panels = new ArrayList<JPanel>();
 		for(int i =0 ;i<info.length;i++){
 			JPanel temp = new JPanel();
-			JLabel Data = new JLabel(info[i][0]);
+			JTextArea Data = new JTextArea(info[i][0]);
+			Data.setLineWrap(true);
+			Data.setWrapStyleWord(true);
+			Data.setEditable(false);
 			JTextField Info = new JTextField(info[i][1]);
 			temp.setLayout(new BorderLayout());
 			temp.add(Data, BorderLayout.WEST);

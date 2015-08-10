@@ -2,6 +2,8 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
@@ -10,6 +12,8 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -30,6 +34,7 @@ public class PhDViewer extends JFrame {
 	private Table Table;
 	private PhDData DATA;
 	private InfoPanel Info;
+	private JButton Add,remove;
 
 
 	public PhDViewer(String string, PhDData pas) {
@@ -39,7 +44,7 @@ public class PhDViewer extends JFrame {
 		this.setMinimumSize(new Dimension(800,600));
 		Table = new Table(DATA,null, this);
 		Info = new InfoPanel(this.getSize());
-		
+
 		setLayout(new BorderLayout());
 		add(Table, BorderLayout.CENTER);
 		add(Info, BorderLayout.EAST);
@@ -48,13 +53,38 @@ public class PhDViewer extends JFrame {
 		this.addWindowStateListener(Listen);
 		this.addWindowListener(Listen);
 
+		JPanel Buttons = new JPanel();
+
+		Add = new JButton("Add");
+		Add.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[][] temp = new String [Table.fullHead.length][2];
+				for(int i =0 ;i<Table.fullHead.length;i++){
+					temp[i][0] = Table.LabelHead[i];
+					temp[i][1] = "";
+				}
+				UpInfo(temp);
+			}
+
+		});
+
+		remove = new JButton("Remove");
+		remove.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 
 
-
-
-
-
-
+		Buttons.add(Add);
+		Buttons.add(remove);
+		this.add(Buttons, BorderLayout.NORTH);
 
 		Table.setVisible(true);
 		setVisible(true);
@@ -79,7 +109,7 @@ public class PhDViewer extends JFrame {
 		Info.updateInfo(info);
 		validate();
 		repaint();
-		
+
 	}
 
 
