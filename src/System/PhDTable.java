@@ -47,8 +47,8 @@ public abstract class PhDTable {
 			String[] current = students.get(i).getValues(headers);
 			// Now go through each header of the student and check what the length is
 			for(int j = 0; j<headers.length; j++){
-				if(headers[j].length() > biggestWidth[j]){
-					biggestWidth[j] = headers[j].length();
+				if(current[j].length() > biggestWidth[j]){
+					biggestWidth[j] = current[j].length();
 				}
 			}
 		}
