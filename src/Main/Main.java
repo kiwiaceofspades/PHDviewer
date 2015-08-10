@@ -5,6 +5,7 @@
 package Main;
 
 import GUI.PhDViewer;
+import System.PhDData;
 
 public class Main {
 	public static void main(String args[]){
@@ -17,7 +18,7 @@ public class Main {
 		}
 		else{
 
-			new PhDViewer("PHDViewer", new PhDData(args[0]);
+			new PhDViewer("PHDViewer", new PhDData(args[0]));
 		}
 	}
 }

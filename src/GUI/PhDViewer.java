@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import System.Parser;
+import System.PhDData;
+
 /**
  *
  */
@@ -24,23 +27,27 @@ import javax.swing.JPanel;
 public class PhDViewer extends JFrame {
 
 	JFrame Me = this;
-	static Table Table;
-	public PhDViewer(String string) {
+	Table Table;
+	private PhDData DATA;
+
+	public PhDViewer(String string, PhDData pas) {
+
 		super(string);
+		DATA = pas;
 		this.setMinimumSize(new Dimension(800,600));
-		Table = new Table(null,null, this);
+		Table = new Table(DATA,null, this);
 
 		setLayout(new BorderLayout());
-		add(Table, BorderLayout.WEST);
-		ResetSize();
-		this.addComponentListener(new CompListener());
+		add(Table, BorderLayout.CENTER);
+		//ResetSize();
+		//pack();
+		//repaint();
+		addComponentListener(new CompListener());
 		WinState Listen = new WinState();
 		this.addWindowStateListener(Listen);
 		this.addWindowListener(Listen);
 		Table.setVisible(true);
 		setVisible(true);
-
-
 	}
 
 
@@ -49,24 +56,20 @@ public class PhDViewer extends JFrame {
 		Dimension size = getSize();
 		//Table
 		Dimension tableSize = new Dimension(size);
-
 		tableSize.width = (tableSize.width/3)*2;
 		tableSize.height = tableSize.height-50;
 		System.out.println(tableSize.toString());
 		System.out.println(size.toString());
 		Table.setSizeOver(tableSize);
 		//Info
-
-		System.out.println("Repaint");
-		pack();
-		repaint();
+		
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		PhDViewer Frame = new PhDViewer("PhdViewers");
+		PhDViewer Frame = new PhDViewer("PhdViewers",null);
 
 	}
 
@@ -75,17 +78,8 @@ public class PhDViewer extends JFrame {
 
 		@Override
 		public void componentResized(ComponentEvent e) {
-			System.out.println(e.toString());
-			if(e.getID()==e.COMPONENT_RESIZED){
-			System.out.println(e.paramString());
-			ResetSize();
-			}
-			if(e.getID()==ComponentEvent.WINDOW_EVENT_MASK){
-				System.out.println("Windows Event");
-			}
-			if(e.getID()==ComponentEvent.WINDOW_STATE_EVENT_MASK){
-				System.out.println("Windows State Event");
-			}
+			
+
 		}
 
 		@Override
@@ -112,9 +106,7 @@ public class PhDViewer extends JFrame {
 
 		@Override
 		public void windowStateChanged(WindowEvent e) {
-
-
-
+	
 		}
 		@Override
 		public void windowOpened(WindowEvent e) {
