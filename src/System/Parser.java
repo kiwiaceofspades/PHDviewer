@@ -29,6 +29,10 @@ public class Parser {
 	private CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents;
 	private NotFullyAdmitted notFullyAdmitted;
 
+	public Parser(String fname, PhDData data) {
+
+	}
+
 	public Parser() {
 
 	}
@@ -53,10 +57,14 @@ public class Parser {
 					parseLine(line);
 				}
 			}
-			notFullyAdmitted = new NotFullyAdmitted(students, headers);
+			notFullyAdmitted = new NotFullyAdmitted(new ArrayList<Student>(students), headers);
 
 			// display sizes to check
-
+			//System.out.println("Under examination: " + underExamination.getSizeOfStudents());
+			//System.out.println("Current fully registered: " + currentFullyRegistered.getSizeOfStudents());
+			//System.out.println("PhD proposal under examination: " + phdProposalUnderExamination.getSizeOfStudents());
+			//System.out.println("Current provisionally registered students: " + currentProvisionallyRegisteredStudents.getSizeOfStudents());
+			//System.out.println("Not fully admitted " + notFullyAdmitted.getSizeOfStudents());
 		}
 		catch(FileNotFoundException e){
 			e.printStackTrace();
@@ -91,13 +99,12 @@ public class Parser {
 
 		for (int i = 0; i < splitLine.length; i++) {
 			if(splitLine[i].isEmpty() || splitLine[i].matches("^\\s*$")) {
-				System.out.print("----------");
+				//System.out.print("----------");
 			}
-			//splitLine[i] = splitLine[i].replace(" ", "");
-			System.out.println(splitLine[i]);
+			//System.out.println(splitLine[i]);
 		}
 
-		if (!(splitLine.length < 22)) {//ignore table breaks for now
+		if (!(splitLine.length < 22)) {//ignore table breaks
 			// Create objects for Student constructor
 			splitLine[2] = splitLine[2].replace(" ", "");
 			int id = Integer.parseInt(splitLine[2]);
@@ -117,26 +124,38 @@ public class Parser {
 
 			switch(splitLine[1]) {
 				case "UNDEREXAMINATION":
+					//System.out.println("UE");
 					currentType = tableTypes.UE;
 					break;
 				case "CURRENTFULLYREGISTEREDSTUDENTS":
+					//System.out.println("CFRS");
 					currentType = tableTypes.CFRS;
-					underExamination = new UnderExamination(students, headers);
+					underExamination = new UnderExamination(new ArrayList<Student>(students), headers);
+					//System.out.println("UE size of students: " + students.size());
 					students.clear();
 					break;
 				case "PHDPROPOSALUNDEREXAMINATION":
+					//System.out.println("PPUE");
 					currentType = tableTypes.PPUE;
-					currentFullyRegistered = new CurrentFullyRegistered(students, headers);
+					currentFullyRegistered = new CurrentFullyRegistered(new ArrayList<Student>(students), headers);
+					//System.out.println("CFRS size of students: " + students.size());
 					students.clear();
 					break;
 				case "CURRENTPROVISIONALLYREGISTEREDSTUDENTS":
+					//System.out.println("CPRS");
 					currentType = tableTypes.CPRS;
-					phdProposalUnderExamination = new PhDProposalUnderExamination(students, headers);
+					phdProposalUnderExamination = new PhDProposalUnderExamination(new ArrayList<Student>(students), headers);
+					//System.out.println("PPUE size of students: " + students.size());
 					students.clear();
 					break;
 				case "NOTFULLYADMITTED":
+					//System.out.println("NFA");
 					currentType = tableTypes.NFA;
-					currentProvisionallyRegisteredStudents = new CurrentProvisionallyRegisteredStudents(students, headers);
+					currentProvisionallyRegisteredStudents = new CurrentProvisionallyRegisteredStudents(new ArrayList<Student>(students), headers);
+					//System.out.println("CPRS size of students: " + students.size());
+					//System.out.println("Case NFA CPRS size: " + currentProvisionallyRegisteredStudents.getSizeOfStudents());
+					//System.out.println("Case NFA PPUE size: " + phdProposalUnderExamination.getSizeOfStudents());
+					//System.out.println("Case NFA CFRS size: " + currentFullyRegistered.getSizeOfStudents());
 					students.clear();
 					break;
 			}
