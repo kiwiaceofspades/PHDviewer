@@ -2,6 +2,7 @@ package System;
 public class PhDData {
 
 	private UnderExamination underExamination;
+	private PhDProposalUnderExamination phDProposalUnderExamination;
 	private CurrentFullyRegistered currentFullyRegistered;
 	private CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents;
 	private NotFullyAdmitted notFullyAdmitted;
@@ -50,6 +51,15 @@ public class PhDData {
 	}
 	public void setOtherSchoolsAtVUW(OtherSchoolsAtVUW otherSchoolsAtVUW) {
 		this.otherSchoolsAtVUW = otherSchoolsAtVUW;
+	}
+
+	public PhDProposalUnderExamination getPhDProposalUnderExamination() {
+		return phDProposalUnderExamination;
+	}
+
+	public void setPhDProposalUnderExamination(
+			PhDProposalUnderExamination phDProposalUnderExamination) {
+		this.phDProposalUnderExamination = phDProposalUnderExamination;
 	}
 
 }
