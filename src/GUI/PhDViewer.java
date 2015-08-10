@@ -26,9 +26,11 @@ import System.PhDData;
  */
 public class PhDViewer extends JFrame {
 
-	JFrame Me = this;
-	Table Table;
+	private JFrame Me = this;
+	private Table Table;
 	private PhDData DATA;
+	private InfoPanel Info;
+
 
 	public PhDViewer(String string, PhDData pas) {
 
@@ -36,16 +38,24 @@ public class PhDViewer extends JFrame {
 		DATA = pas;
 		this.setMinimumSize(new Dimension(800,600));
 		Table = new Table(DATA,null, this);
-
+		Info = new InfoPanel(this.getSize());
+		
 		setLayout(new BorderLayout());
 		add(Table, BorderLayout.CENTER);
-		//ResetSize();
-		//pack();
-		//repaint();
+		add(Info, BorderLayout.EAST);
 		addComponentListener(new CompListener());
 		WinState Listen = new WinState();
 		this.addWindowStateListener(Listen);
 		this.addWindowListener(Listen);
+
+
+
+
+
+
+
+
+
 		Table.setVisible(true);
 		setVisible(true);
 	}
@@ -62,8 +72,17 @@ public class PhDViewer extends JFrame {
 		System.out.println(size.toString());
 		Table.setSizeOver(tableSize);
 		//Info
+
+	}
+
+	public void UpInfo(String[][] info){
+		Info.updateInfo(info);
+		validate();
+		repaint();
 		
 	}
+
+
 
 	/**
 	 * @param args
@@ -78,7 +97,7 @@ public class PhDViewer extends JFrame {
 
 		@Override
 		public void componentResized(ComponentEvent e) {
-			
+
 
 		}
 
@@ -106,7 +125,7 @@ public class PhDViewer extends JFrame {
 
 		@Override
 		public void windowStateChanged(WindowEvent e) {
-	
+
 		}
 		@Override
 		public void windowOpened(WindowEvent e) {

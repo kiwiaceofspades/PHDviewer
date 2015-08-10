@@ -14,7 +14,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 
+import com.sun.org.omg.CORBA.ValueDefPackage.FullValueDescription;
+
 import System.CurrentFullyRegistered;
+import System.ECSStudent;
 import System.PhDData;
 import System.Student;
 
@@ -66,22 +69,22 @@ public class Table extends JPanel {
 	//JTableHeader header =
 		//table.getTableHeader().(new Dimension(30,50));
 		//table.getTableHeader().setPreferredSize(new Dimension(30,50));
+
 		//header.setPreferredSize(new Dimension(30,50));
-//		int[] widths = DATA.getCurrentFullyRegistered().getColumnWidth(fullHead);
-//		for( int i=0 ; i<table.getColumnModel().getColumnCount()-1 ;i++){
-//
-//			table.getColumnModel().getColumn(i).setPreferredWidth();
-//		}
+		//int[] widths = DATA.getCurrentFullyRegistered().getColumnWidth(fullHead);
+		for( int i=0 ; i<table.getColumnModel().getColumnCount()-1 ;i++){
+
+			table.getColumnModel().getColumn(i).setMinWidth(100);;
+		}
 		table.setFillsViewportHeight(true);
-//		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-//
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				//e.
-//			//	getData(e.getFirstIndex(),e.getLastIndex());
-//			}
-//			
-//		});
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+			getData(table.getSelectedRow());
+			}
+
+		});
 
 		Scroll = new JScrollPane(table);
 
@@ -109,9 +112,22 @@ public class Table extends JPanel {
 		Scroll.setPreferredSize(size);
 		table.setMinimumSize(size);
 	}
-	
-	private void getData(int fist,int last){
-		System.out.println(fist+"|"+last);
+
+	private void getData(int fist){
+
+		CurrentFullyRegistered Full = DATA.getCurrentFullyRegistered();
+		Student temp = Full.getStudents().get(fist);
+
+		String[] info = temp.getValues(fullHead);
+		String [][] fullInfo = new String [fullHead.length][2];
+		for (int i = 0 ; i< fullHead.length;i++){
+			fullInfo[i][0]=fullHead[i];
+			fullInfo[i][1]=info[i];
+		}
+		HOST.UpInfo(fullInfo);
+
+
+
 	}
 
 
