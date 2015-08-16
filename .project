@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/GUI/InfoPanel.java</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/u/students/eichlealis/PHDviewer/src/GUI/InfoPanel.java</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
