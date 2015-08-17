@@ -82,7 +82,7 @@ public class PhDData {
 
 	public boolean addEntry(String[][] student, String table){
 		// Find the student
-		if(student.length <= 22){
+		if(student.length < 22){
 			System.out.println("Entry to change is smaller than expected!");
 			return false;
 			// throw some sort of error?
@@ -92,15 +92,20 @@ public class PhDData {
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
 
 		// Now add it to the right table
-		if(table.equals("CurrentFullyRegistered")){
-			currentFullyRegistered.addStudent(toAdd);
+		if(table.equals("UnderExamination")){
+			 return underExamination.addStudent(toAdd);
+		}
+		else if(table.equals("CurrentFullyRegistered")){
+			return currentFullyRegistered.addStudent(toAdd);
+		}
+		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
+			return currentProvisionallyRegisteredStudents.addStudent(toAdd);
 		}
 		else{
 			System.out.println("Couldn't find table to add to");
 			// throw some error?
 			return false;
 		}
-		return true;
 	}
 
 	public boolean editEntry(String[][] student, String table){
@@ -115,13 +120,19 @@ public class PhDData {
 				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
 
-		// Find the right table to make edit to
-		ArrayList<Student> students;
-		if(table.equals("CurrentFullyRegistered")){
+		// Now add it to the right table
+		if(table.equals("UnderExamination")){
+			return underExamination.editStudent(toAdd, studentID);
+		}
+		else if(table.equals("CurrentFullyRegistered")){
 			return currentFullyRegistered.editStudent(toAdd, studentID);
 		}
+		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
+			return currentProvisionallyRegisteredStudents.editStudent(toAdd, studentID);
+		}
 		else{
-			System.out.println("Couldn't find table");
+			System.out.println("Couldn't find table to add to");
+			// throw some error?
 			return false;
 		}
 
