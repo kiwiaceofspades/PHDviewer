@@ -63,47 +63,14 @@ public abstract class PhDTable {
 		return headers.size();
 	}
 
-	public boolean makeChanges(char type, String[][] student){
-		switch(type){
-			case 'a':
-				// add a new entry
-				return addEntry(student[1]);
-			case 'e':
-				// edit a entry that already exists
-				return editEntry(student[1]);
-			default:
-				// type of change not accepted
-				System.out.println("Change of type: " + type + " not allowed");
-				return false;
-		}
-	}
-
-	public boolean addEntry(String[] student){
-		// Find the student
-		if(student.length < 22){
-			System.out.println("Entry to change is smaller than expected!");
-			return false;
-			// throw some sort of error?
-		}
-		Student toAdd = new ECSStudent(student[0], Integer.parseInt(student[1]), student[2], student[3], student[4], student[5], student[6],
-				student[7], student[8], student[9], student[10], student[11], student[12], student[13], student[14], student[15],
-				student[16], student[17], student[18], student[19], student[20], student[21]);
-		students.add(toAdd);
+	public boolean addStudent(Student student){
+		// Check for id
+		students.add(student);
 		return true;
 	}
 
-	public boolean editEntry(String[] student){
-		if(student.length < 22){
-			System.out.println("Entry to change is smaller than expected!");
-			return false;
-			// throw some sort of error?
-		}
-		int studentID = Integer.parseInt(student[1]);
+	public boolean editStudent(Student student, int studentID){
 		int index = -1;
-		Student toAdd = new ECSStudent(student[0], studentID, student[2], student[3], student[4], student[5], student[6],
-				student[7], student[8], student[9], student[10], student[11], student[12], student[13], student[14], student[15],
-				student[16], student[17], student[18], student[19], student[20], student[21]);
-		// Go through all the students and look for ID that matches
 		for(int i = 0; i<students.size(); i++){
 			ECSStudent pupil = (ECSStudent) students.get(i);
 			if(pupil.getId() == studentID){
@@ -115,10 +82,9 @@ public abstract class PhDTable {
 			// throw some sort of error?
 		}
 		else{
-			students.set(index, toAdd);
+			students.set(index, student);
 			return true;
 		}
 		return false;
 	}
-
 }
