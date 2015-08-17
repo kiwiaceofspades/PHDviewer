@@ -71,8 +71,8 @@ public class InfoPanel extends JPanel {
 					HOST.add(info,Table);
 				} else {
 					HOST.edit(info,Table);
-					}
 				}
+			}
 		});
 		this.add(apply);
 
@@ -92,7 +92,7 @@ public class InfoPanel extends JPanel {
 		 * contained with in this area before.
 		 */
 		if(scroll != null)
-		this.remove(scroll);
+			this.remove(scroll);
 		if(Panels != null){
 			for(int k =0; k<Panels.size();k++){
 				if(Panels.get(k)!=null){
@@ -132,7 +132,7 @@ public class InfoPanel extends JPanel {
 			Panels.add(temp);
 			panel.add(temp);
 
-			}
+		}
 
 		scroll.getViewport().add(panel);
 		this.add(scroll);
@@ -141,38 +141,38 @@ public class InfoPanel extends JPanel {
 
 
 
-private class DocListen implements DocumentListener{
+	private class DocListen implements DocumentListener{
 
-	private int index;
-	private JTextField INFO;
+		private int index;
+		private JTextField INFO;
 
 
 
-	public DocListen(int i, JTextField info) {
-		index = i;
-		INFO = info;
+		public DocListen(int i, JTextField info) {
+			index = i;
+			INFO = info;
+		}
+
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			//System.out.println(INFO.getText());
+			info[index][1] = INFO.getText();
+
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			//System.out.println(INFO.getText());
+			info[index][1] = INFO.getText();
+
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
 	}
-
-	@Override
-	public void insertUpdate(DocumentEvent e) {
-		//System.out.println(INFO.getText());
-		info[index][1] = INFO.getText();
-
-	}
-
-	@Override
-	public void removeUpdate(DocumentEvent e) {
-		//System.out.println(INFO.getText());
-		info[index][1] = INFO.getText();
-
-	}
-
-	@Override
-	public void changedUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-}
 }

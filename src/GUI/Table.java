@@ -41,10 +41,10 @@ public class Table extends JPanel {
 	public final String[] fullHead = {"Name", "ID", "Degree","EFTS","Primary Supervisor", "Supervision Split 1",
 			"Secondary Supervisor","Supervision Split 2","Third Supervisor",
 			"Supervision Split 3","Scholarship", "Start Date",
-							"PhD Proposal Submission", "PhD Proposal Seminar",
-							"PhD Proposal Confirmation Date","Suspension Dates",
-							"Thesis Submission And Examiners Appointed Date", "FGR Completes Examination",
-							"Revisions Finalised", "Deposited in Library", "Origin", "Notes"};
+			"PhD Proposal Submission", "PhD Proposal Seminar",
+			"PhD Proposal Confirmation Date","Suspension Dates",
+			"Thesis Submission And Examiners Appointed Date", "FGR Completes Examination",
+			"Revisions Finalised", "Deposited in Library", "Origin", "Notes"};
 	private String[] CurrentHead;
 
 	/*
@@ -85,7 +85,7 @@ public class Table extends JPanel {
 
 		if( Header == null) {
 			CurrentHead = fullHead;
-			}
+		}
 		else {
 			CurrentHead = Header;}
 
@@ -130,7 +130,7 @@ public class Table extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 
-			getData(UnderExaminationTable.getSelectedRow(),"UnderExaminationTable");
+				getData(UnderExaminationTable.getSelectedRow(),"UnderExaminationTable");
 			}
 
 		});
@@ -149,7 +149,7 @@ public class Table extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				//System.out.println("Update");
-			getData(currentFullyRegisteredTable.getSelectedRow(),"currentFullyRegistered");
+				getData(currentFullyRegisteredTable.getSelectedRow(),"currentFullyRegistered");
 			}
 
 		});
@@ -168,7 +168,7 @@ public class Table extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				//System.out.println("Update");
-			getData(CurrentProvisionallyRegisteredStudentsTable.getSelectedRow(),"CurrentProvisionallyRegisteredStudents");
+				getData(CurrentProvisionallyRegisteredStudentsTable.getSelectedRow(),"CurrentProvisionallyRegisteredStudents");
 			}
 
 		});
@@ -210,8 +210,8 @@ public class Table extends JPanel {
 		String[] temp;
 		CurrentFullyRegistered Full = DATA.getCurrentFullyRegistered();
 		for(Student s: Full.getStudents()){
-			 temp = s.getValues(CurrentHead);
-			 Data.add(temp);
+			temp = s.getValues(CurrentHead);
+			Data.add(temp);
 		}
 		String [][] tat = new String[1][1];
 		return Data.toArray(tat);
@@ -227,8 +227,8 @@ public class Table extends JPanel {
 		String[] temp;
 		UnderExamination Full = DATA.getUnderExamination();
 		for(Student s: Full.getStudents()){
-			 temp = s.getValues(CurrentHead);
-			 Data.add(temp);
+			temp = s.getValues(CurrentHead);
+			Data.add(temp);
 		}
 		String [][] tat = new String[1][1];
 		return Data.toArray(tat);
@@ -244,8 +244,8 @@ public class Table extends JPanel {
 		String[] temp;
 		CurrentProvisionallyRegisteredStudents Full = DATA.getCurrentProvisionallyRegisteredStudents();
 		for(Student s: Full.getStudents()){
-			 temp = s.getValues(CurrentHead);
-			 Data.add(temp);
+			temp = s.getValues(CurrentHead);
+			Data.add(temp);
 		}
 		String [][] tat = new String[1][1];
 		return Data.toArray(tat);
@@ -345,11 +345,11 @@ public class Table extends JPanel {
 			if(currentTable.equals("currentFullyRegistered"))temp=this.currentFullyRegisteredTable;
 			if(currentTable.equals("UnderExamination"))temp=this.UnderExaminationTable;
 
-		DATA.makeChanges('r',getRemovedData(tempData[temp.getSelectedRow()]),currentTable);
-		System.out.println("Cleaning");
-		for(String a: currentFullyRegisteredData[currentFullyRegisteredTable.getSelectedRow()]){
-			System.out.println(a);
-		}
+			DATA.makeChanges('r',getRemovedData(tempData[temp.getSelectedRow()]),currentTable);
+			System.out.println("Cleaning");
+			for(String a: currentFullyRegisteredData[currentFullyRegisteredTable.getSelectedRow()]){
+				System.out.println(a);
+			}
 			setupTable();
 		}
 

@@ -31,6 +31,7 @@ public class PhDViewer extends JFrame {
 	private Table Table;
 	private PhDData DATA;
 	private InfoPanel Info;
+	private HeaderPanel Head;
 	private JButton Add,remove;
 	private String currentTable;
 	private String ExtraPanel = "Info";
@@ -80,6 +81,20 @@ public class PhDViewer extends JFrame {
 
 		});
 
+		JButton Headers = new JButton("Custom Headers");
+		Headers.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[]  full = Table.fullHead;
+				String[] current = Table.getCurrentHead();
+				showHeaderPanel(full,current);
+
+
+			}
+
+		});
+
 		Buttons.add(Add);
 		Buttons.add(remove);
 		this.add(Buttons, BorderLayout.NORTH);
@@ -90,28 +105,43 @@ public class PhDViewer extends JFrame {
 
 
 
-//	public void ResetSize(){
-//		Dimension size = getSize();
-//		//Table
-//		Dimension tableSize = new Dimension(size);
-//		tableSize.width = (tableSize.width/3)*2;
-//		tableSize.height = tableSize.height-50;
-//		System.out.println(tableSize.toString());
-//		System.out.println(size.toString());
-//		Table.setSizeOver(tableSize);
-//		//Info
-//
-//	}
+	protected void showHeaderPanel(String[] full, String[] current) {
+		if(!ExtraPanel.equals("Header")){
+			if(ExtraPanel.equals("Info"))remove(Info);
+			add(Head,BorderLayout.EAST);
+			ExtraPanel = "Header";
+		}
+		Head.UpdateInfo(full,current);
+
+
+
+	}
+
+
+
+	//	public void ResetSize(){
+	//		Dimension size = getSize();
+	//		//Table
+	//		Dimension tableSize = new Dimension(size);
+	//		tableSize.width = (tableSize.width/3)*2;
+	//		tableSize.height = tableSize.height-50;
+	//		System.out.println(tableSize.toString());
+	//		System.out.println(size.toString());
+	//		Table.setSizeOver(tableSize);
+	//		//Info
+	//
+	//	}
 	/**
 	 * Called when you are using the InfoPanel
 	 * @param infothe Information to be displayed in the panel
 	 * @param string what table is this table from
 	 * @param b wether we are editing of addign to the table.
 	 */
-	public void UpInfo(String[][] info, String string, boolean b){
+	protected void UpInfo(String[][] info, String string, boolean b){
 
 		if(!ExtraPanel.equals("Info")){
-			add(Info);
+			if(ExtraPanel.equals("Header")) remove(Head);
+			add(Info, BorderLayout.EAST);
 			ExtraPanel = "Info";
 		}
 
@@ -132,9 +162,9 @@ public class PhDViewer extends JFrame {
 		Table.Add(axis,table);
 	}
 
-/**
- 	*
-  * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
+	/**
+	 *
+	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
 	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
 	 * @param tabel tells teh PHDdata which table is being edited in the system.
 	 * */
@@ -192,6 +222,11 @@ public class PhDViewer extends JFrame {
 			// TODO Auto-generated method stub
 
 		}
+
+	}
+
+	public void changeTableHead(String[] currentSelected) {
+		Table.setCurrentHead(currentSelected);
 
 	}
 
