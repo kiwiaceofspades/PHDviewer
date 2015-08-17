@@ -184,7 +184,7 @@ public class Parser {
 		return d;
 	}
 
-	private void writeToFile(PhDData data) throws IOException {
+	public void writeToFile(PhDData data) throws IOException {
 		UnderExamination ue = data.getUnderExamination();
 		CurrentFullyRegistered cfs = data.getCurrentFullyRegistered();
 		PhDProposalUnderExamination ppue = data.getPhDProposalUnderExamination();
@@ -205,18 +205,23 @@ public class Parser {
 
 		pw.println(headerString);
 
+		pw.println("| UNDER EXAMINATION ||||||||||||||||||||||");
 		for (Student s : ue.getStudents()) {
 			pw.println(s.toFoswiki());
 		}
+		pw.println("| CURRENT FULLY REGISTERED STUDENTS |||||||||||||||||||||||");
 		for (Student s : cfs.getStudents()) {
 			pw.println(s.toFoswiki());
 		}
+		pw.println("| PHD PROPOSAL UNDER EXAMINATION ||||||||||||||||||||||");
 		for (Student s : ppue.getStudents()) {
 			pw.println(s.toFoswiki());
 		}
+		pw.println("| CURRENT PROVISIONALLY REGISTERED STUDENTS |||||||||||||||||||||||");
 		for (Student s : cprs.getStudents()) {
 			pw.println(s.toFoswiki());
 		}
+		pw.println("| NOT FULLY ADMITTED ||||||||||||||||||||||");
 		for (Student s : nfa.getStudents()) {
 			pw.println(s.toFoswiki());
 		}
