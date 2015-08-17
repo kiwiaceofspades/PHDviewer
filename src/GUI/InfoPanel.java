@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -18,6 +16,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class InfoPanel extends JPanel {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -1098644150408872540L;
 
 	/**
 	 * A link to the main host of the JPanel
@@ -35,11 +38,24 @@ public class InfoPanel extends JPanel {
 
 	private ArrayList<JPanel> Panels =null;
 
-	private ArrayList<JTextField> textBox = null;
 
+	/*
+	 * The apply button still thinking if i need this stored here
+	 */
 	private JButton apply;
 
+
+	/*
+	 * Are we adding or removing
+	 */
 	private boolean adding;
+
+	/*
+	 * Which table are we looking at currently
+	 */
+	private String Table;
+
+
 
 	public InfoPanel(Dimension tt,PhDViewer Main){
 		HOST = Main;
@@ -52,9 +68,9 @@ public class InfoPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(adding){
-					HOST.add(info);
+					HOST.add(info,Table);
 				} else {
-					HOST.edit(info);
+					HOST.edit(info,Table);
 					}
 				}
 		});
@@ -62,9 +78,19 @@ public class InfoPanel extends JPanel {
 
 	}
 
-
-	public void updateInfo (String[][] INFO, boolean b){
+	/**
+	 *
+	 * @param INFO The information on the Row and the Headers that this information relates to
+	 * @param b	Wether this is a add or not.
+	 * @param string Which table are we working on.
+	 */
+	public void updateInfo (String[][] INFO, boolean b, String string){
 		adding = b;
+		Table =string;
+		/*
+		 * Wiping out any information that was
+		 * contained with in this area before.
+		 */
 		if(scroll != null)
 		this.remove(scroll);
 		if(Panels != null){
@@ -78,27 +104,26 @@ public class InfoPanel extends JPanel {
 		info = INFO;
 		scroll = new JScrollPane();
 
-		textBox = new ArrayList<JTextField>();
+
 
 		JPanel panel = new JPanel();
 
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 
 		Panels = new ArrayList<JPanel>();
-
+		/*
+		 * Adding the new information to the Information Panel;
+		 */
 		for(int i =0 ;i<info.length;i++){
 
 			JPanel temp = new JPanel();
 			JTextArea Data = new JTextArea(info[i][0]);
-			//temp.setPreferredSize(new Dimension(90,90));
 			Data.setLineWrap(true);
 			Data.setWrapStyleWord(true);
 			Data.setEditable(false);
 
 			JTextField Info = new JTextField(info[i][1]);
 			Info.getDocument().addDocumentListener(new DocListen(i,Info));
-			textBox.add(Info);
-
 
 			temp.setLayout(new BorderLayout());
 			temp.add(Data, BorderLayout.WEST);
@@ -106,7 +131,7 @@ public class InfoPanel extends JPanel {
 
 			Panels.add(temp);
 			panel.add(temp);
-			
+
 			}
 
 		scroll.getViewport().add(panel);

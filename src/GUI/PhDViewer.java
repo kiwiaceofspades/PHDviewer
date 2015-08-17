@@ -4,20 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
-import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import System.Parser;
 import System.PhDData;
 
 /**
@@ -30,12 +23,17 @@ import System.PhDData;
  */
 public class PhDViewer extends JFrame {
 
-	private JFrame Me = this;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1770606247378958128L;
+	//private JFrame Me = this;
 	private Table Table;
 	private PhDData DATA;
 	private InfoPanel Info;
 	private JButton Add,remove;
-
+	private String currentTable;
+	private String ExtraPanel = "Info";
 
 	public PhDViewer(String string, PhDData pas) {
 
@@ -48,11 +46,13 @@ public class PhDViewer extends JFrame {
 		setLayout(new BorderLayout());
 		add(Table, BorderLayout.CENTER);
 		add(Info, BorderLayout.EAST);
-		addComponentListener(new CompListener());
 		WinState Listen = new WinState();
 		this.addWindowStateListener(Listen);
 		this.addWindowListener(Listen);
 
+		/*
+		 * Local little panel for housing all the buttons that will be used
+		 */
 		JPanel Buttons = new JPanel();
 
 		Add = new JButton("Add");
@@ -65,7 +65,7 @@ public class PhDViewer extends JFrame {
 					temp[i][0] = Table.getCurrentHead()[i];
 					temp[i][1] = "";
 				}
-				UpInfo(temp,true);
+				UpInfo(temp,"CurrentProvisionallyRegisteredStudents",true);
 			}
 
 		});
@@ -75,13 +75,10 @@ public class PhDViewer extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Table.Remove();
+				Table.Remove(currentTable);
 			}
 
 		});
-		
-		
-
 
 		Buttons.add(Add);
 		Buttons.add(remove);
@@ -93,34 +90,56 @@ public class PhDViewer extends JFrame {
 
 
 
-	public void ResetSize(){
-		Dimension size = getSize();
-		//Table
-		Dimension tableSize = new Dimension(size);
-		tableSize.width = (tableSize.width/3)*2;
-		tableSize.height = tableSize.height-50;
-		System.out.println(tableSize.toString());
-		System.out.println(size.toString());
-		Table.setSizeOver(tableSize);
-		//Info
+//	public void ResetSize(){
+//		Dimension size = getSize();
+//		//Table
+//		Dimension tableSize = new Dimension(size);
+//		tableSize.width = (tableSize.width/3)*2;
+//		tableSize.height = tableSize.height-50;
+//		System.out.println(tableSize.toString());
+//		System.out.println(size.toString());
+//		Table.setSizeOver(tableSize);
+//		//Info
+//
+//	}
+	/**
+	 * Called when you are using the InfoPanel
+	 * @param infothe Information to be displayed in the panel
+	 * @param string what table is this table from
+	 * @param b wether we are editing of addign to the table.
+	 */
+	public void UpInfo(String[][] info, String string, boolean b){
 
-	}
+		if(!ExtraPanel.equals("Info")){
+			add(Info);
+			ExtraPanel = "Info";
+		}
 
-	public void UpInfo(String[][] info, boolean b){
-
-		Info.updateInfo(info,b);
+		currentTable = string;
+		Info.updateInfo(info,b,string);
 		validate();
 		repaint();
 
 	}
-
-	public void add(String[][] axis){
-		Table.Add(axis);
+	/**
+	 * Called by the InfoPanel to declare that it wants to make
+	 * changes to the Table in the Table.class
+	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
+	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
+	 * @param tabel tells teh PHDdata which table is being edited in the system.
+	 */
+	public void add(String[][] axis, String table){
+		Table.Add(axis,table);
 	}
 
-
-	public void edit(String[][] axis) {
-		Table.Edit(axis);
+/**
+ 	*
+  * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
+	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
+	 * @param tabel tells teh PHDdata which table is being edited in the system.
+	 * */
+	public void edit(String[][] axis, String table2) {
+		Table.Edit(axis,table2);
 
 	}
 
@@ -128,36 +147,7 @@ public class PhDViewer extends JFrame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		PhDViewer Frame = new PhDViewer("PhdViewers",null);
 
-	}
-
-
-	private class CompListener implements ComponentListener{
-
-		@Override
-		public void componentResized(ComponentEvent e) {
-
-
-		}
-
-		@Override
-		public void componentMoved(ComponentEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void componentShown(ComponentEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void componentHidden(ComponentEvent e) {
-			// TODO Auto-generated method stub
-
-		}
 
 	}
 
@@ -173,6 +163,8 @@ public class PhDViewer extends JFrame {
 		}
 		@Override
 		public void windowClosing(WindowEvent e) {
+
+			DATA.writeToFoswiki();
 			System.out.println("Death To all Monkeys");
 			System.exit(0);
 		}
