@@ -1,5 +1,6 @@
 package System;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PhDData {
@@ -139,7 +140,12 @@ public class PhDData {
 	}
 
 	public void writeToFoswiki(){
-
+		try {
+			parser.writeToFile(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// to be implemented !
 
 	}

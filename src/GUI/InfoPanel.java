@@ -106,7 +106,7 @@ public class InfoPanel extends JPanel {
 
 			Panels.add(temp);
 			panel.add(temp);
-			
+
 			}
 
 		scroll.getViewport().add(panel);
