@@ -18,7 +18,7 @@
 		<link>
 			<name>src/GUI/InfoPanel.java</name>
 			<type>1</type>
-			<location>/u/students/schmidmatt/Tri2_2015/Swen302/PHDviewer/src/GUI/InfoPanel.java</location>
+			<locationURI>PARENT_LOC/InfoPanel.java</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

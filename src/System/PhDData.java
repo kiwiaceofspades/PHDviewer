@@ -137,4 +137,10 @@ public class PhDData {
 		}
 
 	}
+
+	public void writeToFoswiki(){
+
+		// to be implemented !
+
+	}
 }
