@@ -108,9 +108,9 @@ public class Table extends JPanel {
 			}
 
 		});
-
+		
 		Scroll = new JScrollPane(table);
-
+		
 
 		this.setLayout(new BorderLayout());
 		add(Scroll,BorderLayout.CENTER);

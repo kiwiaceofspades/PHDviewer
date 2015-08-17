@@ -90,7 +90,7 @@ public class InfoPanel extends JPanel {
 
 			JPanel temp = new JPanel();
 			JTextArea Data = new JTextArea(info[i][0]);
-
+			//temp.setPreferredSize(new Dimension(90,90));
 			Data.setLineWrap(true);
 			Data.setWrapStyleWord(true);
 			Data.setEditable(false);
@@ -105,11 +105,12 @@ public class InfoPanel extends JPanel {
 			temp.add(Info,BorderLayout.CENTER);
 
 			Panels.add(temp);
-			add(temp);
+			panel.add(temp);
+			
 			}
 
-		scroll.add(panel);
-		//this.add(panel);
+		scroll.getViewport().add(panel);
+		this.add(scroll);
 		repaint();
 	}
 
