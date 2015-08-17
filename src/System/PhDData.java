@@ -69,10 +69,10 @@ public class PhDData {
 		switch(type){
 			case 'a':
 				// add a new entry
-				return addEntry(student[1], table);
+				return addEntry(student, table);
 			case 'e':
 				// edit a entry that already exists
-				return editEntry(student[1], table);
+				return editEntry(student, table);
 			default:
 				// type of change not accepted
 				System.out.println("Change of type: " + type + " not allowed");
@@ -80,16 +80,16 @@ public class PhDData {
 		}
 	}
 
-	public boolean addEntry(String[] student, String table){
+	public boolean addEntry(String[][] student, String table){
 		// Find the student
-		if(student.length < 22){
+		if(student.length <= 22){
 			System.out.println("Entry to change is smaller than expected!");
 			return false;
 			// throw some sort of error?
 		}
-		Student toAdd = new ECSStudent(student[0], Integer.parseInt(student[1]), student[2], student[3], student[4], student[5], student[6],
-				student[7], student[8], student[9], student[10], student[11], student[12], student[13], student[14], student[15],
-				student[16], student[17], student[18], student[19], student[20], student[21]);
+		Student toAdd = new ECSStudent(student[0][1], Integer.parseInt(student[1][1]), student[2][1], student[3][1], student[4][1], student[5][1], student[6][1],
+				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
+				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
 
 		// Now add it to the right table
 		if(table.equals("CurrentFullyRegistered")){
@@ -103,17 +103,17 @@ public class PhDData {
 		return true;
 	}
 
-	public boolean editEntry(String[] student, String table){
+	public boolean editEntry(String[][] student, String table){
 		if(student.length < 22){
 			System.out.println("Entry to change is smaller than expected!");
 			return false;
 			// throw some sort of error?
 		}
-		int studentID = Integer.parseInt(student[1]);
+		int studentID = Integer.parseInt(student[1][1]);
 		int index = -1;
-		Student toAdd = new ECSStudent(student[0], studentID, student[2], student[3], student[4], student[5], student[6],
-				student[7], student[8], student[9], student[10], student[11], student[12], student[13], student[14], student[15],
-				student[16], student[17], student[18], student[19], student[20], student[21]);
+		Student toAdd = new ECSStudent(student[0][1], studentID, student[2][1], student[3][1], student[4][1], student[5][1], student[6][1],
+				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
+				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
 
 		// Find the right table to make edit to
 		ArrayList<Student> students;

@@ -75,6 +75,7 @@ public abstract class PhDTable {
 			ECSStudent pupil = (ECSStudent) students.get(i);
 			if(pupil.getId() == studentID){
 				index = i;
+				break;
 			}
 		}
 		if(index == -1){

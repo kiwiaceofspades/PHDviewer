@@ -43,7 +43,7 @@ public class PhDViewer extends JFrame {
 		DATA = pas;
 		this.setMinimumSize(new Dimension(800,600));
 		Table = new Table(DATA,null, this);
-		Info = new InfoPanel(this.getSize());
+		Info = new InfoPanel(this.getSize(),this);
 
 		setLayout(new BorderLayout());
 		add(Table, BorderLayout.CENTER);
@@ -60,12 +60,12 @@ public class PhDViewer extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String[][] temp = new String [Table.fullHead.length][2];
-				for(int i =0 ;i<Table.fullHead.length;i++){
-					temp[i][0] = Table.LabelHead[i];
+				String[][] temp = new String [Table.getCurrentHead().length][2];
+				for(int i =0 ;i<Table.getCurrentHead().length;i++){
+					temp[i][0] = Table.getCurrentHead()[i];
 					temp[i][1] = "";
 				}
-				UpInfo(temp);
+				UpInfo(temp,true);
 			}
 
 		});
@@ -75,8 +75,7 @@ public class PhDViewer extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				Table.Remove();
 			}
 
 		});
@@ -105,14 +104,23 @@ public class PhDViewer extends JFrame {
 
 	}
 
-	public void UpInfo(String[][] info){
-		Info.updateInfo(info);
+	public void UpInfo(String[][] info, boolean b){
+
+		Info.updateInfo(info,b);
 		validate();
 		repaint();
 
 	}
 
+	public void add(String[][] axis){
+		Table.Add(axis);
+	}
 
+
+	public void edit(String[][] axis) {
+		Table.Edit(axis);
+
+	}
 
 	/**
 	 * @param args
@@ -192,4 +200,5 @@ public class PhDViewer extends JFrame {
 		}
 
 	}
+
 }
