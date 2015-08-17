@@ -1,18 +1,25 @@
 package System;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+// Author: Shreyas (ramasushre)
 public class Parser {
 
+	// Fields used for testing
 	private static String testHeader = "| *Name* | *ID* | *Degree* | *EFTS* | *Primary Supervisor* | *Supervision Split* | *Secondary Supervisor* | *Supervision Split* | *Third Supervisor* | *Supervision Split* | *Scholarship* | *Start Date* | *PhD Proposal Submission* | *PhD Proposal Seminar* | *PhD Proposal Confirmation Date* | *Suspension Dates* | *Thesis Submission* + *Examiners Appointed Date* | *FGR Completes Examination* | *Revisions Finalised* | *Deposited in Library* | *Notes* | *Origin* |";
 	private static String testStudent = "| Michael Millward | 123456789 | COMP690 | EFTSdata | Person:JamesNoble | 50% | Person:NicholasCameron | 50% | |  | Telstra Clear Postgraduate Scholarship | 20090427 | SUBMITTED | PRESENTED | CONFIRMED | | 20150116 | 20150518 | | | Revisions: 20150901. | D |";
 	private Date testDate = new Date(99, 99, 99);
 	private static String fname = "SanitizedStudentswNames.txt";
 
+	// Enum used for determining what table type we are working with
 	private enum tableTypes {UE, CFRS, PPUE, CPRS, NFA};
 	private tableTypes currentType = tableTypes.UE;
 
@@ -29,6 +36,8 @@ public class Parser {
 	private CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents;
 	private NotFullyAdmitted notFullyAdmitted;
 
+	// Constructor takes a filename string and runs the parser. Also takes an empty PhDData object
+	// and populates it.
 	public Parser(String fname, PhDData data) {
 		runParser(fname);
 
@@ -43,6 +52,7 @@ public class Parser {
 
 	}
 
+	// Essentially the main method, parses the Foswiki text file specified by filename.
 	public void runParser(String filename) {
 		try {
 			Scanner sc = new Scanner(new File(filename));
@@ -62,7 +72,7 @@ public class Parser {
 			}
 			notFullyAdmitted = new NotFullyAdmitted(new ArrayList<Student>(students), headers);
 
-			// display sizes to check
+			// Display sizes to check
 			//System.out.println("Under examination: " + underExamination.getSizeOfStudents());
 			//System.out.println("Current fully registered: " + currentFullyRegistered.getSizeOfStudents());
 			//System.out.println("PhD proposal under examination: " + phdProposalUnderExamination.getSizeOfStudents());
@@ -174,9 +184,47 @@ public class Parser {
 		return d;
 	}
 
+	private void writeToFile(PhDData data) throws IOException {
+		UnderExamination ue = data.getUnderExamination();
+		CurrentFullyRegistered cfs = data.getCurrentFullyRegistered();
+		PhDProposalUnderExamination ppue = data.getPhDProposalUnderExamination();
+		CurrentProvisionallyRegisteredStudents cprs = data.getCurrentProvisionallyRegisteredStudents();
+		NotFullyAdmitted nfa = data.getNotFullyAdmitted();
+
+		PrintWriter pw = new PrintWriter(new FileWriter("output.txt"));
+
+		pw.println(titling[0]);
+		pw.println(titling[1]);
+		pw.println(titling[2]);
+		pw.println(titling[3]);
+
+		String headerString = "| *";
+		for (String s : headers) {
+			headerString += s + "* |";
+		}
+
+		pw.println(headerString);
+
+		for (Student s : ue.getStudents()) {
+			pw.println(s.toFoswiki());
+		}
+		for (Student s : cfs.getStudents()) {
+			pw.println(s.toFoswiki());
+		}
+		for (Student s : ppue.getStudents()) {
+			pw.println(s.toFoswiki());
+		}
+		for (Student s : cprs.getStudents()) {
+			pw.println(s.toFoswiki());
+		}
+		for (Student s : nfa.getStudents()) {
+			pw.println(s.toFoswiki());
+		}
+	}
+
 	public static void main(String[] args) {
 		Parser p = new Parser();
-		p.runParser("test");
+		p.runParser(fname);
 	}
 
 }
