@@ -326,4 +326,37 @@ public class ECSStudent implements Student {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
+
+	public String toFoswiki(){
+		ArrayList<String> foswikiString = new ArrayList<String>();
+		foswikiString.add(name);
+		foswikiString.add(""+id);
+		foswikiString.add(degree);
+		foswikiString.add(efts);
+		foswikiString.add(primarySupervisor);
+		foswikiString.add(supervisionSplit1);
+		foswikiString.add(secondarySupervisor);
+		foswikiString.add(supervisionSplit2);
+		foswikiString.add(thirdSupervisor);
+		foswikiString.add(supervisionSplit3);
+		foswikiString.add(scholarship);
+		foswikiString.add(startDate);
+		foswikiString.add(phdProposalSubmission);
+		foswikiString.add(phdProposalSeminar);
+		foswikiString.add(phdProposalConfirmationDate);
+		foswikiString.add(suspensionDates);
+		foswikiString.add(thesisSubmissionAndExaminersAppointedDate);
+		foswikiString.add(fgrCompletesExamination);
+		foswikiString.add(revisionsFinalised);
+		foswikiString.add(depositedInLibrary);
+		foswikiString.add(notes);
+		foswikiString.add(origin);
+
+		String list = "| ";
+		for(String s : foswikiString){
+			list += s + " | ";
+		}
+
+		return list;
+	}
 }

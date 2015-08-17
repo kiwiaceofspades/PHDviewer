@@ -8,4 +8,12 @@ public class NonVUWStudents implements Student {
 		return null;
 	}
 
+	@Override
+	public String toFoswiki() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }
