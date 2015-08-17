@@ -79,6 +79,8 @@ public class PhDViewer extends JFrame {
 			}
 
 		});
+		
+		
 
 
 		Buttons.add(Add);
