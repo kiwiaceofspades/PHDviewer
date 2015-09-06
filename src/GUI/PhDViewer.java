@@ -43,7 +43,7 @@ public class PhDViewer extends JFrame {
 		this.setMinimumSize(new Dimension(800,600));
 		Table = new Table(DATA,null, this);
 		Info = new InfoPanel(this.getSize(),this);
-
+		Head = new HeaderPanel(this.getSize(),this);
 		setLayout(new BorderLayout());
 		add(Table, BorderLayout.CENTER);
 		add(Info, BorderLayout.EAST);
@@ -97,6 +97,7 @@ public class PhDViewer extends JFrame {
 
 		Buttons.add(Add);
 		Buttons.add(remove);
+		Buttons.add(Headers);
 		this.add(Buttons, BorderLayout.NORTH);
 
 		Table.setVisible(true);
@@ -112,6 +113,8 @@ public class PhDViewer extends JFrame {
 			ExtraPanel = "Header";
 		}
 		Head.UpdateInfo(full,current);
+		validate();
+		repaint();
 
 
 
@@ -171,6 +174,10 @@ public class PhDViewer extends JFrame {
 	public void edit(String[][] axis, String table2) {
 		Table.Edit(axis,table2);
 
+	}
+
+	public PhDData getDATA() {
+		return DATA;
 	}
 
 	/**

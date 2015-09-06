@@ -7,11 +7,15 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+
+import System.PhDData;
 
 /**
  * @author schmidmatt
@@ -26,25 +30,36 @@ public class HeaderPanel extends JPanel {
 	 */
 	private PhDViewer HOST;
 
-	private String[] currentSelected= null;
+	private TreeSet<heads> currentSelected = null;
 	private String[] fullList = null;
-
 	private JPanel Panel;
+	private PhDData HEADS;
+
 
 	public HeaderPanel(Dimension tt, PhDViewer main){
 		HOST = main;
 		tt.width = 300;
+		HEADS = main.getDATA();
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		this.setPreferredSize(tt);
-		JButton button = new JButton("Apply Header Chnages");
+		JButton button = new JButton("Apply Header Changes");
 		button.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HOST.changeTableHead(currentSelected);
+				heads temp[] = new heads[1];
+				String sTemp[] = new String[currentSelected.size()];
+				TreeSet<heads> local = currentSelected;
+				Iterator<heads> iterator = currentSelected.iterator();
+				for(int i =0;i<sTemp.length;i++){
+					sTemp[i]= iterator.next().header;
+
+				}
+				HOST.changeTableHead(sTemp);
 			}
 
 		});
+
 		this.add(button);
 	}
 
@@ -53,7 +68,12 @@ public class HeaderPanel extends JPanel {
 		Panel = new JPanel();
 		Panel.setLayout(new GridLayout(0,2));
 		fullList = full;
-		currentSelected =current;
+		TreeSet<heads> Treetemp = new TreeSet<heads>();
+		for(int i=0 ; i<current.length;i++){
+			Treetemp.add(new heads(current[i],i));
+		}
+
+		currentSelected =Treetemp;
 
 		for( int i =0 ;i<full.length;i++){
 			String f= full[i];
@@ -64,7 +84,7 @@ public class HeaderPanel extends JPanel {
 			temp.addActionListener(new clickListener(f,i));
 			Panel.add(temp);
 		}
-
+		this.add(Panel);
 
 
 	}
@@ -82,47 +102,69 @@ public class HeaderPanel extends JPanel {
 	 */
 	private class clickListener implements ActionListener{
 
-		private String header;
-		private int Index;
+		private heads head;
+
 		public clickListener(String f,int index) {
-			header = f;
-			Index = index;
+			head = new heads(f,index);
+
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int i;
-			for(i =0; i< fullList.length;i++){
-				if(fullList[i].equals(currentSelected[0])){
-					break;
-				}
+			if(!currentSelected.add(head)){
+				currentSelected.remove(head);
 			}
-
-			if(Index<i){
-				/*
-				 * Add it to the beginning of the currentSelection
-				 */
-				String[] temp = new String[currentSelected.length+1];
-				temp[0]=header;
-				for(int k =1; k< temp.length ;k++){
-					temp[k]=currentSelected[k-1];
-				}
-			}else if (Index < currentSelected.length-1){
-				/*
-				 * Adding it to somewhere in the middle of the currentSelection
-				 */
-
-
-			}else {
-				/*
-				 * Must be at the end
-				 */
-			}
-
-
 		}
 
 	}
 
+	private class heads implements Comparable<heads>{
+
+		private String header;
+		private int Index;
+
+
+		public heads(String header, int index) {
+			super();
+			this.header = header;
+			Index = index;
+		}
+
+
+
+		/**
+		 * @return the header
+		 */
+		public String getHeader() {
+			return header;
+		}
+
+
+
+		/**
+		 * @return the index
+		 */
+		public Integer getIndex() {
+			return Index;
+		}
+
+		@Override
+		public int compareTo(heads o) {
+			return getIndex().compareTo(o.getIndex());
+		}
+
+
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "heads [header=" + header + ", Index=" + Index + "]";
+		}
+
+
+
+	}
 
 }

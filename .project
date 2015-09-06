@@ -14,15 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/GUI/InfoPanel.java</name>
-			<type>1</type>
-<<<<<<< HEAD
-			<location>/u/students/ramasushre/SWEN302/PHDviewer/src/GUI/InfoPanel.java</location>
-=======
-			<locationURI>PARENT_LOC/InfoPanel.java</locationURI>
->>>>>>> ccd29adff48fc899b5f3ecb3687309afa7258950
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -388,6 +388,7 @@ public class Table extends JPanel {
 	 */
 	public void setCurrentHead(String[] currentHead) {
 		CurrentHead = currentHead;
+		this.setupTable();
 	}
 
 
