@@ -191,7 +191,8 @@ public class Parser {
 		CurrentProvisionallyRegisteredStudents cprs = data.getCurrentProvisionallyRegisteredStudents();
 		NotFullyAdmitted nfa = data.getNotFullyAdmitted();
 
-		PrintWriter pw = new PrintWriter(new FileWriter("output.txt"));
+		PrintWriter pw = new PrintWriter(new FileWriter(new File("output.txt")));
+		pw.flush();
 
 		pw.println(titling[0]);
 		pw.println(titling[1]);
@@ -225,6 +226,8 @@ public class Parser {
 		for (Student s : nfa.getStudents()) {
 			pw.println(s.toFoswiki());
 		}
+
+		pw.close();
 	}
 
 	public static void main(String[] args) {
