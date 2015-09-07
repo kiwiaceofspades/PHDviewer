@@ -4,10 +4,12 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -51,7 +53,7 @@ public class Table extends JPanel {
 	 * Data Values keeps a hard back up of the table so
 	 * i don't have to dig it up each time i want to make a change
 	 */
-	private String[][] currentFullyRegisteredData= {{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"},
+	private String[][] CurrentFullyRegisteredData= {{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"},
 			{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"}};
 	private String[][] UnderExaminationData;
 	private String[][] CurrentProvisionallyRegisteredStudentsData;
@@ -60,7 +62,7 @@ public class Table extends JPanel {
 	/*
 	 * JTables for clobal links to them as they are called in other methods
 	 */
-	private JTable currentFullyRegisteredTable;
+	private JTable CurrentFullyRegisteredTable;
 	private JTable UnderExaminationTable;
 	private JTable CurrentProvisionallyRegisteredStudentsTable;
 
@@ -110,7 +112,7 @@ public class Table extends JPanel {
 
 		if( DATA != null){
 			UnderExaminationData= setupUnderExaminationData();
-			currentFullyRegisteredData = setupCurrentFullyRegisteredData();
+			CurrentFullyRegisteredData = setupCurrentFullyRegisteredData();
 			CurrentProvisionallyRegisteredStudentsData=setupCurrentProvisionallyRegisteredStudentsData();
 
 
@@ -119,6 +121,7 @@ public class Table extends JPanel {
 		 * Setting up the Under EXamination Table
 		 */
 		UnderExaminationTable = new JTable(UnderExaminationData,CurrentHead);
+		UnderExaminationTable.setCellSelectionEnabled(false);
 		UnderExaminationTable.setAutoResizeMode(0);
 
 		for( int i=0 ; i<UnderExaminationTable.getColumnModel().getColumnCount()-1 ;i++){
@@ -129,8 +132,9 @@ public class Table extends JPanel {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-
-				getData(UnderExaminationTable.getSelectedRow(),"UnderExaminationTable");
+			//	CurrentFullyRegisteredTable.setEditingRow(-1);
+				//CurrentProvisionallyRegisteredStudentsTable.setEditingRow(-1);
+				getData(UnderExaminationTable.getSelectedRow(),"UnderExamination");
 			}
 
 		});
@@ -138,18 +142,22 @@ public class Table extends JPanel {
 		/*
 		 * Setting up the current fully Registered table
 		 */
-		currentFullyRegisteredTable = new JTable(currentFullyRegisteredData,CurrentHead);
-		currentFullyRegisteredTable.setAutoResizeMode(0);
-		for(int i=0 ; i<currentFullyRegisteredTable.getColumnModel().getColumnCount()-1 ;i++){
-			currentFullyRegisteredTable.getColumnModel().getColumn(i).setMinWidth(100);
+		CurrentFullyRegisteredTable = new JTable(CurrentFullyRegisteredData,CurrentHead);
+		CurrentFullyRegisteredTable.setCellSelectionEnabled(false);
+		CurrentFullyRegisteredTable.setAutoResizeMode(0);
+		for(int i=0 ; i<CurrentFullyRegisteredTable.getColumnModel().getColumnCount()-1 ;i++){
+			CurrentFullyRegisteredTable.getColumnModel().getColumn(i).setMinWidth(100);
 		}
-		currentFullyRegisteredTable.setFillsViewportHeight(true);
-		currentFullyRegisteredTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+		CurrentFullyRegisteredTable.setFillsViewportHeight(true);
+		CurrentFullyRegisteredTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				//System.out.println("Update");
-				getData(currentFullyRegisteredTable.getSelectedRow(),"currentFullyRegistered");
+
+			//	UnderExaminationTable.setEditingRow(-1);
+			//	CurrentProvisionallyRegisteredStudentsTable.setEditingRow(-1);
+
+				getData(CurrentFullyRegisteredTable.getSelectedRow(),"CurrentFullyRegistered");
 			}
 
 		});
@@ -158,6 +166,7 @@ public class Table extends JPanel {
 		 * Setting up the current Provisionally Registered Students Tabel
 		 */
 		CurrentProvisionallyRegisteredStudentsTable = new JTable(CurrentProvisionallyRegisteredStudentsData,CurrentHead);
+		CurrentProvisionallyRegisteredStudentsTable.setCellSelectionEnabled(false);
 		CurrentProvisionallyRegisteredStudentsTable.setAutoResizeMode(0);
 		for(int i=0; i<CurrentProvisionallyRegisteredStudentsTable.getColumnModel().getColumnCount()-1;i++){
 			CurrentProvisionallyRegisteredStudentsTable.getColumnModel().getColumn(i).setMinWidth(100);
@@ -168,6 +177,8 @@ public class Table extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				//System.out.println("Update");
+			//	CurrentFullyRegisteredTable.setEditingRow(-1);
+			//	UnderExaminationTable.setEditingRow(-1);
 				getData(CurrentProvisionallyRegisteredStudentsTable.getSelectedRow(),"CurrentProvisionallyRegisteredStudents");
 			}
 
@@ -178,12 +189,18 @@ public class Table extends JPanel {
 		 */
 		locPanel.setLayout(new BoxLayout(locPanel,BoxLayout.Y_AXIS));
 
+		JLabel temp = new JLabel("Under Examination Table");
+		locPanel.add(temp);
 		locPanel.add(UnderExaminationTable.getTableHeader());
 		locPanel.add(UnderExaminationTable);
 
-		locPanel.add(currentFullyRegisteredTable.getTableHeader());
-		locPanel.add(currentFullyRegisteredTable);
+		temp = new JLabel("CurrentFullyRegisteredTable");
+		locPanel.add(temp);
+		locPanel.add(CurrentFullyRegisteredTable.getTableHeader());
+		locPanel.add(CurrentFullyRegisteredTable);
 
+		temp = new JLabel("CurrentProvisionallyRegisteredStudentsTable");
+		locPanel.add(temp);
 		locPanel.add(CurrentProvisionallyRegisteredStudentsTable.getTableHeader());
 		locPanel.add(CurrentProvisionallyRegisteredStudentsTable);
 		/*
@@ -261,7 +278,7 @@ public class Table extends JPanel {
 		this.setMinimumSize(size);
 		Scroll.setMinimumSize(size);
 		Scroll.setPreferredSize(size);
-		currentFullyRegisteredTable.setMinimumSize(size);
+		CurrentFullyRegisteredTable.setMinimumSize(size);
 	}
 
 
@@ -278,6 +295,7 @@ public class Table extends JPanel {
 
 		String[] info = temp.getValues(fullHead);
 		String [][] fullInfo = new String [fullHead.length][2];
+
 		for (int i = 0 ; i< fullHead.length;i++){
 			fullInfo[i][0]=fullHead[i];
 			fullInfo[i][1]=info[i];
@@ -297,9 +315,9 @@ public class Table extends JPanel {
 
 		DATA.makeChanges('a',axis,table2);
 		System.out.println("Add");
-		for(String[] a: axis){
-			System.out.println(a[0] +"= "+a[1]);
-		}
+//		for(String[] a: axis){
+//			System.out.println(a[0] +"= "+a[1]);
+//		}
 		setupTable();
 
 	}
@@ -314,9 +332,9 @@ public class Table extends JPanel {
 	public void Edit(String[][] axis, String table) {
 		DATA.makeChanges('e',axis,table);
 		System.out.println("Edit");
-		for(String[] a: axis){
-			System.out.println(a[0] +"= "+a[1]);
-		}
+//		for(String[] a: axis){
+//			System.out.println(a[0] +"= "+a[1]);
+//		}
 
 		setupTable();
 
@@ -330,24 +348,24 @@ public class Table extends JPanel {
 	 */
 	public void Remove(String currentTable){
 
-		if(currentFullyRegisteredTable.getSelectedRow()==-1){
+		if(CurrentFullyRegisteredTable.getSelectedRow()==-1){
 			JOptionPane.showMessageDialog(HOST, "You have not selected anything to remove!!","ERROR!!",JOptionPane.ERROR_MESSAGE);
 		}else{
 			String[][] tempData=null;
 			if(currentTable.equals("CurrentProvisionallyRegisteredStudents")) tempData = this.CurrentProvisionallyRegisteredStudentsData;
-			if(currentTable.equals("currentFullyRegistered"))tempData=this.currentFullyRegisteredData;
+			if(currentTable.equals("CurrentFullyRegistered"))tempData=this.CurrentFullyRegisteredData;
 			if(currentTable.equals("UnderExamination"))tempData=this.UnderExaminationData;
 
 
 
 			JTable temp=null;
 			if(currentTable.equals("CurrentProvisionallyRegisteredStudents")) temp = this.CurrentProvisionallyRegisteredStudentsTable;
-			if(currentTable.equals("currentFullyRegistered"))temp=this.currentFullyRegisteredTable;
+			if(currentTable.equals("CurrentFullyRegistered"))temp=this.CurrentFullyRegisteredTable;
 			if(currentTable.equals("UnderExamination"))temp=this.UnderExaminationTable;
 
 			DATA.makeChanges('r',getRemovedData(tempData[temp.getSelectedRow()]),currentTable);
 			System.out.println("Cleaning");
-			for(String a: currentFullyRegisteredData[currentFullyRegisteredTable.getSelectedRow()]){
+			for(String a: CurrentFullyRegisteredData[CurrentFullyRegisteredTable.getSelectedRow()]){
 				System.out.println(a);
 			}
 			setupTable();

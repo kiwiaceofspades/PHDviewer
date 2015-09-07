@@ -137,10 +137,10 @@ public class PhDViewer extends JFrame {
 	/**
 	 * Called when you are using the InfoPanel
 	 * @param infothe Information to be displayed in the panel
-	 * @param string what table is this table from
+	 * @param table what table is this table from
 	 * @param b wether we are editing of addign to the table.
 	 */
-	protected void UpInfo(String[][] info, String string, boolean b){
+	protected void UpInfo(String[][] info, String table, boolean b){
 
 		if(!ExtraPanel.equals("Info")){
 			if(ExtraPanel.equals("Header")) remove(Head);
@@ -148,8 +148,8 @@ public class PhDViewer extends JFrame {
 			ExtraPanel = "Info";
 		}
 
-		currentTable = string;
-		Info.updateInfo(info,b,string);
+		currentTable = table;
+		Info.updateInfo(info,b,table);
 		validate();
 		repaint();
 

@@ -82,11 +82,11 @@ public class InfoPanel extends JPanel {
 	 *
 	 * @param INFO The information on the Row and the Headers that this information relates to
 	 * @param b	Wether this is a add or not.
-	 * @param string Which table are we working on.
+	 * @param table Which table are we working on.
 	 */
-	public void updateInfo (String[][] INFO, boolean b, String string){
+	public void updateInfo (String[][] INFO, boolean b, String table){
 		adding = b;
-		Table =string;
+		Table =table;
 		/*
 		 * Wiping out any information that was
 		 * contained with in this area before.
