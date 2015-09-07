@@ -31,6 +31,7 @@ public class ECSStudent implements Student {
 	private String notes;
 	private String origin;
 
+	private boolean isHighlighted;
 
 	public ECSStudent(String name, int id, String degree, String efts,
 			String primarySupervisor, String supervisionSplit1,
@@ -358,5 +359,9 @@ public class ECSStudent implements Student {
 		}
 
 		return list;
+	}
+
+	public boolean isHighlighted(){
+		return isHighlighted;
 	}
 }

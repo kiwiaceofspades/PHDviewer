@@ -141,20 +141,23 @@ public class PhDData {
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
 
 		// Now add it to the right table
-		if(table.equals("UnderExamination")){
-			 return underExamination.addStudent(toAdd);
-		}
-		else if(table.equals("CurrentFullyRegistered")){
-			return currentFullyRegistered.addStudent(toAdd);
+		if(table.equals("NotFullyAdmitted")){
+			return notFullyAdmitted.addStudent(toAdd);
 		}
 		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
 			return currentProvisionallyRegisteredStudents.addStudent(toAdd);
 		}
-		else{
-			System.out.println("Couldn't find table to add to");
-			// throw some error?
-			return false;
+		else if(table.equals("PhDProposalUnderExamination")){
+			return phDProposalUnderExamination.addStudent(toAdd);
 		}
+		else if(table.equals("CurrentFullyRegistered")){
+			return underExamination.addStudent(toAdd);
+		}
+		else if(table.equals("UnderExamination")){
+			return underExamination.addStudent(toAdd);
+		}
+		System.out.println("Couldn't find " + table + " to add entry to");
+		return false;
 	}
 
 	public boolean editEntry(String[][] student, String table){
@@ -168,22 +171,24 @@ public class PhDData {
 		Student toAdd = new ECSStudent(student[0][1], studentID, student[2][1], student[3][1], student[4][1], student[5][1], student[6][1],
 				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
-
-		// Now add it to the right table
-		if(table.equals("UnderExamination")){
-			return underExamination.editStudent(toAdd, studentID);
-		}
-		else if(table.equals("CurrentFullyRegistered")){
-			return currentFullyRegistered.editStudent(toAdd, studentID);
+		// Now send the edit command to the correct table
+		if(table.equals("NotFullyAdmitted")){
+			return notFullyAdmitted.editStudent(toAdd, studentID);
 		}
 		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
 			return currentProvisionallyRegisteredStudents.editStudent(toAdd, studentID);
 		}
-		else{
-			System.out.println("Couldn't find table to add to");
-			// throw some error?
-			return false;
+		else if(table.equals("PhDProposalUnderExamination")){
+			return phDProposalUnderExamination.editStudent(toAdd, studentID);
 		}
+		else if(table.equals("CurrentFullyRegistered")){
+			return underExamination.editStudent(toAdd, studentID);
+		}
+		else if(table.equals("UnderExamination")){
+			return underExamination.editStudent(toAdd, studentID);
+		}
+		System.out.println("Couldn't find " + table + " to add entry to");
+		return false;
 
 	}
 
