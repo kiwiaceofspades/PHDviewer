@@ -352,9 +352,9 @@ public class ECSStudent implements Student {
 		foswikiString.add(notes);
 		foswikiString.add(origin);
 
-		String list = "| ";
+		String list = "|";
 		for(String s : foswikiString){
-			list += s + " | ";
+			list += s + "|";
 		}
 
 		return list;

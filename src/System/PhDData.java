@@ -5,13 +5,16 @@ import java.util.ArrayList;
 
 public class PhDData {
 
-	private UnderExamination underExamination;
+	private NotFullyAdmitted notFullyAdmitted;
+	private CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents;
 	private PhDProposalUnderExamination phDProposalUnderExamination;
 	private CurrentFullyRegistered currentFullyRegistered;
-	private CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents;
-	private NotFullyAdmitted notFullyAdmitted;
+	private UnderExamination underExamination;
+
 	private OtherSchoolsAtVUW otherSchoolsAtVUW;
 	private OtherUniversities otherUniversities;
+
+	private Preferences preferences;
 
 	private Parser parser;
 
@@ -79,6 +82,51 @@ public class PhDData {
 				System.out.println("Change of type: " + type + " not allowed");
 				return false;
 		}
+	}
+
+	// NB: ID should not be hide-able.
+	public boolean moveStudent(String[][] student, String table){
+		int studentID = Integer.parseInt(student[1][1]);
+		if(table.equals("NotFullyAdmitted")){
+			Student studentMoved = notFullyAdmitted.removeStudent(studentID);
+			if(studentMoved != null){
+				return currentProvisionallyRegisteredStudents.addStudent(studentMoved);
+			}
+			// throw error?
+			System.out.println("Couldn't move Student with ID: " + studentID);
+		}
+		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
+			Student studentMoved = currentProvisionallyRegisteredStudents.removeStudent(studentID);
+			if(studentMoved != null){
+				return phDProposalUnderExamination.addStudent(studentMoved);
+			}
+			// throw error?
+			System.out.println("Couldn't move Student with ID: " + studentID);
+		}
+		else if(table.equals("PhDProposalUnderExamination")){
+			Student studentMoved = phDProposalUnderExamination.removeStudent(studentID);
+			if(studentMoved != null){
+				return currentFullyRegistered.addStudent(studentMoved);
+			}
+			// throw error?
+			System.out.println("Couldn't move Student with ID: " + studentID);
+		}
+		else if(table.equals("CurrentFullyRegistered")){
+			Student studentMoved = currentFullyRegistered.removeStudent(studentID);
+			if(studentMoved != null){
+				return underExamination.addStudent(studentMoved);
+			}
+			// throw error?
+			System.out.println("Couldn't move Student with ID: " + studentID);
+		}
+		else if(table.equals("UnderExamination")){
+			Student studentMoved = underExamination.removeStudent(studentID);
+			// Possible print something out?
+			// throw error?
+			System.out.println("Couldn't move Student with ID: " + studentID);
+		}
+		System.out.println("Can't find the table " + table + " to move the student from");
+		return false;
 	}
 
 	public boolean addEntry(String[][] student, String table){
@@ -149,4 +197,5 @@ public class PhDData {
 		// to be implemented !
 
 	}
+
 }
