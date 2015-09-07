@@ -70,14 +70,7 @@ public abstract class PhDTable {
 	}
 
 	public boolean editStudent(Student student, int studentID){
-		int index = -1;
-		for(int i = 0; i<students.size(); i++){
-			ECSStudent pupil = (ECSStudent) students.get(i);
-			if(pupil.getId() == studentID){
-				index = i;
-				break;
-			}
-		}
+		int index = findStudent(studentID);
 		if(index == -1){
 			System.out.println("Couldn't find the student with ID: " + studentID);
 			// throw some sort of error?
@@ -87,5 +80,31 @@ public abstract class PhDTable {
 			return true;
 		}
 		return false;
+	}
+
+	public int findStudent(int studentID){
+		int index = -1;
+		for(int i = 0; i<students.size(); i++){
+			ECSStudent pupil = (ECSStudent) students.get(i);
+			if(pupil.getId() == studentID){
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
+
+	public Student removeStudent(int studentID){
+		int index = findStudent(studentID);
+		if(index == -1){
+			System.out.println("Couldn't find the student with ID: " + studentID);
+			// throw some sort of error?
+		}
+		else{
+			Student student = students.get(index);
+			students.remove(index);
+			return student;
+		}
+		return null;
 	}
 }

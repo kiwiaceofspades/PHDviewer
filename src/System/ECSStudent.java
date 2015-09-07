@@ -31,6 +31,7 @@ public class ECSStudent implements Student {
 	private String notes;
 	private String origin;
 
+	private boolean isHighlighted;
 
 	public ECSStudent(String name, int id, String degree, String efts,
 			String primarySupervisor, String supervisionSplit1,
@@ -352,11 +353,15 @@ public class ECSStudent implements Student {
 		foswikiString.add(notes);
 		foswikiString.add(origin);
 
-		String list = "| ";
+		String list = "|";
 		for(String s : foswikiString){
-			list += s + " | ";
+			list += s + "|";
 		}
 
 		return list;
+	}
+
+	public boolean isHighlighted(){
+		return isHighlighted;
 	}
 }
