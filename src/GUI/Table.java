@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -53,15 +52,18 @@ public class Table extends JPanel {
 	 * Data Values keeps a hard back up of the table so
 	 * i don't have to dig it up each time i want to make a change
 	 */
-	private String[][] CurrentFullyRegisteredData= {{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"},
-			{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"}};
-	private String[][] UnderExaminationData;
+	private String[][] NotFullyAdmitedData;
 	private String[][] CurrentProvisionallyRegisteredStudentsData;
+	private String[][] PhdPropsolUnderExamination;
+	private String[][] CurrentFullyRegisteredData;
+	private String[][] UnderExaminationData;
+
 
 
 	/*
 	 * JTables for clobal links to them as they are called in other methods
 	 */
+	private JTable No
 	private JTable CurrentFullyRegisteredTable;
 	private JTable UnderExaminationTable;
 	private JTable CurrentProvisionallyRegisteredStudentsTable;
@@ -121,7 +123,7 @@ public class Table extends JPanel {
 		 * Setting up the Under EXamination Table
 		 */
 		UnderExaminationTable = new JTable(UnderExaminationData,CurrentHead);
-		UnderExaminationTable.setCellSelectionEnabled(false);
+		UnderExaminationTable.setDragEnabled(false);
 		UnderExaminationTable.setAutoResizeMode(0);
 
 		for( int i=0 ; i<UnderExaminationTable.getColumnModel().getColumnCount()-1 ;i++){
@@ -143,7 +145,7 @@ public class Table extends JPanel {
 		 * Setting up the current fully Registered table
 		 */
 		CurrentFullyRegisteredTable = new JTable(CurrentFullyRegisteredData,CurrentHead);
-		CurrentFullyRegisteredTable.setCellSelectionEnabled(false);
+		CurrentFullyRegisteredTable.setDragEnabled(false);
 		CurrentFullyRegisteredTable.setAutoResizeMode(0);
 		for(int i=0 ; i<CurrentFullyRegisteredTable.getColumnModel().getColumnCount()-1 ;i++){
 			CurrentFullyRegisteredTable.getColumnModel().getColumn(i).setMinWidth(100);
@@ -166,7 +168,7 @@ public class Table extends JPanel {
 		 * Setting up the current Provisionally Registered Students Tabel
 		 */
 		CurrentProvisionallyRegisteredStudentsTable = new JTable(CurrentProvisionallyRegisteredStudentsData,CurrentHead);
-		CurrentProvisionallyRegisteredStudentsTable.setCellSelectionEnabled(false);
+		CurrentProvisionallyRegisteredStudentsTable.setDragEnabled(false);
 		CurrentProvisionallyRegisteredStudentsTable.setAutoResizeMode(0);
 		for(int i=0; i<CurrentProvisionallyRegisteredStudentsTable.getColumnModel().getColumnCount()-1;i++){
 			CurrentProvisionallyRegisteredStudentsTable.getColumnModel().getColumn(i).setMinWidth(100);
