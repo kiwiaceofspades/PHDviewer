@@ -2,6 +2,8 @@ package System;
 
 public class NonVUWStudents implements Student {
 
+	private boolean isHighlighted;
+
 	@Override
 	public String[] getValues(String[] headers) {
 		// TODO Auto-generated method stub
@@ -14,6 +16,9 @@ public class NonVUWStudents implements Student {
 		return null;
 	}
 
+	public boolean isHighlighted(){
+		return isHighlighted;
+	}
 
 
 }
