@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -52,9 +53,9 @@ public class Table extends JPanel {
 	 * Data Values keeps a hard back up of the table so
 	 * i don't have to dig it up each time i want to make a change
 	 */
-	private String[][] NotFullyAdmitedData;
+	private String[][] NotFullyAdmittedData;
 	private String[][] CurrentProvisionallyRegisteredStudentsData;
-	private String[][] PhdPropsolUnderExamination;
+	private String[][] PhDPropsalUnderExamination;
 	private String[][] CurrentFullyRegisteredData;
 	private String[][] UnderExaminationData;
 
@@ -63,11 +64,14 @@ public class Table extends JPanel {
 	/*
 	 * JTables for clobal links to them as they are called in other methods
 	 */
-	private JTable No
-	private JTable CurrentFullyRegisteredTable;
-	private JTable UnderExaminationTable;
+	private JTable NotFullyAdmittedTable;
 	private JTable CurrentProvisionallyRegisteredStudentsTable;
+	private JTable PhDPropsalUnderExaminationTable;
+	private JTable UnderExaminationTable;
+	private JTable CurrentFullyRegisteredTable;
 
+
+	private String CurrentTable;
 
 	private JScrollPane Scroll;
 
@@ -130,13 +134,18 @@ public class Table extends JPanel {
 			UnderExaminationTable.getColumnModel().getColumn(i).setMinWidth(100);
 		}
 		UnderExaminationTable.setFillsViewportHeight(true);
+		UnderExaminationTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		UnderExaminationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-			//	CurrentFullyRegisteredTable.setEditingRow(-1);
-				//CurrentProvisionallyRegisteredStudentsTable.setEditingRow(-1);
-				getData(UnderExaminationTable.getSelectedRow(),"UnderExamination");
+				System.out.println(e.toString());
+				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+				validate();
+				int temp = UnderExaminationTable.getSelectedRow();
+				if(temp >=0)
+				getData(temp,"UnderExamination");
 			}
 
 		});
@@ -151,15 +160,18 @@ public class Table extends JPanel {
 			CurrentFullyRegisteredTable.getColumnModel().getColumn(i).setMinWidth(100);
 		}
 		CurrentFullyRegisteredTable.setFillsViewportHeight(true);
+		CurrentFullyRegisteredTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		CurrentFullyRegisteredTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-
-			//	UnderExaminationTable.setEditingRow(-1);
-			//	CurrentProvisionallyRegisteredStudentsTable.setEditingRow(-1);
-
-				getData(CurrentFullyRegisteredTable.getSelectedRow(),"CurrentFullyRegistered");
+				System.out.println(e.toString());
+				UnderExaminationTable.getSelectionModel().clearSelection();
+				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+				validate();
+				int temp = CurrentFullyRegisteredTable.getSelectedRow();
+						if(temp>=0)
+								getData(temp,"CurrentFullyRegistered");
 			}
 
 		});
@@ -174,14 +186,19 @@ public class Table extends JPanel {
 			CurrentProvisionallyRegisteredStudentsTable.getColumnModel().getColumn(i).setMinWidth(100);
 		}
 		CurrentProvisionallyRegisteredStudentsTable.setFillsViewportHeight(true);
+		CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				//System.out.println("Update");
-			//	CurrentFullyRegisteredTable.setEditingRow(-1);
-			//	UnderExaminationTable.setEditingRow(-1);
-				getData(CurrentProvisionallyRegisteredStudentsTable.getSelectedRow(),"CurrentProvisionallyRegisteredStudents");
+				System.out.println(e.toString());
+			CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+			UnderExaminationTable.getSelectionModel().clearSelection();
+			validate();
+			int temp = CurrentProvisionallyRegisteredStudentsTable.getSelectedRow();
+			if(temp>=0)
+			getData(temp,"CurrentProvisionallyRegisteredStudents");
 			}
 
 		});
