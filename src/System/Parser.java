@@ -28,6 +28,7 @@ public class Parser {
 	private String[] titling = new String[4];
 	private ArrayList<String> headers = new ArrayList<String>();
 	private ArrayList<Student> students = new ArrayList<Student>();
+	private ArrayList<String> otherStudents = new ArrayList<String>();
 
 	// Tables
 	private UnderExamination underExamination;
@@ -71,7 +72,7 @@ public class Parser {
 				}
 			}
 			notFullyAdmitted = new NotFullyAdmitted(new ArrayList<Student>(students), headers);
-
+			parseOtherStudents(sc);
 			// Display sizes to check
 			//System.out.println("Under examination: " + underExamination.getSizeOfStudents());
 			//System.out.println("Current fully registered: " + currentFullyRegistered.getSizeOfStudents());
@@ -101,7 +102,8 @@ public class Parser {
 				if(s.isEmpty() || s.matches("^\\s*$")) {
 					//System.out.print("----------");
 				}
-				s = s.replace("*", "");
+				s = s.replace("* ", "");
+				s = s.replace(" *", "");
 				headers.add(s);
 				//System.out.println(s);
 			}
@@ -175,6 +177,12 @@ public class Parser {
 		}
 	}
 
+	private void parseOtherStudents(Scanner sc) {
+		while (sc.hasNextLine()) {
+			otherStudents.add(sc.nextLine());
+		}
+	}
+
 	private Date parseDate(String date) {
 		int startDateYear = Integer.parseInt(date.substring(0, 3));
 		int startDateMonth = Integer.parseInt(date.substring(4, 5));
@@ -183,6 +191,8 @@ public class Parser {
 		Date d = new Date(startDateYear, startDateMonth, startDateDay);
 		return d;
 	}
+
+	//writeToHeaderFile
 
 	public void writeToFile(PhDData data) throws IOException {
 		UnderExamination ue = data.getUnderExamination();
@@ -199,9 +209,13 @@ public class Parser {
 		pw.println(titling[2]);
 		pw.println(titling[3]);
 
-		String headerString = "| *";
+		//String headerString = "| *";
+		String headerString = "|";
 		for (String s : headers) {
-			headerString += s + "* |";
+			if (!s.isEmpty()) {
+				System.out.println(s);
+				headerString += " *" + s + "* |";
+			}
 		}
 
 		pw.println(headerString);
@@ -225,6 +239,11 @@ public class Parser {
 		pw.println("| NOT FULLY ADMITTED ||||||||||||||||||||||");
 		for (Student s : nfa.getStudents()) {
 			pw.println(s.toFoswiki());
+		}
+
+		pw.println("");
+		for (String s : otherStudents) {
+			pw.println(s);
 		}
 
 		pw.close();
