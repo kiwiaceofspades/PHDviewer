@@ -151,7 +151,7 @@ public class PhDData {
 			return phDProposalUnderExamination.addStudent(toAdd);
 		}
 		else if(table.equals("CurrentFullyRegistered")){
-			return underExamination.addStudent(toAdd);
+			return currentFullyRegistered.addStudent(toAdd);
 		}
 		else if(table.equals("UnderExamination")){
 			return underExamination.addStudent(toAdd);
@@ -182,7 +182,7 @@ public class PhDData {
 			return phDProposalUnderExamination.editStudent(toAdd, studentID);
 		}
 		else if(table.equals("CurrentFullyRegistered")){
-			return underExamination.editStudent(toAdd, studentID);
+			return currentFullyRegistered.editStudent(toAdd, studentID);
 		}
 		else if(table.equals("UnderExamination")){
 			return underExamination.editStudent(toAdd, studentID);
