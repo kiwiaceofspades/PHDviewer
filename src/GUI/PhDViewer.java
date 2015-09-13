@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -50,7 +52,34 @@ public class PhDViewer extends JFrame {
 		WinState Listen = new WinState();
 		this.addWindowStateListener(Listen);
 		this.addWindowListener(Listen);
+		this.addComponentListener(new ComponentListener(){
 
+			@Override
+			public void componentResized(ComponentEvent e) {
+				System.out.println("Big");
+				ResetSize();
+
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 		/*
 		 * Local little panel for housing all the buttons that will be used
 		 */
@@ -120,20 +149,30 @@ public class PhDViewer extends JFrame {
 
 	}
 
+		public void ResetSize(){
+			Dimension size = getSize();
+			//Table
+			Dimension HeaderSize = new Dimension(size);
+			HeaderSize.width = (HeaderSize.width/3)*1;
+			HeaderSize.height = HeaderSize.height-50;
+			System.out.println("HEADERSIZE "+HeaderSize.toString());
+			System.out.println("Window Size "+size.toString());
+			Head.setSizeOverride(HeaderSize);
+			Info.setSizeOverride(HeaderSize);
+			System.out.println("Info Size "+Info.getSize().toString());
+			System.out.println("Head Size "+Head.getSize().toString());
+			if((Info.getSize().width!=0) && !(Info.getSize().width==HeaderSize.width)){
+				System.out.println("Info check");
+				Info.setSizeOverride(HeaderSize);
+			}
+			if((Head.getSize().width!=0) && !(Head.getSize().width==HeaderSize.width)){
+				System.out.println("head check");
+				Head.setSizeOverride(HeaderSize);
+			}
 
+			validate();
 
-	//	public void ResetSize(){
-	//		Dimension size = getSize();
-	//		//Table
-	//		Dimension tableSize = new Dimension(size);
-	//		tableSize.width = (tableSize.width/3)*2;
-	//		tableSize.height = tableSize.height-50;
-	//		System.out.println(tableSize.toString());
-	//		System.out.println(size.toString());
-	//		Table.setSizeOver(tableSize);
-	//		//Info
-	//
-	//	}
+		}
 	/**
 	 * Called when you are using the InfoPanel
 	 * @param infothe Information to be displayed in the panel
@@ -178,14 +217,6 @@ public class PhDViewer extends JFrame {
 
 	public PhDData getDATA() {
 		return DATA;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-
 	}
 
 	private class WinState extends WindowAdapter{

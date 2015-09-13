@@ -167,4 +167,10 @@ public class HeaderPanel extends JPanel {
 
 	}
 
+	public void setSizeOverride(Dimension size) {
+		this.setMinimumSize(size);
+		this.setPreferredSize(size);
+		validate();
+	}
+
 }

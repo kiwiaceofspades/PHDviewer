@@ -15,7 +15,9 @@ import javax.swing.event.ListSelectionListener;
 
 import System.CurrentFullyRegistered;
 import System.CurrentProvisionallyRegisteredStudents;
+import System.NotFullyAdmitted;
 import System.PhDData;
+import System.PhDProposalUnderExamination;
 import System.Student;
 import System.UnderExamination;
 
@@ -55,7 +57,7 @@ public class Table extends JPanel {
 	 */
 	private String[][] NotFullyAdmittedData;
 	private String[][] CurrentProvisionallyRegisteredStudentsData;
-	private String[][] PhDPropsalUnderExamination;
+	private String[][] PhDPropsalUnderExaminationData;
 	private String[][] CurrentFullyRegisteredData;
 	private String[][] UnderExaminationData;
 
@@ -69,9 +71,6 @@ public class Table extends JPanel {
 	private JTable PhDPropsalUnderExaminationTable;
 	private JTable UnderExaminationTable;
 	private JTable CurrentFullyRegisteredTable;
-
-
-	private String CurrentTable;
 
 	private JScrollPane Scroll;
 
@@ -103,7 +102,7 @@ public class Table extends JPanel {
 	}
 
 	/**
-	 * Sets up the Data in the main tabel is called everytime the table is updated
+	 * Sets up the Data in the main table is called everytime the table is updated
 	 * i got lazy and i feel there wont be used on a big table or having massive
 	 * changes happend in mass.
 	 *
@@ -117,12 +116,72 @@ public class Table extends JPanel {
 		JPanel locPanel= new JPanel();
 
 		if( DATA != null){
+			NotFullyAdmittedData =setupNotFullyAdmittedData();
+			CurrentProvisionallyRegisteredStudentsData=setupCurrentProvisionallyRegisteredStudentsData();
+			PhDPropsalUnderExaminationData = setupNotPhDPropsalUnderExaminationData();
 			UnderExaminationData= setupUnderExaminationData();
 			CurrentFullyRegisteredData = setupCurrentFullyRegisteredData();
-			CurrentProvisionallyRegisteredStudentsData=setupCurrentProvisionallyRegisteredStudentsData();
-
-
 		}
+
+
+		/*
+		 * Setting up the Not Fully Admitted Table
+		 */
+		NotFullyAdmittedTable = new JTable(NotFullyAdmittedData,CurrentHead);
+		NotFullyAdmittedTable.setDragEnabled(false);
+		NotFullyAdmittedTable.setAutoResizeMode(0);
+
+		for( int i=0 ; i<NotFullyAdmittedTable.getColumnModel().getColumnCount()-1 ;i++){
+			NotFullyAdmittedTable.getColumnModel().getColumn(i).setMinWidth(100);
+		}
+		NotFullyAdmittedTable.setFillsViewportHeight(true);
+		NotFullyAdmittedTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		NotFullyAdmittedTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("NotFullyAdmitted");
+				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();;
+				UnderExaminationTable.getSelectionModel().clearSelection();;
+				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+				validate();
+				int temp = NotFullyAdmittedTable.getSelectedRow();
+				if(temp >=0)
+					getData(temp,"NotFullyAdmitted");
+			}
+
+		});
+
+		/*
+		 * Setting up the PhD PropsalUnder Examination Table
+		 */
+		PhDPropsalUnderExaminationTable = new JTable(PhDPropsalUnderExaminationData,CurrentHead);
+		PhDPropsalUnderExaminationTable.setDragEnabled(false);
+		PhDPropsalUnderExaminationTable.setAutoResizeMode(0);
+
+		for( int i=0 ; i<NotFullyAdmittedTable.getColumnModel().getColumnCount()-1 ;i++){
+			PhDPropsalUnderExaminationTable.getColumnModel().getColumn(i).setMinWidth(100);
+		}
+		PhDPropsalUnderExaminationTable.setFillsViewportHeight(true);
+		PhDPropsalUnderExaminationTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		PhDPropsalUnderExaminationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("PhDPropsalUnderExamination");
+				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();;
+				UnderExaminationTable.getSelectionModel().clearSelection();;
+				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+				validate();
+				int temp = PhDPropsalUnderExaminationTable.getSelectedRow();
+				if(temp >=0)
+					getData(temp,"PhDPropsalUnderExamination");
+			}
+
+		});
+
 		/*
 		 * Setting up the Under EXamination Table
 		 */
@@ -139,13 +198,13 @@ public class Table extends JPanel {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				System.out.println(e.toString());
+				System.out.println("UnderExamination");
 				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
 				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
 				validate();
 				int temp = UnderExaminationTable.getSelectedRow();
 				if(temp >=0)
-				getData(temp,"UnderExamination");
+					getData(temp,"UnderExamination");
 			}
 
 		});
@@ -165,13 +224,15 @@ public class Table extends JPanel {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				System.out.println(e.toString());
+				System.out.println("CurrentFullyRegistered");
+				NotFullyAdmittedTable.getSelectionModel().clearSelection();
+				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();
 				UnderExaminationTable.getSelectionModel().clearSelection();
 				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
 				validate();
 				int temp = CurrentFullyRegisteredTable.getSelectedRow();
-						if(temp>=0)
-								getData(temp,"CurrentFullyRegistered");
+				if(temp>=0)
+					getData(temp,"CurrentFullyRegistered");
 			}
 
 		});
@@ -192,36 +253,57 @@ public class Table extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				//System.out.println("Update");
-				System.out.println(e.toString());
-			CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
-			UnderExaminationTable.getSelectionModel().clearSelection();
-			validate();
-			int temp = CurrentProvisionallyRegisteredStudentsTable.getSelectedRow();
-			if(temp>=0)
-			getData(temp,"CurrentProvisionallyRegisteredStudents");
+				System.out.println("CurrentProvisionallyRegisteredStudents");
+				NotFullyAdmittedTable.getSelectionModel().clearSelection();
+				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();
+				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+				UnderExaminationTable.getSelectionModel().clearSelection();
+				validate();
+				int temp = CurrentProvisionallyRegisteredStudentsTable.getSelectedRow();
+				if(temp>=0)
+					getData(temp,"CurrentProvisionallyRegisteredStudents");
 			}
 
 		});
+		/*
+		 * NotFullyAdmittedTable;
+		 * CurrentProvisionallyRegisteredStudentsTable;
+		 * PhDPropsalUnderExaminationTable;
+		 * CurrentFullyRegisteredTable;
+		 * UnderExaminationTable;
+		 */
+
 
 		/*
 		 * Creating alocal Panel to hows each of the tables
 		 */
 		locPanel.setLayout(new BoxLayout(locPanel,BoxLayout.Y_AXIS));
 
-		JLabel temp = new JLabel("Under Examination Table");
+		JLabel temp = new JLabel("Not Fully Admitted Table");
 		locPanel.add(temp);
-		locPanel.add(UnderExaminationTable.getTableHeader());
-		locPanel.add(UnderExaminationTable);
+		locPanel.add(NotFullyAdmittedTable.getTableHeader());
+		locPanel.add(NotFullyAdmittedTable);
 
 		temp = new JLabel("CurrentFullyRegisteredTable");
 		locPanel.add(temp);
 		locPanel.add(CurrentFullyRegisteredTable.getTableHeader());
 		locPanel.add(CurrentFullyRegisteredTable);
 
+		temp = new JLabel("Phd Propsal Under Examination Table");
+		locPanel.add(temp);
+		locPanel.add(PhDPropsalUnderExaminationTable.getTableHeader());
+		locPanel.add(PhDPropsalUnderExaminationTable);
+
 		temp = new JLabel("CurrentProvisionallyRegisteredStudentsTable");
 		locPanel.add(temp);
 		locPanel.add(CurrentProvisionallyRegisteredStudentsTable.getTableHeader());
 		locPanel.add(CurrentProvisionallyRegisteredStudentsTable);
+
+		temp = new JLabel("Under Examination Table");
+		locPanel.add(temp);
+		locPanel.add(UnderExaminationTable.getTableHeader());
+		locPanel.add(UnderExaminationTable);
+
 		/*
 		 * Putting the local panel into the scrollPane as we can
 		 * be sure the table goes beyond the scope of the screen
@@ -236,6 +318,30 @@ public class Table extends JPanel {
 		repaint();
 
 	}
+	private String[][] setupNotPhDPropsalUnderExaminationData() {
+		ArrayList<String[]> Data = new ArrayList<String[]>();
+		String[] temp;
+		PhDProposalUnderExamination Full = DATA.getPhDProposalUnderExamination();
+		for(Student s: Full.getStudents()){
+			temp = s.getValues(CurrentHead);
+			Data.add(temp);
+		}
+		String [][] tat = new String[1][1];
+		return Data.toArray(tat);
+	}
+
+	private String[][] setupNotFullyAdmittedData() {
+		ArrayList<String[]> Data = new ArrayList<String[]>();
+		String[] temp;
+		NotFullyAdmitted Full = DATA.getNotFullyAdmitted();
+		for(Student s: Full.getStudents()){
+			temp = s.getValues(CurrentHead);
+			Data.add(temp);
+		}
+		String [][] tat = new String[1][1];
+		return Data.toArray(tat);
+	}
+
 	/**
 	 * Gets the data out of the database and formats it into a string array
 	 * so that the jtable can show it.
@@ -297,7 +403,8 @@ public class Table extends JPanel {
 		this.setMinimumSize(size);
 		Scroll.setMinimumSize(size);
 		Scroll.setPreferredSize(size);
-		CurrentFullyRegisteredTable.setMinimumSize(size);
+		//CurrentFullyRegisteredTable.setMinimumSize(size);
+		validate();
 	}
 
 
@@ -334,9 +441,9 @@ public class Table extends JPanel {
 
 		DATA.makeChanges('a',axis,table2);
 		System.out.println("Add");
-//		for(String[] a: axis){
-//			System.out.println(a[0] +"= "+a[1]);
-//		}
+		//		for(String[] a: axis){
+		//			System.out.println(a[0] +"= "+a[1]);
+		//		}
 		setupTable();
 
 	}
@@ -351,9 +458,9 @@ public class Table extends JPanel {
 	public void Edit(String[][] axis, String table) {
 		DATA.makeChanges('e',axis,table);
 		System.out.println("Edit");
-//		for(String[] a: axis){
-//			System.out.println(a[0] +"= "+a[1]);
-//		}
+		//		for(String[] a: axis){
+		//			System.out.println(a[0] +"= "+a[1]);
+		//		}
 
 		setupTable();
 
