@@ -17,7 +17,7 @@ public class Main {
 	/**
 	 *
 	 * @param args array of arguments. First element should be the Foswiki script containing the table.
-	 * Us absoloute path to specify file, unless file is in same directory as the program, in which case use ../filename
+	 * Us absolute path to specify file, unless file is in same directory as the program, in which case use ../filename
 	 */
 	public static void main(String args[]){
 		if(args.length <= 0 ){//checks to make sure a file is specified
@@ -26,8 +26,8 @@ public class Main {
 		else{
 			File headers = new File("../headers.txt");
 			try {
-				if(headers.createNewFile()){
-					fillWithDefualts(headers);
+				if(headers.createNewFile()){//checks whether there is a headers file containing prefernces
+					fillWithDefualts(headers); //if there isn't create one with default values
 				}
 			} catch (IOException e) {
 				System.out.println("Error reading file: "+e);
@@ -37,7 +37,7 @@ public class Main {
 	}
 
 	/**
-	 * Write the defualt headers to the "headers" file
+	 * Write the default headers to the "headers" file
 	 * @param headers File which will contain the headers
 	 * @throws IOException -  if the file exists but is a directory rather than a regular file, does not exist but cannot
 	 be created, or cannot be opened for any other reason
@@ -46,7 +46,7 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(headers.getAbsoluteFile()));
 		bw.write("| *Defualt View* | *Yes* | *Name* | *ID* | *Degree* | *EFTS* | *Primary Supervisor* | *Supervision Split* | *Secondary Supervisor* | *Supervision Split* | *Third Supervisor* | *Supervision Split* | *Scholarship* | *Start Date* | *PhD Proposal Submission* | *PhD Proposal Seminar* | *PhD Proposal Confirmation Date* | *Suspension Dates* | *Thesis Submission* + *Examiners Appointed Date* | *FGR Completes Examination* | *Revisions Finalised* | *Deposited in Library* | *Notes* | *Origin* |");
 		bw.newLine();
-		bw.flush();
+		bw.close();
 
 	}
 }
