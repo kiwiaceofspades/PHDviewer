@@ -143,4 +143,8 @@ public class UnitTest {
 		assertTrue(phd.makeChanges('e', stu, testTable));
 	}
 
+	public void test6(){
+
+	}
+
 }
