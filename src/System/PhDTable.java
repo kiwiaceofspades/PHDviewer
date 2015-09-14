@@ -1,5 +1,7 @@
 package System;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public abstract class PhDTable {
@@ -106,5 +108,55 @@ public abstract class PhDTable {
 			return student;
 		}
 		return null;
+	}
+
+	public boolean sort(String header){
+		// Need to make sure the table has the header.
+		if(!headers.contains(header)){
+			System.out.println("Couldn't find header " + header + " to sort by");
+			return false;
+		}
+
+		String typeBuffer = "String";
+		// Special cases
+		if(header.equals("ID")){
+			typeBuffer = "Integer";
+		}
+
+		final String[] finalHeader = {header};
+		final String type = typeBuffer;
+		final int[] error = new int[1];
+
+		Collections.sort(students, new Comparator<Student>(){
+			@Override
+			public int compare(Student o1, Student o2) {
+				if(type.equals("String")){
+					String o1value = ((ECSStudent) o1).getValues(finalHeader)[0];
+					String o2value = ((ECSStudent) o2).getValues(finalHeader)[0];
+					// Just get the first entry
+					return o1value.compareTo(o2value);
+				}
+				else if(type.equals("Integer")){
+					int o1value = Integer.parseInt(((ECSStudent) o1).getValues(finalHeader)[0]);
+					int o2value = Integer.parseInt(((ECSStudent) o2).getValues(finalHeader)[0]);
+					// Just get the first entry
+					return o2value - o1value;
+				}
+				else{
+					// Then we have an error
+					error[0] = 1;
+					return 0;
+				}
+			}
+		});
+
+		if(error[0] == 1){
+			// Then we have an error!
+			System.out.println("Type wasn't set correctly in sort");
+			return false;
+		}
+
+		return true;
+
 	}
 }

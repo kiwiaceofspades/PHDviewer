@@ -20,8 +20,8 @@ public class UnitTest {
 	private String[][] stu = new String[sizeOfArray][2];
 	private String testTable = "currentFullyRegistered";
 
-	private Student student1 = new ECSStudent("Harry", 1234, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
-	private Student student2 = new ECSStudent("Harry", 1234, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
+	private Student student1 = new ECSStudent("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
+	private Student student2 = new ECSStudent("Harry", 1232, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
 	private ArrayList<Student> stues = new ArrayList<Student>();
 	private ArrayList<String> headers = new ArrayList<String>();
 
@@ -243,4 +243,14 @@ public class UnitTest {
 
 	}
 
+	@Test
+	public void testSort(){
+		addToArrays();
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		CurrentFullyRegistered cfr = phd.getCurrentFullyRegistered();
+		String[] headers = {"ID"};
+		cfr.getStudents().get(0).getValues(headers);
+		phd.sort("ID");
+	}
 }
