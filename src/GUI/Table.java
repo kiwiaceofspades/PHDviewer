@@ -2,13 +2,16 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.EventObject;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -124,147 +127,13 @@ public class Table extends JPanel {
 		}
 
 
-		/*
-		 * Setting up the Not Fully Admitted Table
-		 */
-		NotFullyAdmittedTable = new JTable(NotFullyAdmittedData,CurrentHead);
-		NotFullyAdmittedTable.setDragEnabled(false);
-		NotFullyAdmittedTable.setAutoResizeMode(0);
+		NotFullyAdmittedTable = setTable("NotFullyAdmitted");
+		PhDPropsalUnderExaminationTable = setTable("PhDPropsalUnderExamination");
+		UnderExaminationTable = setTable("UnderExamination");
+		CurrentFullyRegisteredTable = setTable("CurrentFullyRegistered");
+		CurrentProvisionallyRegisteredStudentsTable= setTable("CurrentProvisionallyRegisteredStudents");
 
-		for( int i=0 ; i<NotFullyAdmittedTable.getColumnModel().getColumnCount()-1 ;i++){
-			NotFullyAdmittedTable.getColumnModel().getColumn(i).setMinWidth(100);
-		}
-		NotFullyAdmittedTable.setFillsViewportHeight(true);
-		NotFullyAdmittedTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		NotFullyAdmittedTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("NotFullyAdmitted");
-				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();;
-				UnderExaminationTable.getSelectionModel().clearSelection();;
-				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
-				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
-				validate();
-				int temp = NotFullyAdmittedTable.getSelectedRow();
-				if(temp >=0)
-					getData(temp,"NotFullyAdmitted");
-			}
-
-		});
-
-		/*
-		 * Setting up the PhD PropsalUnder Examination Table
-		 */
-		PhDPropsalUnderExaminationTable = new JTable(PhDPropsalUnderExaminationData,CurrentHead);
-		PhDPropsalUnderExaminationTable.setDragEnabled(false);
-		PhDPropsalUnderExaminationTable.setAutoResizeMode(0);
-
-		for( int i=0 ; i<NotFullyAdmittedTable.getColumnModel().getColumnCount()-1 ;i++){
-			PhDPropsalUnderExaminationTable.getColumnModel().getColumn(i).setMinWidth(100);
-		}
-		PhDPropsalUnderExaminationTable.setFillsViewportHeight(true);
-		PhDPropsalUnderExaminationTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		PhDPropsalUnderExaminationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("PhDPropsalUnderExamination");
-				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();;
-				UnderExaminationTable.getSelectionModel().clearSelection();;
-				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
-				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
-				validate();
-				int temp = PhDPropsalUnderExaminationTable.getSelectedRow();
-				if(temp >=0)
-					getData(temp,"PhDPropsalUnderExamination");
-			}
-
-		});
-
-		/*
-		 * Setting up the Under EXamination Table
-		 */
-		UnderExaminationTable = new JTable(UnderExaminationData,CurrentHead);
-		UnderExaminationTable.setDragEnabled(false);
-		UnderExaminationTable.setAutoResizeMode(0);
-
-		for( int i=0 ; i<UnderExaminationTable.getColumnModel().getColumnCount()-1 ;i++){
-			UnderExaminationTable.getColumnModel().getColumn(i).setMinWidth(100);
-		}
-		UnderExaminationTable.setFillsViewportHeight(true);
-		UnderExaminationTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		UnderExaminationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("UnderExamination");
-				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
-				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
-				validate();
-				int temp = UnderExaminationTable.getSelectedRow();
-				if(temp >=0)
-					getData(temp,"UnderExamination");
-			}
-
-		});
-
-		/*
-		 * Setting up the current fully Registered table
-		 */
-		CurrentFullyRegisteredTable = new JTable(CurrentFullyRegisteredData,CurrentHead);
-		CurrentFullyRegisteredTable.setDragEnabled(false);
-		CurrentFullyRegisteredTable.setAutoResizeMode(0);
-		for(int i=0 ; i<CurrentFullyRegisteredTable.getColumnModel().getColumnCount()-1 ;i++){
-			CurrentFullyRegisteredTable.getColumnModel().getColumn(i).setMinWidth(100);
-		}
-		CurrentFullyRegisteredTable.setFillsViewportHeight(true);
-		CurrentFullyRegisteredTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		CurrentFullyRegisteredTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("CurrentFullyRegistered");
-				NotFullyAdmittedTable.getSelectionModel().clearSelection();
-				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();
-				UnderExaminationTable.getSelectionModel().clearSelection();
-				CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
-				validate();
-				int temp = CurrentFullyRegisteredTable.getSelectedRow();
-				if(temp>=0)
-					getData(temp,"CurrentFullyRegistered");
-			}
-
-		});
-
-		/*
-		 * Setting up the current Provisionally Registered Students Tabel
-		 */
-		CurrentProvisionallyRegisteredStudentsTable = new JTable(CurrentProvisionallyRegisteredStudentsData,CurrentHead);
-		CurrentProvisionallyRegisteredStudentsTable.setDragEnabled(false);
-		CurrentProvisionallyRegisteredStudentsTable.setAutoResizeMode(0);
-		for(int i=0; i<CurrentProvisionallyRegisteredStudentsTable.getColumnModel().getColumnCount()-1;i++){
-			CurrentProvisionallyRegisteredStudentsTable.getColumnModel().getColumn(i).setMinWidth(100);
-		}
-		CurrentProvisionallyRegisteredStudentsTable.setFillsViewportHeight(true);
-		CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				//System.out.println("Update");
-				System.out.println("CurrentProvisionallyRegisteredStudents");
-				NotFullyAdmittedTable.getSelectionModel().clearSelection();
-				PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();
-				CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
-				UnderExaminationTable.getSelectionModel().clearSelection();
-				validate();
-				int temp = CurrentProvisionallyRegisteredStudentsTable.getSelectedRow();
-				if(temp>=0)
-					getData(temp,"CurrentProvisionallyRegisteredStudents");
-			}
-
-		});
 		/*
 		 * NotFullyAdmittedTable;
 		 * CurrentProvisionallyRegisteredStudentsTable;
@@ -284,7 +153,7 @@ public class Table extends JPanel {
 		locPanel.add(NotFullyAdmittedTable.getTableHeader());
 		locPanel.add(NotFullyAdmittedTable);
 
-		temp = new JLabel("CurrentFullyRegisteredTable");
+		temp = new JLabel("Current Fully Registered Table");
 		locPanel.add(temp);
 		locPanel.add(CurrentFullyRegisteredTable.getTableHeader());
 		locPanel.add(CurrentFullyRegisteredTable);
@@ -318,6 +187,150 @@ public class Table extends JPanel {
 		repaint();
 
 	}
+
+	private JTable setTable(String Table){
+		JTable temp = getTableData(Table);
+
+		temp.setDragEnabled(false);
+		temp.setAutoResizeMode(0);
+		for(int i=0; i<temp.getColumnModel().getColumnCount()-1;i++){
+			temp.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()){
+
+				@Override
+				public boolean isCellEditable(EventObject anEvent){
+					return false;
+				}
+
+			});
+			temp.getColumnModel().getColumn(i).setMinWidth(100);
+		}
+		temp.setFillsViewportHeight(true);
+		temp.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		temp.getSelectionModel().addListSelectionListener(getSelectionListener(Table));
+		return temp;
+
+
+
+
+
+
+	}
+
+	/**
+	 * @return
+	 */
+	private ListSelectionListener getSelectionListener(final String string) {
+		if(string.equalsIgnoreCase("CurrentFullyRegistered")){
+			return new ListSelectionListener(){
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					System.out.println("CurrentFullyRegistered");
+					NotFullyAdmittedTable.getSelectionModel().clearSelection();
+					PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();
+					UnderExaminationTable.getSelectionModel().clearSelection();
+					CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+					validate();
+					int temp = CurrentFullyRegisteredTable.getSelectedRow();
+					if(temp>=0){
+						getData(temp,"CurrentFullyRegistered");
+					}
+				}
+			};
+		}else if(string.equalsIgnoreCase("NotFullyAdmitted")){
+			return new ListSelectionListener(){
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					System.out.println(string);
+					PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();;
+					UnderExaminationTable.getSelectionModel().clearSelection();;
+					CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+					CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+					validate();
+					int temp = NotFullyAdmittedTable.getSelectedRow();
+
+					if(temp >=0)
+						getData(temp,string);
+				}
+
+			};
+		}else if(string.equalsIgnoreCase("PhDPropsalUnderExamination")){
+			return new ListSelectionListener(){
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					System.out.println(string);
+					//PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();;
+					NotFullyAdmittedTable.getSelectionModel().clearSelection();
+					UnderExaminationTable.getSelectionModel().clearSelection();;
+					CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+					CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+					validate();
+					int temp = PhDPropsalUnderExaminationTable.getSelectedRow();
+					if(temp >=0)
+						getData(temp,string);
+				}
+
+			};
+		}else if(string.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			return new ListSelectionListener(){
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					//System.out.println("Update");
+
+					System.out.println(string);
+					NotFullyAdmittedTable.getSelectionModel().clearSelection();
+					PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();
+					CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+					UnderExaminationTable.getSelectionModel().clearSelection();
+					validate();
+					int temp = CurrentProvisionallyRegisteredStudentsTable.getSelectedRow();
+					if(temp>=0)
+						getData(temp,string);
+				}
+
+			};
+		} else if(string.equalsIgnoreCase("UnderExamination")){
+			return new ListSelectionListener(){
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					System.out.println(string);
+					NotFullyAdmittedTable.getSelectionModel().clearSelection();
+					PhDPropsalUnderExaminationTable.getSelectionModel().clearSelection();
+					CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
+					CurrentProvisionallyRegisteredStudentsTable.getSelectionModel().clearSelection();
+					validate();
+					int temp = UnderExaminationTable.getSelectedRow();
+					if(temp >=0)
+						getData(temp,string);
+				}
+
+			};
+		}
+		return null;
+
+	}
+
+	private JTable getTableData(String string) {
+		JTable temp = null;
+		if(string.equalsIgnoreCase("CurrentFullyRegistered")){
+			temp = new JTable(CurrentFullyRegisteredData,CurrentHead);
+		}else if(string.equalsIgnoreCase("NotFullyAdmitted")){
+			temp = new JTable(NotFullyAdmittedData,CurrentHead);
+		}else if(string.equalsIgnoreCase("PhDPropsalUnderExamination")){
+			temp = new JTable(PhDPropsalUnderExaminationData,CurrentHead);
+		}else if(string.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			temp = new JTable(CurrentProvisionallyRegisteredStudentsData,CurrentHead);
+		} else if(string.equalsIgnoreCase("UnderExamination")){
+			temp = new JTable(UnderExaminationData,CurrentHead);
+		}
+		return temp;
+	}
+
+
 	private String[][] setupNotPhDPropsalUnderExaminationData() {
 		ArrayList<String[]> Data = new ArrayList<String[]>();
 		String[] temp;
@@ -415,9 +428,25 @@ public class Table extends JPanel {
 	 * @param string
 	 */
 	private void getData(int fist, String string){
+		Student temp = null;
 
-		CurrentFullyRegistered Full = DATA.getCurrentFullyRegistered();
-		Student temp = Full.getStudents().get(fist);
+		if(string.equalsIgnoreCase("CurrentFullyRegistered")){
+			CurrentFullyRegistered Full = DATA.getCurrentFullyRegistered();
+			temp = Full.getStudents().get(fist);
+		}else if(string.equalsIgnoreCase("NotFullyAdmitted")){
+			NotFullyAdmitted Full = DATA.getNotFullyAdmitted();
+			temp = Full.getStudents().get(fist);
+		}else if(string.equalsIgnoreCase("PhDPropsalUnderExamination")){
+			PhDProposalUnderExamination Full = DATA.getPhDProposalUnderExamination();
+			temp = Full.getStudents().get(fist);
+		}else if(string.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			CurrentProvisionallyRegisteredStudents Full = DATA.getCurrentProvisionallyRegisteredStudents();
+			temp = Full.getStudents().get(fist);
+		} else if(string.equalsIgnoreCase("UnderExamination")){
+			UnderExamination Full = DATA.getUnderExamination();
+			temp = Full.getStudents().get(fist);
+
+		}
 
 		String[] info = temp.getValues(fullHead);
 		String [][] fullInfo = new String [fullHead.length][2];
