@@ -10,7 +10,5 @@ public class NotFullyAdmitted extends PhDTable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean sort(String header){
-		return false;
-	}
+
 }

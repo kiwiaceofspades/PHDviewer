@@ -131,8 +131,8 @@ public class PhDData {
 
 	public boolean addEntry(String[][] student, String table){
 		// Find the student
-		if(student.length < 22){
-			System.out.println("Entry to change is smaller than expected!");
+		if(student.length != 22){
+			System.out.println("Entry to add is a different size than expected!");
 			return false;
 			// throw some sort of error?
 		}
@@ -161,8 +161,8 @@ public class PhDData {
 	}
 
 	public boolean editEntry(String[][] student, String table){
-		if(student.length < 22){
-			System.out.println("Entry to change is smaller than expected!");
+		if(student.length != 22){
+			System.out.println("Entry to change is a different size than expected!");
 			return false;
 			// throw some sort of error?
 		}
@@ -205,10 +205,22 @@ public class PhDData {
 
 	public boolean sort(String header){
 		// Will only for ecs student for now
-		notFullyAdmitted.sort(header);
-		currentProvisionallyRegisteredStudents.sort(header);
-		phDProposalUnderExamination.sort(header);
-		currentFullyRegistered.sort(header);
+		if(!notFullyAdmitted.sort(header)){
+			System.out.println("Couldn't sort");
+			return false;
+		}
+		if(!currentProvisionallyRegisteredStudents.sort(header)){
+			System.out.println("Couldn't sort");
+			return false;
+		}
+		if(!phDProposalUnderExamination.sort(header)){
+			System.out.println("Couldn't sort");
+			return false;
+		}
+		if(!currentFullyRegistered.sort(header)){
+			System.out.println("Couldn't sort");
+			return false;
+		}
 		return true;
 	}
 
