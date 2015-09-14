@@ -2,6 +2,7 @@
 *.project
 *.metadata
 *.recommenders
+output.txt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
