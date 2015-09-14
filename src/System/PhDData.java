@@ -87,7 +87,7 @@ public class PhDData {
 	// NB: ID should not be hide-able.
 	public boolean moveStudent(String[][] student, String table){
 		int studentID = Integer.parseInt(student[1][1]);
-		if(table.equals("NotFullyAdmitted")){
+		if(table.equalsIgnoreCase("NotFullyAdmitted")){
 			Student studentMoved = notFullyAdmitted.removeStudent(studentID);
 			if(studentMoved != null){
 				return currentProvisionallyRegisteredStudents.addStudent(studentMoved);
@@ -95,7 +95,7 @@ public class PhDData {
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
 		}
-		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
+		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
 			Student studentMoved = currentProvisionallyRegisteredStudents.removeStudent(studentID);
 			if(studentMoved != null){
 				return phDProposalUnderExamination.addStudent(studentMoved);
@@ -103,7 +103,7 @@ public class PhDData {
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
 		}
-		else if(table.equals("PhDProposalUnderExamination")){
+		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
 			Student studentMoved = phDProposalUnderExamination.removeStudent(studentID);
 			if(studentMoved != null){
 				return currentFullyRegistered.addStudent(studentMoved);
@@ -111,7 +111,7 @@ public class PhDData {
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
 		}
-		else if(table.equals("CurrentFullyRegistered")){
+		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
 			Student studentMoved = currentFullyRegistered.removeStudent(studentID);
 			if(studentMoved != null){
 				return underExamination.addStudent(studentMoved);
@@ -119,7 +119,7 @@ public class PhDData {
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
 		}
-		else if(table.equals("UnderExamination")){
+		else if(table.equalsIgnoreCase("UnderExamination")){
 			Student studentMoved = underExamination.removeStudent(studentID);
 			// Possible print something out?
 			// throw error?
@@ -141,19 +141,19 @@ public class PhDData {
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
 
 		// Now add it to the right table
-		if(table.equals("NotFullyAdmitted")){
+		if(table.equalsIgnoreCase("NotFullyAdmitted")){
 			return notFullyAdmitted.addStudent(toAdd);
 		}
-		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
+		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
 			return currentProvisionallyRegisteredStudents.addStudent(toAdd);
 		}
-		else if(table.equals("PhDProposalUnderExamination")){
+		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
 			return phDProposalUnderExamination.addStudent(toAdd);
 		}
-		else if(table.equals("CurrentFullyRegistered")){
-			return underExamination.addStudent(toAdd);
+		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+			return currentFullyRegistered.addStudent(toAdd);
 		}
-		else if(table.equals("UnderExamination")){
+		else if(table.equalsIgnoreCase("UnderExamination")){
 			return underExamination.addStudent(toAdd);
 		}
 		System.out.println("Couldn't find " + table + " to add entry to");
@@ -172,19 +172,19 @@ public class PhDData {
 				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
 		// Now send the edit command to the correct table
-		if(table.equals("NotFullyAdmitted")){
+		if(table.equalsIgnoreCase("NotFullyAdmitted")){
 			return notFullyAdmitted.editStudent(toAdd, studentID);
 		}
-		else if(table.equals("CurrentProvisionallyRegisteredStudents")){
+		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
 			return currentProvisionallyRegisteredStudents.editStudent(toAdd, studentID);
 		}
-		else if(table.equals("PhDProposalUnderExamination")){
+		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
 			return phDProposalUnderExamination.editStudent(toAdd, studentID);
 		}
-		else if(table.equals("CurrentFullyRegistered")){
-			return underExamination.editStudent(toAdd, studentID);
+		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+			return currentFullyRegistered.editStudent(toAdd, studentID);
 		}
-		else if(table.equals("UnderExamination")){
+		else if(table.equalsIgnoreCase("UnderExamination")){
 			return underExamination.editStudent(toAdd, studentID);
 		}
 		System.out.println("Couldn't find " + table + " to add entry to");
@@ -201,6 +201,19 @@ public class PhDData {
 		}
 		// to be implemented !
 
+	}
+
+	public boolean sort(String header){
+		// Will only for ecs student for now
+
+		// Sort each table
+
+		// First sort NotFullyAdmitted
+		notFullyAdmitted.sort(header);
+
+
+
+		return false;
 	}
 
 }
