@@ -111,6 +111,7 @@ public abstract class PhDTable {
 	}
 
 	public boolean sort(String header){
+		System.out.println("Sorting");
 		// Need to make sure the table has the header.
 		if(!headers.contains(header)){
 			System.out.println("Couldn't find header " + header + " to sort by");
@@ -140,7 +141,7 @@ public abstract class PhDTable {
 					int o1value = Integer.parseInt(((ECSStudent) o1).getValues(finalHeader)[0]);
 					int o2value = Integer.parseInt(((ECSStudent) o2).getValues(finalHeader)[0]);
 					// Just get the first entry
-					return o2value - o1value;
+					return o1value - o2value;
 				}
 				else{
 					// Then we have an error

@@ -255,5 +255,10 @@ public class UnitTest {
 		String[] headers = {"ID"};
 		cfr.getStudents().get(0).getValues(headers);
 		assertTrue(phd.sort("ID"));
+		String[] values = cfr.getStudents().get(0).getValues(headers);
+		System.out.println(values[0]);
+		phd.getCurrentFullyRegistered().sort("ID");
+		values = cfr.getStudents().get(0).getValues(headers);
+		System.out.println(values[0]);
 	}
 }

@@ -207,15 +207,11 @@ public class PhDData {
 
 	public boolean sort(String header){
 		// Will only for ecs student for now
-
-		// Sort each table
-
-		// First sort NotFullyAdmitted
 		notFullyAdmitted.sort(header);
-
-
-
-		return false;
+		currentProvisionallyRegisteredStudents.sort(header);
+		phDProposalUnderExamination.sort(header);
+		currentFullyRegistered.sort(header);
+		return true;
 	}
 
 }

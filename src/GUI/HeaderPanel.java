@@ -64,9 +64,10 @@ public class HeaderPanel extends JPanel {
 	}
 
 	public void UpdateInfo(String[] full, String[] current) {
-
+		if(Panel != null)remove(Panel);
 		Panel = new JPanel();
 		Panel.setLayout(new GridLayout(0,2));
+		
 		fullList = full;
 		TreeSet<heads> Treetemp = new TreeSet<heads>();
 		for(int i=0 ; i<current.length;i++){

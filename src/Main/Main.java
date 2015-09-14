@@ -44,7 +44,7 @@ public class Main {
 	 */
 	private static void fillWithDefualts(File headers) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(headers.getAbsoluteFile()));
-		bw.write("| *Defualt View* | *Yes* | *Name* | *ID* | *Degree* | *EFTS* | *Primary Supervisor* | *Supervision Split* | *Secondary Supervisor* | *Supervision Split* | *Third Supervisor* | *Supervision Split* | *Scholarship* | *Start Date* | *PhD Proposal Submission* | *PhD Proposal Seminar* | *PhD Proposal Confirmation Date* | *Suspension Dates* | *Thesis Submission* + *Examiners Appointed Date* | *FGR Completes Examination* | *Revisions Finalised* | *Deposited in Library* | *Notes* | *Origin* |");
+		bw.write("|Defualt View|Yes|Name|ID|Degree|EFTS|Primary Supervisor|Supervision Split|Secondary Supervisor|Supervision Split|Third Supervisor|Supervision Split|Scholarship|Start Date|PhD Proposal Submission|PhD Proposal Seminar|PhD Proposal Confirmation Date|Suspension Dates|Thesis Submission + Examiners Appointed Date|FGR Completes Examination|Revisions Finalised|Deposited in Library|Notes|Origin|");
 		bw.newLine();
 		bw.close();
 
