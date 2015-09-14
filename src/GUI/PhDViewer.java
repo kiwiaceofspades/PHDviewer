@@ -135,6 +135,17 @@ public class PhDViewer extends JFrame {
 
 		});
 
+		JButton MoveUp = new JButton("Move Student Up");
+		MoveUp.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MoveUp();
+
+			}
+
+		});
+
 		Buttons.add(Add);
 		Buttons.add(remove);
 		Buttons.add(Headers);
@@ -143,6 +154,11 @@ public class PhDViewer extends JFrame {
 
 		Table.setVisible(true);
 		setVisible(true);
+	}
+
+	protected void MoveUp() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -176,16 +192,17 @@ public class PhDViewer extends JFrame {
 		validate();
 		repaint();
 	}
+
 	protected void hidePanel(){
-		
+
 		String lasttemp = last;
 		String ePanel = ExtraPanel;
 		if(ExtraPanel.equals("Info"))remove(Info);
 		if(ExtraPanel.equals("Header")) remove(Head);
 		if(ExtraPanel.equals("Hide")){
-			
-			
-			if(last.equals("Info")){	
+
+
+			if(last.equals("Info")){
 				add(Info, BorderLayout.EAST);
 				ExtraPanel = "Info";
 				}

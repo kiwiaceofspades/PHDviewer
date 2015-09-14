@@ -154,6 +154,8 @@ public class PhDData {
 			return currentFullyRegistered.addStudent(toAdd);
 		}
 		else if(table.equalsIgnoreCase("UnderExamination")){
+			System.out.println("To add : " + toAdd.toFoswiki());
+			System.out.println("Under exam : "+underExamination);
 			return underExamination.addStudent(toAdd);
 		}
 		System.out.println("Couldn't find " + table + " to add entry to");

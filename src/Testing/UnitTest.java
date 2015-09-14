@@ -11,6 +11,7 @@ import System.ECSStudent;
 import System.PhDData;
 import System.PhDTable;
 import System.Student;
+import System.UnderExamination;
 
 public class UnitTest {
 
@@ -18,7 +19,8 @@ public class UnitTest {
 
 	private String testFile = "test.txt";
 	private String[][] stu = new String[sizeOfArray][2];
-	private String testTable = "currentFullyRegistered";
+	private String fullyRegiTable = "currentFullyRegistered";
+	private String underExamTable = "UnderExamination";
 
 	private Student student1 = new ECSStudent("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
 	private Student student2 = new ECSStudent("Harry", 1232, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
@@ -53,7 +55,7 @@ public class UnitTest {
 	}
 
 	private CurrentFullyRegistered regiTable = new CurrentFullyRegistered(stues, headers);
-
+	private UnderExamination underTable = new UnderExamination(stues, headers);
 
 	/**
 	 * Tests to add a file to a new PhDData object.
@@ -70,7 +72,7 @@ public class UnitTest {
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 
-		assertTrue(phd.addEntry(stu, testTable));
+		assertTrue(phd.addEntry(stu, fullyRegiTable));
 
 	}
 
@@ -85,7 +87,7 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
-		assertFalse(phd.addEntry(stu, testTable));
+		assertFalse(phd.addEntry(stu, fullyRegiTable));
 	}
 
 	@Test
@@ -98,7 +100,7 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
-		assertFalse(phd.addEntry(stu, testTable));
+		assertFalse(phd.addEntry(stu, fullyRegiTable));
 	}
 
 
@@ -112,8 +114,8 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
-		assertTrue(phd.editEntry(stu,testTable));
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(phd.editEntry(stu,fullyRegiTable));
 	}
 
 	@Test
@@ -125,13 +127,13 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
+		phd.addEntry(stu, fullyRegiTable);
 		stu = new String[sizeOfArray-2][2];
 		for(int i=0; i<sizeOfArray-2; i++){
 			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
 		}
-		assertFalse(phd.editEntry(stu,testTable));
+		assertFalse(phd.editEntry(stu,fullyRegiTable));
 	}
 
 	@Test
@@ -143,13 +145,13 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
+		phd.addEntry(stu, fullyRegiTable);
 		stu = new String[sizeOfArray+2][2];
 		for(int i=0; i<sizeOfArray+2; i++){
 			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
 		}
-		assertFalse(phd.editEntry(stu,testTable));
+		assertFalse(phd.editEntry(stu,fullyRegiTable));
 	}
 
 	//test that make change works
@@ -162,8 +164,8 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
-		assertTrue(phd.makeChanges('a', stu, testTable));
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(phd.makeChanges('a', stu, fullyRegiTable));
 	}
 
 	@Test
@@ -175,8 +177,8 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
-		assertTrue(phd.makeChanges('e', stu, testTable));
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(phd.makeChanges('e', stu, fullyRegiTable));
 	}
 
 	@Test
@@ -188,8 +190,8 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
-		assertFalse(phd.makeChanges('r', stu, testTable));
+		phd.addEntry(stu, fullyRegiTable);
+		assertFalse(phd.makeChanges('r', stu, fullyRegiTable));
 	}
 
 	@Test
@@ -201,13 +203,13 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
+		phd.addEntry(stu, fullyRegiTable);
 		stu = new String[sizeOfArray-2][2];
 		for(int i=0; i<sizeOfArray-2; i++){
 			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
 		}
-		assertFalse(phd.makeChanges('a', stu, testTable));
+		assertFalse(phd.makeChanges('a', stu, fullyRegiTable));
 	}
 
 	//test that move works
@@ -220,8 +222,9 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
-		assertTrue(phd.moveStudent(stu, testTable));
+		phd.setUnderExamination(underTable);
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(phd.moveStudent(stu, fullyRegiTable));
 	}
 
 	@Test
@@ -233,9 +236,9 @@ public class UnitTest {
 		}
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
-		phd.addEntry(stu, testTable);
+		phd.addEntry(stu, fullyRegiTable);
 		stu[1][1] = "999";
-		assertFalse(phd.moveStudent(stu, testTable));
+		assertFalse(phd.moveStudent(stu, fullyRegiTable));
 	}
 
 	@Test
@@ -250,6 +253,8 @@ public class UnitTest {
 		phd.setCurrentFullyRegistered(regiTable);
 		CurrentFullyRegistered cfr = phd.getCurrentFullyRegistered();
 		String[] headers = {"ID"};
+		cfr.getStudents().get(0).getValues(headers);
+		assertTrue(phd.sort("ID"));
 		String[] values = cfr.getStudents().get(0).getValues(headers);
 		System.out.println(values[0]);
 		phd.getCurrentFullyRegistered().sort("ID");
