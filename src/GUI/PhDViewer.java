@@ -95,7 +95,7 @@ public class PhDViewer extends JFrame {
 					temp[i][0] = Table.getCurrentHead()[i];
 					temp[i][1] = "";
 				}
-				UpInfo(temp,"CurrentProvisionallyRegisteredStudents",true);
+				UpInfo(temp,currentTable,true);
 			}
 
 		});
@@ -148,16 +148,22 @@ public class PhDViewer extends JFrame {
 
 		Buttons.add(Add);
 		Buttons.add(remove);
+		Buttons.add(MoveUp);
 		Buttons.add(Headers);
 		Buttons.add(Hide);
+
 		this.add(Buttons, BorderLayout.NORTH);
 
 		Table.setVisible(true);
 		setVisible(true);
 	}
 
+	/**
+	 *
+	 */
 	protected void MoveUp() {
-		// TODO Auto-generated method stub
+		DATA.moveStudent(Info.getCurrentData(),currentTable);
+		Table.setupTable();
 
 	}
 
@@ -195,8 +201,7 @@ public class PhDViewer extends JFrame {
 
 	protected void hidePanel(){
 
-		String lasttemp = last;
-		String ePanel = ExtraPanel;
+
 		if(ExtraPanel.equals("Info"))remove(Info);
 		if(ExtraPanel.equals("Header")) remove(Head);
 		if(ExtraPanel.equals("Hide")){
@@ -215,8 +220,7 @@ public class PhDViewer extends JFrame {
 			last = ExtraPanel;
 			ExtraPanel = "Hide";
 		}
-		lasttemp = last;
-		ePanel = ExtraPanel;
+
 		validate();
 		repaint();
 	}

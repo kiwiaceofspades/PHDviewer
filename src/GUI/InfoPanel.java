@@ -139,7 +139,9 @@ public class InfoPanel extends JPanel {
 		repaint();
 	}
 
-
+	public String[][] getCurrentData(){
+		return info;
+	}
 
 	private class DocListen implements DocumentListener{
 
