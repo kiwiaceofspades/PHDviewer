@@ -250,7 +250,10 @@ public class UnitTest {
 		phd.setCurrentFullyRegistered(regiTable);
 		CurrentFullyRegistered cfr = phd.getCurrentFullyRegistered();
 		String[] headers = {"ID"};
-		cfr.getStudents().get(0).getValues(headers);
-		phd.sort("ID");
+		String[] values = cfr.getStudents().get(0).getValues(headers);
+		System.out.println(values[0]);
+		phd.getCurrentFullyRegistered().sort("ID");
+		values = cfr.getStudents().get(0).getValues(headers);
+		System.out.println(values[0]);
 	}
 }
