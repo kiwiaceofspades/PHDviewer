@@ -37,6 +37,7 @@ public class PhDViewer extends JFrame {
 	private JButton Add,remove;
 	private String currentTable;
 	private String ExtraPanel = "Info";
+			private String last="";
 
 	public PhDViewer(String string, PhDData pas) {
 
@@ -63,19 +64,18 @@ public class PhDViewer extends JFrame {
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
+
 
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
+
 
 			}
 
@@ -124,55 +124,27 @@ public class PhDViewer extends JFrame {
 
 		});
 
+		JButton Hide = new JButton("Hide Panels");
+		Hide.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				hidePanel();
+
+			}
+
+		});
+
 		Buttons.add(Add);
 		Buttons.add(remove);
 		Buttons.add(Headers);
+		Buttons.add(Hide);
 		this.add(Buttons, BorderLayout.NORTH);
 
 		Table.setVisible(true);
 		setVisible(true);
 	}
 
-
-
-	protected void showHeaderPanel(String[] full, String[] current) {
-		if(!ExtraPanel.equals("Header")){
-			if(ExtraPanel.equals("Info"))remove(Info);
-			add(Head,BorderLayout.EAST);
-			ExtraPanel = "Header";
-		}
-		Head.UpdateInfo(full,current);
-		validate();
-		repaint();
-
-
-
-	}
-
-		public void ResetSize(){
-			Dimension size = getSize();
-			//Table
-			Dimension HeaderSize = new Dimension(size);
-			HeaderSize.width = (HeaderSize.width/3)*1;
-			HeaderSize.height = HeaderSize.height-50;
-			System.out.println("HEADERSIZE "+HeaderSize.toString());
-			System.out.println("Window Size "+size.toString());
-			Head.setSizeOverride(HeaderSize);
-			Info.setSizeOverride(HeaderSize);
-			System.out.println("Info Size "+Info.getSize().toString());
-			System.out.println("Head Size "+Head.getSize().toString());
-			if((Info.getSize().width!=0) && !(Info.getSize().width==HeaderSize.width)){
-				System.out.println("Info check");
-				Info.setSizeOverride(HeaderSize);
-			}
-			if((Head.getSize().width!=0) && !(Head.getSize().width==HeaderSize.width)){
-				System.out.println("head check");
-				Head.setSizeOverride(HeaderSize);
-			}
-
-			validate();
-
-		}
 	/**
 	 * Called when you are using the InfoPanel
 	 * @param infothe Information to be displayed in the panel
@@ -193,6 +165,72 @@ public class PhDViewer extends JFrame {
 		repaint();
 
 	}
+
+	protected void showHeaderPanel(String[] full, String[] current) {
+		if(!ExtraPanel.equals("Header")){
+			if(ExtraPanel.equals("Info"))remove(Info);
+			add(Head,BorderLayout.EAST);
+			ExtraPanel = "Header";
+		}
+		Head.UpdateInfo(full,current);
+		validate();
+		repaint();
+	}
+	protected void hidePanel(){
+		
+		String lasttemp = last;
+		String ePanel = ExtraPanel;
+		if(ExtraPanel.equals("Info"))remove(Info);
+		if(ExtraPanel.equals("Header")) remove(Head);
+		if(ExtraPanel.equals("Hide")){
+			
+			
+			if(last.equals("Info")){	
+				add(Info, BorderLayout.EAST);
+				ExtraPanel = "Info";
+				}
+			if(last.equals("Header")){
+				add(Head,BorderLayout.EAST);
+			ExtraPanel = "Header";
+			}
+			last = "";
+		}else{
+			last = ExtraPanel;
+			ExtraPanel = "Hide";
+		}
+		lasttemp = last;
+		ePanel = ExtraPanel;
+		validate();
+		repaint();
+	}
+
+
+		public void ResetSize(){
+			hidePanel();
+			Dimension size = getSize();
+			//Table
+			Dimension HeaderSize = new Dimension(size);
+			HeaderSize.width = (HeaderSize.width/3)*1;
+			HeaderSize.height = HeaderSize.height-50;
+			System.out.println("HEADERSIZE "+HeaderSize.toString());
+			System.out.println("Window Size "+size.toString());
+			Head.setSizeOverride(HeaderSize);
+			Info.setSizeOverride(HeaderSize);
+			System.out.println("Info Size "+Info.getSize().toString());
+			System.out.println("Head Size "+Head.getSize().toString());
+			if((Info.getSize().width!=0) && !(Info.getSize().width==HeaderSize.width)){
+				System.out.println("Info check");
+				Info.setSizeOverride(HeaderSize);
+			}
+			if((Head.getSize().width!=0) && !(Head.getSize().width==HeaderSize.width)){
+				System.out.println("head check");
+				Head.setSizeOverride(HeaderSize);
+			}
+			validate();
+			hidePanel();
+
+		}
+
 	/**
 	 * Called by the InfoPanel to declare that it wants to make
 	 * changes to the Table in the Table.class
@@ -223,7 +261,7 @@ public class PhDViewer extends JFrame {
 
 		@Override
 		public void windowStateChanged(WindowEvent e) {
-
+			System.out.println("1");
 		}
 		@Override
 		public void windowOpened(WindowEvent e) {
