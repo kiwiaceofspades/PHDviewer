@@ -24,6 +24,11 @@ public class UnitTest {
 
 	private Student student1 = new ECSStudent("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
 	private Student student2 = new ECSStudent("Harry", 1232, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
+	private Student student3 = new ECSStudent("Alistair Eichler", 1, "COMP690", "EFTSdata", "Person:JamesNoble", "50%", "Person:NicholasCameron", "50%", "", "",  "Telstra Clear Postgraduate Scholarship", "20090427", " SUBMITTED", "PRESENTED",  "CONFIRMED", "20150116", "", "20150518", "", "", " Revisions: 20150901.", "D");
+	private Student student4 = new ECSStudent("Homer Simpson", 5, "NWEN690", "", "Person:IanWelch", "70%", " Person:WinstonSeah", " 30%", "", "", "", "20100719", "20120904", "20121019" , "20121220" ,"20130601 - 20130630 , 20130801 - 20130913, 20150101 - 20150228 ", "", "", "", "", "Expected submission date: 20150531.", "I ");
+
+
+
 	private ArrayList<Student> stues = new ArrayList<Student>();
 	private ArrayList<String> headers = new ArrayList<String>();
 
@@ -52,6 +57,8 @@ public class UnitTest {
 		headers.add("Origin");
 		stues.add(student1);
 		stues.add(student2);
+		stues.add(student3);
+		stues.add(student4);
 	}
 
 	private CurrentFullyRegistered regiTable = new CurrentFullyRegistered(stues, headers);
@@ -243,8 +250,33 @@ public class UnitTest {
 
 	@Test
 	public void test10(){
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		PhDData phd = new PhDData(testFile);
+		try{
+			phd.addEntry(stu, fullyRegiTable);
+			fail();
+		} catch (NullPointerException e ){ assertTrue(true);}
+	}
+
+	@Test
+	public void test11(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable );
+		try{
+			phd.addEntry(null, null);
+			fail();
+		} catch (NullPointerException e ){assertTrue(true);}
 
 	}
+
 
 	@Test
 	public void testSort(){
@@ -254,11 +286,16 @@ public class UnitTest {
 		CurrentFullyRegistered cfr = phd.getCurrentFullyRegistered();
 		String[] headers = {"ID"};
 		cfr.getStudents().get(0).getValues(headers);
-		assertTrue(phd.sort("ID"));
 		String[] values = cfr.getStudents().get(0).getValues(headers);
 		System.out.println(values[0]);
 		phd.getCurrentFullyRegistered().sort("ID");
 		values = cfr.getStudents().get(0).getValues(headers);
 		System.out.println(values[0]);
+		assertEquals(phd.getCurrentFullyRegistered().getStudents().get(0).getValues(headers)[0],"1232");
+	}
+
+	@Test
+	public void testSort1(){
+
 	}
 }
