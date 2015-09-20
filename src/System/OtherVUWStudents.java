@@ -4,6 +4,7 @@ public class OtherVUWStudents implements Student {
 
 	private boolean isHighlighted;
 	private boolean isMarked;
+	private boolean isIncorrectlyFormatted;
 
 	@Override
 	public String[] getValues(String[] headers) {
@@ -20,6 +21,10 @@ public class OtherVUWStudents implements Student {
 	@Override
 	public boolean isHighlighted() {
 		return isHighlighted;
+	}
+
+	public boolean isIncorrectlyFormatted(){
+		return isIncorrectlyFormatted;
 	}
 
 	public boolean isMarked(){

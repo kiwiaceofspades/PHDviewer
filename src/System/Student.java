@@ -11,4 +11,6 @@ public interface Student {
 	public boolean isHighlighted();
 
 	public boolean isMarked();
+
+	public boolean isIncorrectlyFormatted();
 }

@@ -33,6 +33,7 @@ public class ECSStudent implements Student {
 
 	private boolean isHighlighted;
 	private boolean isMarked;
+	private boolean isIncorrectlyFormatted = false;
 
 	public ECSStudent(String name, int id, String degree, String efts,
 			String primarySupervisor, String supervisionSplit1,
@@ -77,7 +78,7 @@ public class ECSStudent implements Student {
 		// Format of string YYYYMMDD
 
 		date = new Date(startDate);
-
+		isIncorrectlyFormatted = true;
 
 		return date;
 		/**
@@ -388,6 +389,10 @@ public class ECSStudent implements Student {
 
 	public boolean isMarked(){
 		return isMarked;
+	}
+
+	public boolean isIncorrectlyFormatted(){
+		return isIncorrectlyFormatted;
 	}
 
 	public void toogleMark(){

@@ -127,7 +127,13 @@ public abstract class PhDTable {
 	public int[] getIncorrectlyFormatted(){
 		int[] incorrectlyFormatted = new int[students.size()];
 		for(int i = 0; i < students.size(); i++){
-			incorrectlyFormatted[i] = 0;
+			Student stud = students.get(i);
+			if(stud.isIncorrectlyFormatted() == true){
+				incorrectlyFormatted[i] = 1;
+			}
+			else{
+				incorrectlyFormatted[i] = 0;
+			}
 		}
 		return incorrectlyFormatted;
 	}

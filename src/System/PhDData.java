@@ -302,5 +302,10 @@ public class PhDData {
 		return highlighted;
 	}
 
+	public boolean markStudent(String[][] student, String table){
+		System.out.println("Not implemented yet");
+		return false;
+	}
+
 
 }

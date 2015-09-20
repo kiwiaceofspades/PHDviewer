@@ -4,6 +4,7 @@ public class NonVUWStudents implements Student {
 
 	private boolean isHighlighted;
 	private boolean isMarked;
+	private boolean isIncorrectlyFormatted;
 
 	@Override
 	public String[] getValues(String[] headers) {
@@ -21,6 +22,9 @@ public class NonVUWStudents implements Student {
 		return isHighlighted;
 	}
 
+	public boolean isIncorrectlyFormatted(){
+		return isIncorrectlyFormatted;
+	}
 
 	public boolean isMarked(){
 		return isMarked;
