@@ -43,5 +43,10 @@ public class Preferences {
 		return false;
 	}
 
+	public boolean setModes(ArrayList<Mode> modes){
+		viewingModes = modes;
+		return true;
+	}
+
 
 }

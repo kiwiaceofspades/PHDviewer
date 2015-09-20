@@ -54,7 +54,11 @@ public class ECSStudent implements Student {
 		this.thirdSupervisor = thirdSupervisor;
 		this.supervisionSplit3 = supervisionSplit3;
 		this.scholarship = scholarship;
+
+		// Need to try convert the date
+		//Date stDate = convertToDate(startDate);
 		this.startDate = startDate;
+
 		this.phdProposalSubmission = phdProposalSubmission;
 		this.phdProposalSeminar = phdProposalSeminar;
 		this.phdProposalConfirmationDate = phdProposalConfirmationDate;
@@ -65,6 +69,11 @@ public class ECSStudent implements Student {
 		this.depositedInLibrary = depositedInLibrary;
 		this.notes = notes;
 		this.origin = origin;
+	}
+
+	private Date convertToDate(String startDate) {
+
+		return null;
 	}
 
 	public String[] getValues(String[] headers){
