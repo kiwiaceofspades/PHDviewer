@@ -395,7 +395,7 @@ public class ECSStudent implements Student {
 		return isIncorrectlyFormatted;
 	}
 
-	public void toogleMark(){
+	public void toggleMark(){
 		if(isMarked == true){
 			isMarked = false;
 		}

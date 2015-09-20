@@ -29,4 +29,13 @@ public class NonVUWStudents implements Student {
 	public boolean isMarked(){
 		return isMarked;
 	}
+
+	public void toggleMark(){
+		if(isMarked == true){
+			isMarked = false;
+		}
+		else{
+			isMarked = true;
+		}
+	}
 }

@@ -202,4 +202,9 @@ public abstract class PhDTable {
 		return true;
 
 	}
+
+	public void toggleMark(int studentID){
+		int index = findStudent(studentID);
+		students.get(index).toggleMark();
+	}
 }

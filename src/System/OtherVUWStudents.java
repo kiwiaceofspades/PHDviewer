@@ -31,4 +31,15 @@ public class OtherVUWStudents implements Student {
 		return isMarked;
 	}
 
+	public void toggleMark(){
+		if(isMarked == true){
+			isMarked = false;
+		}
+		else{
+			isMarked = true;
+		}
+	}
+
+
+
 }

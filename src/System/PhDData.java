@@ -302,9 +302,24 @@ public class PhDData {
 		return highlighted;
 	}
 
-	public boolean markStudent(String[][] student, String table){
-		System.out.println("Not implemented yet");
-		return false;
+	public void toggleMark(String[][] student, String table){
+		int studentID = Integer.parseInt(student[1][1]);
+		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+			notFullyAdmitted.toggleMark(studentID);
+		}
+		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			currentProvisionallyRegisteredStudents.toggleMark(studentID);
+		}
+		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+			phDProposalUnderExamination.toggleMark(studentID);
+		}
+		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+			currentFullyRegistered.toggleMark(studentID);
+		}
+		else if(table.equalsIgnoreCase("UnderExamination")){
+			underExamination.toggleMark(studentID);
+		}
+		System.out.println("Can't find the table " + table + " to toggle the student's mark");
 	}
 
 

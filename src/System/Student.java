@@ -13,4 +13,8 @@ public interface Student {
 	public boolean isMarked();
 
 	public boolean isIncorrectlyFormatted();
+
+	public void toggleMark();
+
+
 }
