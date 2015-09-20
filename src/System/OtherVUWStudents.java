@@ -3,6 +3,7 @@ package System;
 public class OtherVUWStudents implements Student {
 
 	private boolean isHighlighted;
+	private boolean isMarked;
 
 	@Override
 	public String[] getValues(String[] headers) {
@@ -19,6 +20,10 @@ public class OtherVUWStudents implements Student {
 	@Override
 	public boolean isHighlighted() {
 		return isHighlighted;
+	}
+
+	public boolean isMarked(){
+		return isMarked;
 	}
 
 }

@@ -9,4 +9,6 @@ public interface Student {
 	public String toFoswiki();
 
 	public boolean isHighlighted();
+
+	public boolean isMarked();
 }

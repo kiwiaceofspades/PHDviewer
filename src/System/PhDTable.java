@@ -110,6 +110,42 @@ public abstract class PhDTable {
 		return null;
 	}
 
+	public int[] getMarked(){
+		int[] marked = new int[students.size()];
+		for(int i = 0; i < students.size(); i++){
+			Student stud = students.get(i);
+			if(stud.isMarked() == true){
+				marked[i] = 1;
+			}
+			else{
+				marked[i] = 0;
+			}
+		}
+		return marked;
+	}
+
+	public int[] getIncorrectlyFormatted(){
+		int[] incorrectlyFormatted = new int[students.size()];
+		for(int i = 0; i < students.size(); i++){
+			incorrectlyFormatted[i] = 0;
+		}
+		return incorrectlyFormatted;
+	}
+
+	public int[] getHighlighted(){
+		int[] highlighted = new int[students.size()];
+		for(int i = 0; i < students.size(); i++){
+			Student stud = students.get(i);
+			if(stud.isHighlighted() == true){
+				highlighted[i] = 1;
+			}
+			else{
+				highlighted[i] = 0;
+			}
+		}
+		return highlighted;
+	}
+
 	public boolean sort(String header){
 		System.out.println("Sorting");
 		// Need to make sure the table has the header.

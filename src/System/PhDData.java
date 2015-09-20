@@ -207,6 +207,10 @@ public class PhDData {
 
 	public boolean sort(String header){
 		// Will only for ecs student for now
+		if(!underExamination.sort(header)){
+			System.out.println("Couldn't sort");
+			return false;
+		}
 		if(!notFullyAdmitted.sort(header)){
 			System.out.println("Couldn't sort");
 			return false;
@@ -225,5 +229,78 @@ public class PhDData {
 		}
 		return true;
 	}
+
+	public int[] getMarked(String table){
+		int[] marked;
+		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+			marked = notFullyAdmitted.getMarked();
+		}
+		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			marked = currentProvisionallyRegisteredStudents.getMarked();
+		}
+		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+			marked = phDProposalUnderExamination.getMarked();
+		}
+		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+			marked = currentFullyRegistered.getMarked();
+		}
+		else if(table.equalsIgnoreCase("UnderExamination")){
+			marked = underExamination.getMarked();
+		}
+		else {
+			System.out.println("Couldn't get Marked for " + table);
+			return null;
+		}
+		return marked;
+	}
+
+	public int[] getIncorrectlyFormated(String table){
+		int[] incorrectlyFormatted;
+		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+			incorrectlyFormatted = notFullyAdmitted.getIncorrectlyFormatted();
+		}
+		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			incorrectlyFormatted = currentProvisionallyRegisteredStudents.getIncorrectlyFormatted();;
+		}
+		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+			incorrectlyFormatted = phDProposalUnderExamination.getIncorrectlyFormatted();
+		}
+		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+			incorrectlyFormatted = currentFullyRegistered.getIncorrectlyFormatted();
+		}
+		else if(table.equalsIgnoreCase("UnderExamination")){
+			incorrectlyFormatted = underExamination.getIncorrectlyFormatted();
+		}
+		else {
+			System.out.println("Couldn't get Highlighted for " + table);
+			return null;
+		}
+		return incorrectlyFormatted;
+	}
+
+	public int[] getHighlighted(String table){
+		int[] highlighted;
+		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+			highlighted = notFullyAdmitted.getHighlighted();
+		}
+		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			highlighted = currentProvisionallyRegisteredStudents.getHighlighted();
+		}
+		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+			highlighted = phDProposalUnderExamination.getHighlighted();
+		}
+		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+			highlighted = currentFullyRegistered.getHighlighted();
+		}
+		else if(table.equalsIgnoreCase("UnderExamination")){
+			highlighted = underExamination.getHighlighted();
+		}
+		else {
+			System.out.println("Couldn't get Highlighted for " + table);
+			return null;
+		}
+		return highlighted;
+	}
+
 
 }

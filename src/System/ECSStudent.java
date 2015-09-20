@@ -17,7 +17,7 @@ public class ECSStudent implements Student {
 	private String supervisionSplit3;
 
 	private String scholarship;
-	private String startDate;
+	private Date startDate;
 
 	private String phdProposalSubmission;
 	private String phdProposalSeminar;
@@ -32,6 +32,7 @@ public class ECSStudent implements Student {
 	private String origin;
 
 	private boolean isHighlighted;
+	private boolean isMarked;
 
 	public ECSStudent(String name, int id, String degree, String efts,
 			String primarySupervisor, String supervisionSplit1,
@@ -56,8 +57,8 @@ public class ECSStudent implements Student {
 		this.scholarship = scholarship;
 
 		// Need to try convert the date
-		//Date stDate = convertToDate(startDate);
-		this.startDate = startDate;
+		Date stDate = convertToDate(startDate);
+		this.startDate = stDate;
 
 		this.phdProposalSubmission = phdProposalSubmission;
 		this.phdProposalSeminar = phdProposalSeminar;
@@ -72,8 +73,18 @@ public class ECSStudent implements Student {
 	}
 
 	private Date convertToDate(String startDate) {
+		Date date;
+		// Format of string YYYYMMDD
 
-		return null;
+		date = new Date(startDate);
+
+
+		return date;
+		/**
+		// Get year
+		ArrayList<String> year = new ArrayList<String>();
+		for(int i = 0; i < )
+		return null; */
 	}
 
 	public String[] getValues(String[] headers){
@@ -248,11 +259,12 @@ public class ECSStudent implements Student {
 	}
 
 	public String getStartDate() {
-		return startDate;
+		return startDate.toString();
 	}
 
 	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+		Date date = new Date(startDate);
+		this.startDate = date;
 	}
 
 	public String getPhdProposalSubmission() {
@@ -350,7 +362,7 @@ public class ECSStudent implements Student {
 		foswikiString.add(thirdSupervisor);
 		foswikiString.add(supervisionSplit3);
 		foswikiString.add(scholarship);
-		foswikiString.add(startDate);
+		foswikiString.add(startDate.toString()); // this may need to be chan
 		foswikiString.add(phdProposalSubmission);
 		foswikiString.add(phdProposalSeminar);
 		foswikiString.add(phdProposalConfirmationDate);
@@ -373,4 +385,18 @@ public class ECSStudent implements Student {
 	public boolean isHighlighted(){
 		return isHighlighted;
 	}
+
+	public boolean isMarked(){
+		return isMarked;
+	}
+
+	public void toogleMark(){
+		if(isMarked == true){
+			isMarked = false;
+		}
+		else{
+			isMarked = true;
+		}
+	}
+
 }

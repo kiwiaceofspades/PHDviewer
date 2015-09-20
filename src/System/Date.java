@@ -22,7 +22,12 @@ public class Date {
 	}
 
 	public String toString(){
-		return day+"-"+month+"-"+year;
+		if(converted == false){
+			return date;
+		}
+		else{
+			return day+"-"+month+"-"+year;
+		}
 	}
 
 	public int getDay() {
