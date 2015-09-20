@@ -49,10 +49,23 @@ public class Parser {
 		data.setNotFullyAdmitted(notFullyAdmitted);
 	}
 
+	public Parser(String fname, PhDData data, Preferences pref) {
+		runParser(fname);
+
+		data.setUnderExamination(underExamination);
+		data.setCurrentFullyRegistered(currentFullyRegistered);
+		data.setPhDProposalUnderExamination(phdProposalUnderExamination);
+		data.setCurrentProvisionallyRegisteredStudents(currentProvisionallyRegisteredStudents);
+		data.setNotFullyAdmitted(notFullyAdmitted);
+		//TODO: populate pref
+		//pref.setModes(parsePreferences("header.txt"));
+	}
+
 	public Parser() {
 
 	}
 
+	//TODO: remove spaces on either side of text = .trim
 	// Essentially the main method, parses the Foswiki text file specified by filename.
 	public void runParser(String filename) {
 		try {
@@ -192,8 +205,44 @@ public class Parser {
 		return d;
 	}
 
-	//writeToHeaderFile
+	private ArrayList<Mode> parsePreferences(String filename) {
+		ArrayList<Mode> modes = new ArrayList<Mode>();
+		try {
+			Scanner sc = new Scanner(new File(filename));
 
+			while (sc.hasNextLine()) {
+				ArrayList<String> modeHeaderList = new ArrayList<String>();
+				String line = sc.nextLine();
+				String[] splitHeaders = line.split("\\|", 0);
+				for (String s : splitHeaders) {
+					if(s.isEmpty() || s.matches("^\\s*$")) {
+						//System.out.print("----------");
+					}
+					modeHeaderList.add(s);
+					String[] modeHeaderArray = (String[]) modeHeaderList.toArray();
+					modes.add(new Mode(splitHeaders[0], modeHeaderArray));
+				}
+			}
+			sc.close();
+		}
+		catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return modes;
+	}
+
+	public void writeToHeadersFile(Preferences prefs) throws IOException {
+		//load preferences file
+
+		PrintWriter pw = new PrintWriter(new FileWriter(new File("headers.txt")));
+		//pw.flush();
+
+
+
+		pw.close();
+	}
+
+	//TODO: add space on either side back to file
 	public void writeToFile(PhDData data) throws IOException {
 		UnderExamination ue = data.getUnderExamination();
 		CurrentFullyRegistered cfs = data.getCurrentFullyRegistered();
@@ -202,7 +251,7 @@ public class Parser {
 		NotFullyAdmitted nfa = data.getNotFullyAdmitted();
 
 		PrintWriter pw = new PrintWriter(new FileWriter(new File("output.txt")));
-		pw.flush();
+		//pw.flush();
 
 		pw.println(titling[0]);
 		pw.println(titling[1]);
