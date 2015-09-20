@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import System.CurrentFullyRegistered;
+import System.CurrentProvisionallyRegisteredStudents;
 import System.ECSStudent;
+import System.NotFullyAdmitted;
 import System.PhDData;
+import System.PhDProposalUnderExamination;
 import System.PhDTable;
 import System.Student;
 import System.UnderExamination;
@@ -57,12 +60,19 @@ public class UnitTest {
 		headers.add("Origin");
 		stues.add(student1);
 		stues.add(student2);
+
+	}
+
+	public void addExtras(){
 		stues.add(student3);
 		stues.add(student4);
 	}
 
 	private CurrentFullyRegistered regiTable = new CurrentFullyRegistered(stues, headers);
 	private UnderExamination underTable = new UnderExamination(stues, headers);
+	private CurrentProvisionallyRegisteredStudents provTable = new CurrentProvisionallyRegisteredStudents(stues, headers);
+	private PhDProposalUnderExamination proUnderTable = new PhDProposalUnderExamination(stues, headers);
+	private NotFullyAdmitted notFullTable = new NotFullyAdmitted(stues, headers);
 
 	/**
 	 * Tests to add a file to a new PhDData object.
@@ -248,6 +258,8 @@ public class UnitTest {
 		assertFalse(phd.moveStudent(stu, fullyRegiTable));
 	}
 
+
+	//test for nulls
 	@Test
 	public void test10(){
 		for(int i=0; i<sizeOfArray; i++){
@@ -277,7 +289,7 @@ public class UnitTest {
 
 	}
 
-
+	//test for sorting
 	@Test
 	public void testSort(){
 		addToArrays();
@@ -285,7 +297,6 @@ public class UnitTest {
 		phd.setCurrentFullyRegistered(regiTable);
 		CurrentFullyRegistered cfr = phd.getCurrentFullyRegistered();
 		String[] headers = {"ID"};
-		cfr.getStudents().get(0).getValues(headers);
 		String[] values = cfr.getStudents().get(0).getValues(headers);
 		System.out.println(values[0]);
 		phd.getCurrentFullyRegistered().sort("ID");
@@ -296,6 +307,30 @@ public class UnitTest {
 
 	@Test
 	public void testSort1(){
+		addToArrays();
+		addExtras();
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		CurrentFullyRegistered cfr = phd.getCurrentFullyRegistered();
+		String[] headers = {"ID"};
+		String[] values = cfr.getStudents().get(0).getValues(headers);
+		System.out.println(values[0]);
+		phd.getCurrentFullyRegistered().sort("ID");
+		values = cfr.getStudents().get(0).getValues(headers);
+		System.out.println(values[0]);
+		assertEquals(phd.getCurrentFullyRegistered().getStudents().get(0).getValues(headers)[0],"1");
 
+	}
+
+	@Test
+	public void testSort2(){
+		addToArrays();
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.setUnderExamination(underTable);
+		phd.setCurrentProvisionallyRegisteredStudents(provTable);
+		phd.setNotFullyAdmitted(notFullTable);
+		phd.setPhDProposalUnderExamination(proUnderTable);
+		assertTrue(phd.sort("ID"));
 	}
 }
