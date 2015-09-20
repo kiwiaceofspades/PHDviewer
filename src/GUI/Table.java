@@ -1,8 +1,12 @@
 package GUI;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.EventObject;
 
@@ -17,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import System.CurrentFullyRegistered;
 import System.CurrentProvisionallyRegisteredStudents;
@@ -194,10 +200,16 @@ public class Table extends JPanel {
 
 	private JTable setTable(String Table){
 		JTable temp = getTableData(Table);
+		int[] a= new int[temp.getRowCount()];
+		for(int i =0; i< temp.getRowCount()-1; i++){
+			a[i]=0;
+		}
+
 
 		temp.setDragEnabled(false);
 		temp.setAutoResizeMode(0);
 		for(int i=0; i<temp.getColumnModel().getColumnCount()-1;i++){
+			temp.getColumnModel().getColumn(i).setCellRenderer(new Render(a,a,a));
 			temp.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()){
 
 				@Override
@@ -207,6 +219,9 @@ public class Table extends JPanel {
 
 			});
 			temp.getColumnModel().getColumn(i).setMinWidth(100);
+			for(int k = 0; k<temp.getRowCount()-1;k++){
+
+			}
 		}
 		temp.getTableHeader().addMouseListener(getMouse(Table));
 		temp.setFillsViewportHeight(true);
@@ -760,6 +775,39 @@ public class Table extends JPanel {
 		this.setupTable();
 	}
 
+
+
+private class Render extends DefaultTableCellRenderer{
+
+	private int[] YELLOW,RED,PURPLE;
+
+
+	public Render(int[] yellow,int[]red, int[] purple){
+		YELLOW=yellow;
+		RED=red;
+		PURPLE = purple;
+	}
+
+	@Override
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+		  Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		  if(YELLOW[row]==1){
+			  cell.setBackground(Color.YELLOW);
+		  }else if(RED[row]==1){
+			  cell.setBackground(Color.RED);
+		  }
+
+		  if(PURPLE[row] ==1){
+			  cell.setBackground(new Color(102,51,153));
+		  }
+		  //BufferedImage im= null;
+		  //cell.createImage(im.getSource());
+
+	    return cell;
+	}
+
+}
 
 
 

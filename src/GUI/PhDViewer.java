@@ -327,4 +327,8 @@ public class PhDViewer extends JFrame {
 
 	}
 
+	public void makeRed(String[][] i, String t) {
+		DATA.toggleMark(i,t);
+	}
+
 }

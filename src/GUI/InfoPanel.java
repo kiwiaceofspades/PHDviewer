@@ -1,11 +1,13 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -14,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
 
 public class InfoPanel extends JPanel {
 
@@ -43,7 +46,7 @@ public class InfoPanel extends JPanel {
 	 * The apply button still thinking if i need this stored here
 	 */
 	private JButton apply;
-
+	private JPanel pan;
 
 	/*
 	 * Are we adding or removing
@@ -62,6 +65,7 @@ public class InfoPanel extends JPanel {
 		tt.width = 300;
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		this.setPreferredSize(tt);
+		pan = new JPanel();
 		apply = new JButton("Apply Changes");
 		apply.addActionListener(new ActionListener(){
 
@@ -74,8 +78,24 @@ public class InfoPanel extends JPanel {
 				}
 			}
 		});
-		this.add(apply);
+		pan.add(apply);
 
+		JButton but = new JButton("Highlight");
+		but.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HOST.makeRed(info,Table);
+			}
+
+		});
+		pan.add(but);
+		Dimension panDimension= new Dimension(tt.width,40);
+		pan.setMinimumSize(panDimension);
+		pan.setPreferredSize(panDimension);
+		pan.setMaximumSize(panDimension);
+		//pan.setBorder(BorderFactory.createLineBorder(Color.RED));
+		add(pan);
 	}
 
 	/**
@@ -178,11 +198,14 @@ public class InfoPanel extends JPanel {
 
 	}
 
-
-
 	public void setSizeOverride(Dimension size) {
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);
+		Dimension panDimension = new Dimension(size.width,40);
+		pan.setMinimumSize(panDimension);
+		pan.setPreferredSize(panDimension);
+		pan.setMaximumSize(panDimension);
+		pan.validate();
 		validate();
 
 	}
