@@ -319,8 +319,9 @@ public class PhDData {
 		else if(table.equalsIgnoreCase("UnderExamination")){
 			underExamination.toggleMark(studentID);
 		}
-		System.out.println("Can't find the table " + table + " to toggle the student's mark");
+		else{
+			System.out.println("Can't find the table " + table + " to toggle the student's mark");
+		}
 	}
-
 
 }

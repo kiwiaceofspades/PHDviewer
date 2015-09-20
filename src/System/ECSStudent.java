@@ -76,11 +76,17 @@ public class ECSStudent implements Student {
 	private Date convertToDate(String startDate) {
 		Date date;
 		// Format of string YYYYMMDD
+		if(startDate.length() != 8){
+			date = new Date(startDate);
+			isIncorrectlyFormatted = true;
+		}
 
 		date = new Date(startDate);
 		isIncorrectlyFormatted = true;
 
 		return date;
+
+		//return date;
 		/**
 		// Get year
 		ArrayList<String> year = new ArrayList<String>();
@@ -363,7 +369,7 @@ public class ECSStudent implements Student {
 		foswikiString.add(thirdSupervisor);
 		foswikiString.add(supervisionSplit3);
 		foswikiString.add(scholarship);
-		foswikiString.add(startDate.toString()); // this may need to be chan
+		foswikiString.add(startDate.toString()); // this may need to be changed
 		foswikiString.add(phdProposalSubmission);
 		foswikiString.add(phdProposalSeminar);
 		foswikiString.add(phdProposalConfirmationDate);
