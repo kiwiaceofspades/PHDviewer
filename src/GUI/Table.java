@@ -7,9 +7,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EventObject;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JLabel;
@@ -200,16 +203,18 @@ public class Table extends JPanel {
 
 	private JTable setTable(String Table){
 		JTable temp = getTableData(Table);
-		int[] a= new int[temp.getRowCount()];
-		for(int i =0; i< temp.getRowCount()-1; i++){
-			a[i]=0;
-		}
 
+		int[] red,orange,purple;
+		red = DATA.getMarked(Table);
+		orange = DATA.getHighlighted(Table);
+		purple = DATA.getIncorrectlyFormated(Table);
 
 		temp.setDragEnabled(false);
 		temp.setAutoResizeMode(0);
-		for(int i=0; i<temp.getColumnModel().getColumnCount()-1;i++){
-			temp.getColumnModel().getColumn(i).setCellRenderer(new Render(a,a,a));
+		for(int i=0; i<temp.getColumnModel().getColumnCount();i++){
+
+
+			temp.getColumnModel().getColumn(i).setCellRenderer(new Render(orange,red,purple));
 			temp.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()){
 
 				@Override
@@ -219,9 +224,7 @@ public class Table extends JPanel {
 
 			});
 			temp.getColumnModel().getColumn(i).setMinWidth(100);
-			for(int k = 0; k<temp.getRowCount()-1;k++){
 
-			}
 		}
 		temp.getTableHeader().addMouseListener(getMouse(Table));
 		temp.setFillsViewportHeight(true);
@@ -781,7 +784,12 @@ private class Render extends DefaultTableCellRenderer{
 
 	private int[] YELLOW,RED,PURPLE;
 
-
+/**
+ *
+ * @param yellow
+ * @param red
+ * @param purple
+ */
 	public Render(int[] yellow,int[]red, int[] purple){
 		YELLOW=yellow;
 		RED=red;
@@ -794,15 +802,25 @@ private class Render extends DefaultTableCellRenderer{
 		  Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		  if(YELLOW[row]==1){
 			  cell.setBackground(Color.YELLOW);
+			  cell.setForeground(Color.BLACK);
 		  }else if(RED[row]==1){
 			  cell.setBackground(Color.RED);
+			  cell.setForeground(Color.white);
+		  }else {
+			  cell.setBackground(Color.WHITE);
+			  cell.setForeground(Color.BLACK);
 		  }
 
 		  if(PURPLE[row] ==1){
 			  cell.setBackground(new Color(102,51,153));
-		  }
-		  //BufferedImage im= null;
-		  //cell.createImage(im.getSource());
+			  cell.setForeground(Color.white);
+		  } else if(RED[row]==1 ||YELLOW[row]==1){
+
+		  }else{
+		  	cell.setBackground(Color.WHITE);
+		  	cell.setForeground(Color.BLACK);
+			}
+
 
 	    return cell;
 	}
