@@ -2,6 +2,13 @@ package System;
 
 import java.util.ArrayList;
 
+/**
+ * Preferences class contains a list ofviewingModes - which are different ways of viewing the table.
+ * Modes contain a name which identifies the mode, and the headers which should be displayed with
+ * that mode.
+ * @author millwamich1
+ *
+ */
 public class Preferences {
 
 	private ArrayList<Mode> viewingModes;
