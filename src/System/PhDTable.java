@@ -89,6 +89,11 @@ public abstract class PhDTable {
 	 */
 	public boolean editStudent(Student student, int studentID){
 		int index = findStudent(studentID);
+		// need to check the highlighted fields
+		Student oldStudent = students.get(index);
+		if(oldStudent.isMarked() == true){
+			student.toggleMark();
+		}
 		if(index == -1){
 			System.out.println("Couldn't find the student with ID: " + studentID);
 			// throw some sort of error?

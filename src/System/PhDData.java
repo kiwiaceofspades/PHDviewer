@@ -158,7 +158,6 @@ public class PhDData {
 		Student toAdd = new ECSStudent(student[0][1], Integer.parseInt(student[1][1]), student[2][1], student[3][1], student[4][1], student[5][1], student[6][1],
 				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
-
 		// Now add it to the right table
 		if(table.equalsIgnoreCase("NotFullyAdmitted")){
 			return notFullyAdmitted.addStudent(toAdd);

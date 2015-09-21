@@ -64,8 +64,7 @@ public class Date {
 		java.util.Date StartDate = new java.util.Date(this.year-1900, this.month-1, this.day);
 
 		int diffInDays = Math.round((int) ((StartDate.getTime() - currentDate.getTime()) / DAY_IN_MILLIS));
-if (diffInDays<0)
-	System.out.println("hat");
+
 		return diffInDays;
 	}
 
