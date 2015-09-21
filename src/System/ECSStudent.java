@@ -77,24 +77,62 @@ public class ECSStudent implements Student {
 	 * Date gets parsed as a String. convertToDate converts the String into a Date object
 	 */
 	private Date convertToDate(String startDate) {
-		Date date;
+		Date date = null;
+		int year = -1;
+		int month = -1;
+		int day = -1;
+
 		// Format of string YYYYMMDD
 		if(startDate.length() != 8){
 			date = new Date(startDate);
 			isIncorrectlyFormatted = true;
+			return date;
 		}
 
-		date = new Date(startDate);
-		isIncorrectlyFormatted = true;
+		int mode = 0; // 0 = year, 1 = month, 2 = day
+		ArrayList<Character> buffer = new ArrayList<Character>();
+		for(int i = 0; i<startDate.length(); i++){
+			char character = startDate.charAt(i);
+			if(Character.isDigit(character) == false){
+				date = new Date(startDate);
+				isIncorrectlyFormatted = true;
+				return date;
+			}
+			buffer.add(character);
+			if(buffer.size() == 4 && mode == 0){
+				// We have a year done
+				String yearString = buffer.toString();
+				year = Integer.parseInt(yearString);
+				mode++;
+				buffer.clear();
+			}
+			if(buffer.size() == 2 && mode == 1){
+				// We have a month done
+				String monthString = buffer.toString();
+				month = Integer.parseInt(monthString);
+				mode++;
+				buffer.clear();
+			}
+			if(buffer.size() == 2 && mode == 2){
+				// We have a month done
+				String dayString = buffer.toString();
+				day = Integer.parseInt(dayString);
+				mode++;
+				buffer.clear();
+			}
+		}
+
+		// All done!
+		if(day != -1 && month != -1 && year != -2){
+			date = new Date(day, month, year);
+			isIncorrectlyFormatted = false;
+		}
+
+		if(date == null){
+			System.out.println("Converting date did not work!");
+		}
 
 		return date;
-
-		//return date;
-		/**
-		// Get year
-		ArrayList<String> year = new ArrayList<String>();
-		for(int i = 0; i < )
-		return null; */
 	}
 
 	/*
