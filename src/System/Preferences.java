@@ -55,5 +55,14 @@ public class Preferences {
 		return true;
 	}
 
+	public ArrayList<String> toFoswiki(){
+		ArrayList<String> foswikiList = new ArrayList<String>();
+		for(int i = 0; i<viewingModes.size(); i++){
+			Mode mode = viewingModes.get(i);
+			foswikiList.add(mode.toFoswiki());
+		}
+		return foswikiList;
+	}
+
 
 }

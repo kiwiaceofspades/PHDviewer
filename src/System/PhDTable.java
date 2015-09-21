@@ -91,6 +91,7 @@ public abstract class PhDTable {
 		int index = findStudent(studentID);
 		// need to check the highlighted fields
 		Student oldStudent = students.get(index);
+		// Edge case when the student needing to be updated has just been marked
 		if(oldStudent.isMarked() == true){
 			student.toggleMark();
 		}

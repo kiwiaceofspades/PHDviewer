@@ -194,9 +194,20 @@ public class PhDData {
 		}
 		int studentID = Integer.parseInt(student[1][1]);
 		int index = -1;
+
+		// Problem, the date that the GUI uses is not the correct format!
+		String date = convertDate(student[11][1]);
+
+		// TODO
+		// A problem exists where date is passed as a DATE object, and not a string...
+		// For now, I will just convert the date object into a string, but in future
+		// the formation of this toAdd student should occur with the Student class
+		// which gets implemented by the calls which implements the Student class
+
 		Student toAdd = new ECSStudent(student[0][1], studentID, student[2][1], student[3][1], student[4][1], student[5][1], student[6][1],
-				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
+				student[7][1], student[8][1], student[9][1], student[10][1], date, student[12][1], student[13][1], student[14][1], student[15][1],
 				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
+
 		// Now send the edit command to the correct table
 		if(table.equalsIgnoreCase("NotFullyAdmitted")){
 			return notFullyAdmitted.editStudent(toAdd, studentID);
@@ -216,6 +227,20 @@ public class PhDData {
 		System.out.println("Couldn't find " + table + " to add entry to");
 		return false;
 
+	}
+
+	/**
+	 * When editing a student, the date the GUI holds needs to be a date that the student object recognizes
+	 * @param date
+	 * @return
+	 */
+	public String convertDate(String date){
+		// format here is dd-mm-yyyy. needs to be format yyyymmdd
+		// TODO error checking to make sure date is of correct format... in case the user changes it
+		String day = date.substring(0, 2);
+		String month = date.substring(3, 5);
+		String year = date.substring(6, 10);
+		return year+month+day;
 	}
 
 	/**
@@ -290,7 +315,6 @@ public class PhDData {
 			System.out.println("Couldn't get Marked for " + table);
 			return null;
 		}
-		System.out.println("Current length of marked: " + marked.length);
 		return marked;
 	}
 

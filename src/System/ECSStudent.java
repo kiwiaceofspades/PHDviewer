@@ -101,16 +101,19 @@ public class ECSStudent implements Student {
 		Calendar calobj = Calendar.getInstance();
 		String currentDateString = dateFormat.format(calobj.getTime());
 		String formattedCurrentDate = currentDateString.substring(0, 10).replace("/", "");
-		Date currentDate = convertToDate(formattedCurrentDate);
+		int year = Integer.parseInt(formattedCurrentDate.substring(0, 4));
+		int month = Integer.parseInt(formattedCurrentDate.substring(4, 6));
+		int day = Integer.parseInt(formattedCurrentDate.substring(6, 8));
+		Date currentDate = new Date(day, month, year);
+
 
 		// Now lets calculate the time since the startDate
-		if(startDate.isConverted() == false){
-			// The startDate has been correctly formatted, therefore time cannot be calculated
+		if(isIncorrectlyFormatted == true){
+			// The startDate has is incorrectly formatted, therefore time cannot be calculated
 			return 0;
 		}
 
 		int days = currentDate.since(startDate);
-		System.out.println("Days since: " + days);
 		return days;
 	}
 

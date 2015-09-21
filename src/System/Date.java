@@ -26,7 +26,34 @@ public class Date {
 			return date;
 		}
 		else{
+			String day;
+			String month;
+
+			if(this.day < 10){
+				day = "0"+this.day;
+			}
+			else{
+				day = ""+this.day;
+			}
+
+
+			if(this.month < 10){
+				month = "0"+this.month;
+			}
+			else{
+				month = ""+this.month;
+			}
+
 			return day+"-"+month+"-"+year;
+		}
+	}
+
+	public String toStringFormatted(){
+		if(converted == false){
+			return date;
+		}
+		else{
+			return ""+year+""+month+""+day;
 		}
 	}
 

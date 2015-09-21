@@ -40,6 +40,12 @@ public class OtherVUWStudents implements Student {
 		}
 	}
 
+	@Override
+	public String getStartDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

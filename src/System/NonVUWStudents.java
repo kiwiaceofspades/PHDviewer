@@ -38,4 +38,10 @@ public class NonVUWStudents implements Student {
 			isMarked = true;
 		}
 	}
+
+	@Override
+	public String getStartDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
