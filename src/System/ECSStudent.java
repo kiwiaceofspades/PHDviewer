@@ -77,6 +77,7 @@ public class ECSStudent implements Student {
 	 * Date gets parsed as a String. convertToDate converts the String into a Date object
 	 */
 	private Date convertToDate(String startDate) {
+		startDate = startDate.trim();
 		Date date = null;
 		int year = -1;
 		int month = -1;
@@ -86,11 +87,13 @@ public class ECSStudent implements Student {
 		if(startDate.length() != 8){
 			date = new Date(startDate);
 			isIncorrectlyFormatted = true;
+			System.out.println("Not correct length " + startDate);
 			return date;
 		}
 
 		int mode = 0; // 0 = year, 1 = month, 2 = day
-		ArrayList<Character> buffer = new ArrayList<Character>();
+		int pointer = 0;
+		char[] buffer = new char[4];
 		for(int i = 0; i<startDate.length(); i++){
 			char character = startDate.charAt(i);
 			if(Character.isDigit(character) == false){
@@ -98,27 +101,29 @@ public class ECSStudent implements Student {
 				isIncorrectlyFormatted = true;
 				return date;
 			}
-			buffer.add(character);
-			if(buffer.size() == 4 && mode == 0){
+			buffer[pointer] = character;
+			pointer++;
+			if(pointer == 4 && mode == 0){
 				// We have a year done
-				String yearString = buffer.toString();
+				String yearString = new String(buffer);
 				year = Integer.parseInt(yearString);
 				mode++;
-				buffer.clear();
+				buffer = new char[2];
+				pointer = 0;
 			}
-			if(buffer.size() == 2 && mode == 1){
+			if(pointer == 2 && mode == 1){
 				// We have a month done
-				String monthString = buffer.toString();
+				String monthString = new String(buffer);
 				month = Integer.parseInt(monthString);
 				mode++;
-				buffer.clear();
+				buffer = new char[2];
+				pointer = 0;
 			}
-			if(buffer.size() == 2 && mode == 2){
+			if(pointer == 2 && mode == 2){
 				// We have a month done
-				String dayString = buffer.toString();
+				String dayString = new String(buffer);
 				day = Integer.parseInt(dayString);
-				mode++;
-				buffer.clear();
+				break;
 			}
 		}
 
