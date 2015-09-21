@@ -254,6 +254,9 @@ public abstract class PhDTable {
 	 */
 	public void toggleMark(int studentID){
 		int index = findStudent(studentID);
+		if(index == -1){
+			System.out.println("Couldn't find studentID " + studentID);
+		}
 		students.get(index).toggleMark();
 	}
 }
