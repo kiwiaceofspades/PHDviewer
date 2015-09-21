@@ -31,6 +31,8 @@ public class ECSStudent implements Student {
 	private String notes;
 	private String origin;
 
+	private int timeSinceStartDate; // generated column
+
 	private boolean isHighlighted;
 	private boolean isMarked;
 	private boolean isIncorrectlyFormatted = false;

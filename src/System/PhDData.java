@@ -291,6 +291,7 @@ public class PhDData {
 			System.out.println("Couldn't get Marked for " + table);
 			return null;
 		}
+		System.out.println("Current length of marked: " + marked.length);
 		return marked;
 	}
 
