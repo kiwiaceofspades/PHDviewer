@@ -73,6 +73,9 @@ public class ECSStudent implements Student {
 		this.origin = origin;
 	}
 
+	/*
+	 * Date gets parsed as a String. convertToDate converts the String into a Date object
+	 */
 	private Date convertToDate(String startDate) {
 		Date date;
 		// Format of string YYYYMMDD
@@ -94,6 +97,9 @@ public class ECSStudent implements Student {
 		return null; */
 	}
 
+	/*
+	 * Requests the values for a list of headers provided as an argument
+	 */
 	public String[] getValues(String[] headers){
 		String[] values = new String[headers.length];
 		for(int i = 0; i<headers.length; i++){

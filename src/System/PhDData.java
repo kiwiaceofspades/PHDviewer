@@ -69,6 +69,13 @@ public class PhDData {
 		this.phDProposalUnderExamination = phDProposalUnderExamination;
 	}
 
+	/**
+	 * Method called by GUI to make change to the data in the system.
+	 * @param type of change to make
+	 * @param student to make the change on
+	 * @param table that contains the student to make the change on
+	 * @return boolean of whether the change was made or not
+	 */
 	public boolean makeChanges(char type, String[][] student, String table){
 		switch(type){
 			case 'a':
@@ -85,6 +92,12 @@ public class PhDData {
 	}
 
 	// NB: ID should not be hide-able.
+	/**
+	 * Moves the student from the current table it is in, to the table above (table order is hardcoded)
+	 * @param student that is to be moved
+	 * @param table that contains the student that is being moved
+	 * @return boolean of whether the student was moved successfully
+	 */
 	public boolean moveStudent(String[][] student, String table){
 		int studentID = Integer.parseInt(student[1][1]);
 		if(table.equalsIgnoreCase("NotFullyAdmitted")){
@@ -129,6 +142,12 @@ public class PhDData {
 		return false;
 	}
 
+	/**
+	 * Adds a student into a table
+	 * @param student to be added
+	 * @param table that the student is to be added to
+	 * @return boolean as to whether the student was added or not
+	 */
 	public boolean addEntry(String[][] student, String table){
 		// Find the student
 		if(student.length != 22){
@@ -162,6 +181,12 @@ public class PhDData {
 		return false;
 	}
 
+	/**
+	 * Edits a existing student in a table
+	 * @param student to be edited
+	 * @param table that contains the student that is to be edited.
+	 * @return boolean as to whether or not the student was edited successfully
+	 */
 	public boolean editEntry(String[][] student, String table){
 		if(student.length != 22){
 			System.out.println("Entry to change is a different size than expected!");
@@ -194,6 +219,9 @@ public class PhDData {
 
 	}
 
+	/**
+	 * Writes all the data to a foswiki file. Called when the program is closed.
+	 */
 	public void writeToFoswiki(){
 		try {
 			parser.writeToFile(this);
@@ -205,6 +233,11 @@ public class PhDData {
 
 	}
 
+	/**
+	 * Sorts every table by the header provided
+	 * @param header that each table should be sorted by
+	 * @return boolean as to whether the table was successfully sorted or not
+	 */
 	public boolean sort(String header){
 		// Will only for ecs student for now
 		if(!underExamination.sort(header)){
@@ -230,6 +263,13 @@ public class PhDData {
 		return true;
 	}
 
+	/**
+	 * Returns an array of integers. Array contains which students in a specific table are marked.
+	 * The index of the student entry in the returned array matches up with the index of corresponding student
+	 * in the table. 1 = student is marked. 0 = student is not marked.
+	 * @param table that you want to check
+	 * @return int[] that contains what students should and should not be marked.
+	 */
 	public int[] getMarked(String table){
 		int[] marked;
 		if(table.equalsIgnoreCase("NotFullyAdmitted")){
@@ -254,6 +294,14 @@ public class PhDData {
 		return marked;
 	}
 
+	/**
+	 * Returns an array of integers. Array contains which students in a specific table have fields that are incorrectly formated.
+	 * Usually bad formatting is on a date entry.
+	 * The index of the student entry in the returned array matches up with the index of corresponding student in the table.
+	 * 1 = student has a field that is incorrectly formated. 0 = student is does not have a field that is incorrectly formatted.
+	 * @param table that you want to check
+	 * @return int[] that contains what students are and are not incorrectly formatted.
+	 */
 	public int[] getIncorrectlyFormated(String table){
 		int[] incorrectlyFormatted;
 		if(table.equalsIgnoreCase("NotFullyAdmitted")){
@@ -278,6 +326,14 @@ public class PhDData {
 		return incorrectlyFormatted;
 	}
 
+	/**
+	 * Returns an array of integers. Array contains which students in a specific table are highlighted.
+	 * An entry will be highlighted if it needs attention (which is calculated using logic provided within the Student class).
+	 * The index of the student entry in the returned array matches up with the index of corresponding student
+	 * in the table. 1 = student should be highlighted . 0 = student is not marked.
+	 * @param table that you want to check
+	 * @return int[] that contains what students should and should not be marked.
+	 */
 	public int[] getHighlighted(String table){
 		int[] highlighted;
 		if(table.equalsIgnoreCase("NotFullyAdmitted")){
@@ -302,6 +358,11 @@ public class PhDData {
 		return highlighted;
 	}
 
+	/**
+	 * Toggles the marked field on a student in a specific table
+	 * @param student that you want to mark (or unmark)
+	 * @param table that contains the student
+	 */
 	public void toggleMark(String[][] student, String table){
 		int studentID = Integer.parseInt(student[1][1]);
 		if(table.equalsIgnoreCase("NotFullyAdmitted")){

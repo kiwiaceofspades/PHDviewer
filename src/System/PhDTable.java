@@ -39,6 +39,15 @@ public abstract class PhDTable {
 		this.headers = headers;
 	}
 
+	/**
+	 * Goes through each entry under each header (provided in the headers array)
+	 * and checks how big the biggest entry is (in terms of character length).
+	 * In the returned array, the index corresponds to the index of the provided headers array.
+	 * E.g. if header studentID has index of 2 in the headers array, then at index 2 of the returned array
+	 * there will be the column width of the biggest entry for studentID.
+	 * @param headers that
+	 * @return int[] that contains the biggest width of an entry
+	 */
 	public int[] getColumnWidth(String[] headers){
 		int[] biggestWidth = new int[headers.length];
 		for(int i = 0; i<headers.length; i++){
@@ -71,6 +80,13 @@ public abstract class PhDTable {
 		return true;
 	}
 
+	/**
+	 * Edits an existing student entry in the table, does this by replacing an old student entry with the update
+	 * version of that student.
+	 * @param student - updated version which will replace the old version
+	 * @param studentID of the student that will be replaced
+	 * @return boolean of whether the edit/replacement was successful.
+	 */
 	public boolean editStudent(Student student, int studentID){
 		int index = findStudent(studentID);
 		if(index == -1){
@@ -96,6 +112,11 @@ public abstract class PhDTable {
 		return index;
 	}
 
+	/**
+	 * Removes the student from the table
+	 * @param studentID of the student to be removed
+	 * @return the Student that should be removed
+	 */
 	public Student removeStudent(int studentID){
 		int index = findStudent(studentID);
 		if(index == -1){
@@ -110,6 +131,11 @@ public abstract class PhDTable {
 		return null;
 	}
 
+	/**
+	 * Checks which entries of the table should be marked. The indexes of the returned int array corresponds to the index
+	 * of the Student in the Student list. 1 = student entry should be marked. 0 = student entry should not be marked.
+	 * @return int[] of which student entries should be marked.
+	 */
 	public int[] getMarked(){
 		int[] marked = new int[students.size()];
 		for(int i = 0; i < students.size(); i++){
@@ -124,6 +150,13 @@ public abstract class PhDTable {
 		return marked;
 	}
 
+	/**
+	 * Checks which entries of the table have fields which are incorrectly formatted.
+	 * The indexes of the returned int array corresponds to the index of the Student in the Student list.
+	 * 1 = student entry contains fields which are incorrectly formatted.
+	 * 0 = student entry does not contains fields which are incorrectly formatted.
+	 * @return int[] of which student entries have fields that are incorrectly formatted.
+	 */
 	public int[] getIncorrectlyFormatted(){
 		int[] incorrectlyFormatted = new int[students.size()];
 		for(int i = 0; i < students.size(); i++){
@@ -138,6 +171,13 @@ public abstract class PhDTable {
 		return incorrectlyFormatted;
 	}
 
+	/**
+	 * Checks which entries of the table should be highlighted. The indexes of the returned int array corresponds to the index
+	 * of the Student in the Student list.
+	 * 1 = student entry should be highlighted.
+	 * 0 = student entry should not be highlighted.
+	 * @return int[] of which student entries should be highlighted.
+	 */
 	public int[] getHighlighted(){
 		int[] highlighted = new int[students.size()];
 		for(int i = 0; i < students.size(); i++){
@@ -152,6 +192,11 @@ public abstract class PhDTable {
 		return highlighted;
 	}
 
+	/**
+	 * Sorts the table by a header provided
+	 * @param header which the table should be sorted by
+	 * @return whether the table was sorted successfully
+	 */
 	public boolean sort(String header){
 		System.out.println("Sorting");
 		// Need to make sure the table has the header.
@@ -203,6 +248,10 @@ public abstract class PhDTable {
 
 	}
 
+	/**
+	 * Toggles the marked field of the student in the table with studentID provided
+	 * @param studentID of the student that needs marked field to be toggled.
+	 */
 	public void toggleMark(int studentID){
 		int index = findStudent(studentID);
 		students.get(index).toggleMark();
