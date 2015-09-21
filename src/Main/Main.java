@@ -24,7 +24,7 @@ public class Main {
 				System.out.println("No file specified");
 		}
 		else{
-			File headers = new File("../headers.txt");
+			File headers = new File("../preferences.txt");
 			try {
 				if(headers.createNewFile()){//checks whether there is a headers file containing prefernces
 					fillWithDefualts(headers); //if there isn't create one with default values
