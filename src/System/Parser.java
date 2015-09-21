@@ -37,8 +37,11 @@ public class Parser {
 	private CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents;
 	private NotFullyAdmitted notFullyAdmitted;
 
-	// Constructor takes a filename string and runs the parser. Also takes an empty PhDData object
-	// and populates it.
+	/**
+	 * Legacy Parser constructor to populate a PhDData object
+	 * @param fname Filename of table data
+	 * @param data PhDData object to populate with data
+	 */
 	public Parser(String fname, PhDData data) {
 		runParser(fname);
 
@@ -49,24 +52,38 @@ public class Parser {
 		data.setNotFullyAdmitted(notFullyAdmitted);
 	}
 
+	/**
+	 * Current Parser constructor to populate a PhDData object and Preferences object
+	 * @param fname Filename of table data
+	 * @param data PhDData object to populate with Students
+	 * @param pref Preferences object to populate
+	 */
 	public Parser(String fname, PhDData data, Preferences pref) {
 		runParser(fname);
 
+		// Populate empty PhDData object
 		data.setUnderExamination(underExamination);
 		data.setCurrentFullyRegistered(currentFullyRegistered);
 		data.setPhDProposalUnderExamination(phdProposalUnderExamination);
 		data.setCurrentProvisionallyRegisteredStudents(currentProvisionallyRegisteredStudents);
 		data.setNotFullyAdmitted(notFullyAdmitted);
-		//TODO: populate pref
-		//pref.setModes(parsePreferences("header.txt"));
+
+		// Populate empty Preferences object
+		pref.setModes(parsePreferences("header.txt"));
 	}
 
+	/**
+	 * Empty constructor (used for testing)
+	 */
 	public Parser() {
 
 	}
 
-	//TODO: remove spaces on either side of text = .trim
-	// Essentially the main method, parses the Foswiki text file specified by filename.
+	/**
+	 * Essentially the main method, parses the Foswiki text file specified by filename by calling a
+	 * a number of individual methods.
+	 * @param filename Foswiki text file name
+	 */
 	public void runParser(String filename) {
 		try {
 			Scanner sc = new Scanner(new File(filename));
@@ -84,8 +101,11 @@ public class Parser {
 					parseLine(line);
 				}
 			}
+			// We are right at the end of the main VUW table
 			notFullyAdmitted = new NotFullyAdmitted(new ArrayList<Student>(students), headers);
+			// Non-VUW students
 			parseOtherStudents(sc);
+
 			// Display sizes to check
 			//System.out.println("Under examination: " + underExamination.getSizeOfStudents());
 			//System.out.println("Current fully registered: " + currentFullyRegistered.getSizeOfStudents());
@@ -98,6 +118,10 @@ public class Parser {
 		}
 	}
 
+	/**
+	 * Parses the titling of a Foswiki text file and stores it in a global variable
+	 * @param s
+	 */
 	private void parseTitling(Scanner s) {
 		titling[0] = s.nextLine();
 		if (titling[0].startsWith("-")) {
@@ -109,6 +133,10 @@ public class Parser {
 		titling[3] = s.nextLine();
 	}
 
+	/**
+	 * Parses the headers of a Foswiki text file and stores it in a global variable
+	 * @param line
+	 */
 	private void parseHeaders(String line) {
 		String[] splitHeaders = line.split("\\|", 0);
 			for (String s : splitHeaders) {
@@ -122,6 +150,10 @@ public class Parser {
 			}
 	}
 
+	/**
+	 * Parses a line which will represent a student
+	 * @param line
+	 */
 	private void parseLine(String line) {
 		String[] splitLine = line.split("\\|", 0);
 
@@ -129,25 +161,27 @@ public class Parser {
 			if(splitLine[i].isEmpty() || splitLine[i].matches("^\\s*$")) {
 				//System.out.print("----------");
 			}
+			splitLine[i] = splitLine[i].trim();
 			//System.out.println(splitLine[i]);
 		}
 
-		if (!(splitLine.length < 22)) {//ignore table breaks
-			// Create objects for Student constructor
+		if (!(splitLine.length < 22)) {// Ignore table breaks
+			// Create objects for Student constructor in here
+
+			// ID special case
 			splitLine[2] = splitLine[2].replace(" ", "");
 			int id = Integer.parseInt(splitLine[2]);
 
-			//make different types of students
+			// Make different types of students
 			Student s = new ECSStudent(splitLine[1], id, splitLine[3], splitLine[4],
 					splitLine[5], splitLine[6], splitLine[7], splitLine[8], splitLine[9], splitLine[10],
 					splitLine[11], splitLine[12],
 					splitLine[13], splitLine[14], splitLine[15], splitLine[16], splitLine[17],
 					splitLine[18], splitLine[19], splitLine[20], splitLine[21], splitLine[22]);
 
-			// check enum and add to right table
 			students.add(s);
 		}
-		else {//parse table break line and set enum
+		else {// Parse table break line and set enum (we've hit a new table)
 			splitLine[1] = splitLine[1].replace(" ", "");
 
 			switch(splitLine[1]) {
@@ -190,12 +224,21 @@ public class Parser {
 		}
 	}
 
+	/**
+	 * Parses the remainder tables, namely non-VUW students
+	 * @param sc
+	 */
 	private void parseOtherStudents(Scanner sc) {
 		while (sc.hasNextLine()) {
 			otherStudents.add(sc.nextLine());
 		}
 	}
 
+	/**
+	 * Parses a string representation of a date and returns a Date object
+	 * @param date String representation of a date
+	 * @return A Date object
+	 */
 	private Date parseDate(String date) {
 		int startDateYear = Integer.parseInt(date.substring(0, 3));
 		int startDateMonth = Integer.parseInt(date.substring(4, 5));
@@ -205,6 +248,11 @@ public class Parser {
 		return d;
 	}
 
+	/**
+	 * Parses a preferences file and returns an ArrayList of Modes specified in the file
+	 * @param filename
+	 * @return ArrayList of Modes
+	 */
 	private ArrayList<Mode> parsePreferences(String filename) {
 		ArrayList<Mode> modes = new ArrayList<Mode>();
 		try {
@@ -231,18 +279,27 @@ public class Parser {
 		return modes;
 	}
 
-	public void writeToHeadersFile(Preferences prefs) throws IOException {
+	/**
+	 * Uses a Preferences object to write to the preferences file
+	 * @param prefs
+	 * @throws IOException
+	 */
+	public void writeToPreferencesFile(Preferences prefs) throws IOException {
 		//load preferences file
 
 		PrintWriter pw = new PrintWriter(new FileWriter(new File("headers.txt")));
 		//pw.flush();
-
+		//pw.println()
 
 
 		pw.close();
 	}
 
-	//TODO: add space on either side back to file
+	/**
+	 * Uses a PhDData object to write to the Foswiki text file
+	 * @param data PhDData object
+	 * @throws IOException
+	 */
 	public void writeToFile(PhDData data) throws IOException {
 		UnderExamination ue = data.getUnderExamination();
 		CurrentFullyRegistered cfs = data.getCurrentFullyRegistered();
@@ -253,12 +310,13 @@ public class Parser {
 		PrintWriter pw = new PrintWriter(new FileWriter(new File("output.txt")));
 		//pw.flush();
 
+		// Write titles
 		pw.println(titling[0]);
 		pw.println(titling[1]);
 		pw.println(titling[2]);
 		pw.println(titling[3]);
 
-		//String headerString = "| *";
+		// Write headers
 		String headerString = "|";
 		for (String s : headers) {
 			if (!s.isEmpty()) {
@@ -269,6 +327,7 @@ public class Parser {
 
 		pw.println(headerString);
 
+		// Write tables
 		pw.println("| UNDER EXAMINATION ||||||||||||||||||||||");
 		for (Student s : ue.getStudents()) {
 			pw.println(s.toFoswiki());
