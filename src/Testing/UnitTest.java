@@ -405,8 +405,8 @@ public class UnitTest {
 	@Test
 	public void testParser(){
 		CurrentFullyRegistered cfr = (CurrentFullyRegistered)parserSetup();
-		System.out.println(cfr.getHeaders()+"");
 		if(cfr ==  null) {fail();}
+		System.out.println(cfr.getHeaders()+"");
 		for(Student s : cfr.getStudents()){
 			if(s == null) {fail();}
 			String arr[];
