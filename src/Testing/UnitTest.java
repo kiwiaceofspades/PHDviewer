@@ -10,6 +10,7 @@ import System.CurrentFullyRegistered;
 import System.CurrentProvisionallyRegisteredStudents;
 import System.ECSStudent;
 import System.NotFullyAdmitted;
+import System.Parser;
 import System.PhDData;
 import System.PhDProposalUnderExamination;
 import System.PhDTable;
@@ -61,6 +62,31 @@ public class UnitTest {
 		stues.add(student1);
 		stues.add(student2);
 
+	}
+
+	public void setupHeaders(){
+		headers.add("Name");
+		headers.add("ID");
+		headers.add("Degree");
+		headers.add("EFTS");
+		headers.add("Primary Supervisor");
+		headers.add("Supervision Split");
+		headers.add("Secondary Supervisor");
+		headers.add("Supervision Split");
+		headers.add("Third Supervisor");
+		headers.add("Supervision Split");
+		headers.add("Scholarship");
+		headers.add("Start Date");
+		headers.add("PhD Proposal Submission");
+		headers.add("PhD Proposal Seminar");
+		headers.add("PhD Proposal Confirmation Date");
+		headers.add("Suspension Dates");
+		headers.add("Thesis Submission + Examiners Appointed Date");
+		headers.add("FGR Completes Examination");
+		headers.add("Revisions Finalised");
+		headers.add("Deposited in Library");
+		headers.add("Notes");
+		headers.add("Origin");
 	}
 
 	public void addExtras(){
@@ -333,4 +359,65 @@ public class UnitTest {
 		phd.setPhDProposalUnderExamination(proUnderTable);
 		assertTrue(phd.sort("ID"));
 	}
+
+	@Test
+	public void testSort3(){
+		addToArrays();
+		PhDData phd = new PhDData(testFile);
+		try{
+			phd.sort("ID");
+			fail();
+		} catch (NullPointerException e ){ assertTrue(true);}
+	}
+
+	@Test
+	public void testSort4(){
+		addToArrays();
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		try{
+			phd.sort("ID");
+			fail();
+		} catch (NullPointerException e ){ assertTrue(true);}
+	}
+
+	@Test
+	public void testSort5(){
+		addToArrays();
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.setUnderExamination(underTable);
+		phd.setCurrentProvisionallyRegisteredStudents(provTable);
+		try{
+			phd.sort("ID");
+			fail();
+		} catch (NullPointerException e ){ assertTrue(true);}
+	}
+
+	public PhDTable parserSetup(){
+		setupHeaders();
+		PhDData phd = new PhDData("SanitizedStudentswNames.txt");
+		Parser p = new Parser("SanitizedStudentswNames.txt", phd );
+		System.out.println("phd "+phd.getUnderExamination());
+		return phd.getCurrentFullyRegistered();
+	}
+
+	@Test
+	public void testParser(){
+		CurrentFullyRegistered cfr = (CurrentFullyRegistered)parserSetup();
+		System.out.println(cfr.getHeaders()+"");
+		if(cfr ==  null) {fail();}
+		for(Student s : cfr.getStudents()){
+			if(s == null) {fail();}
+			String arr[];
+			arr = s.getValues(cfr.getHeaders().toArray(new String[0]));
+			for (String str : arr){
+				if (str == null){fail();}
+			}
+
+		}
+		assertTrue(true);
+
+	}
+
 }
