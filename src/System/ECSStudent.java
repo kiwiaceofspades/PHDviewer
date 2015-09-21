@@ -1,6 +1,8 @@
 package System;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 
 public class ECSStudent implements Student {
 
@@ -73,33 +75,70 @@ public class ECSStudent implements Student {
 		this.depositedInLibrary = depositedInLibrary;
 		this.notes = notes;
 		this.origin = origin;
+
+		this.timeSinceStartDate = generateTimeSinceStartDate();
+		checkToHighlight();
+	}
+
+
+
+	private void checkToHighlight() {
+		// logic to check if entry should be highlighted
+		if(timeSinceStartDate == 173){
+			isHighlighted = true;
+		}
+	}
+
+
+
+	/**
+	 *
+	 * @return
+	 */
+	private int generateTimeSinceStartDate() {
+		// get current date
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar calobj = Calendar.getInstance();
+		String currentDateString = dateFormat.format(calobj.getTime());
+		String formattedCurrentDate = currentDateString.substring(0, 10).replace("/", "");
+		Date currentDate = convertToDate(formattedCurrentDate);
+
+		// Now lets calculate the time since the startDate
+		if(startDate.isConverted() == false){
+			// The startDate has been correctly formatted, therefore time cannot be calculated
+			return 0;
+		}
+
+		int days = currentDate.since(startDate);
+		System.out.println("Days since: " + days);
+		return days;
 	}
 
 	/*
 	 * Date gets parsed as a String. convertToDate converts the String into a Date object
 	 */
-	private Date convertToDate(String startDate) {
-		startDate = startDate.trim();
+	private Date convertToDate(String dateArgument) {
+		dateArgument = dateArgument.trim();
 		Date date = null;
 		int year = -1;
 		int month = -1;
 		int day = -1;
 
 		// Format of string YYYYMMDD
-		if(startDate.length() != 8){
-			date = new Date(startDate);
+		if(dateArgument.length() != 8){
+			date = new Date(dateArgument);
 			isIncorrectlyFormatted = true;
-			System.out.println("Not correct length " + startDate);
+			System.out.println("Not correct length " + dateArgument);
 			return date;
 		}
 
 		int mode = 0; // 0 = year, 1 = month, 2 = day
 		int pointer = 0;
 		char[] buffer = new char[4];
-		for(int i = 0; i<startDate.length(); i++){
-			char character = startDate.charAt(i);
+		for(int i = 0; i<dateArgument.length(); i++){
+			char character = dateArgument.charAt(i);
 			if(Character.isDigit(character) == false){
-				date = new Date(startDate);
+				date = new Date(dateArgument);
 				isIncorrectlyFormatted = true;
 				return date;
 			}

@@ -25,7 +25,7 @@ public abstract class PhDTable {
 	public ArrayList<String> getHeaders() {
 		ArrayList<String> headersFormatted = new ArrayList<String>();
 		for(int i = 0; i<headers.size(); i++){
-			headersFormatted.set(i, formatHeader(headers.get(i)));
+			headersFormatted.add(i, formatHeader(headers.get(i)));
 		}
 		return headersFormatted;
 	}
