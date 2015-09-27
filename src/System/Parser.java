@@ -143,6 +143,7 @@ public class Parser {
 			for (String s : splitHeaders) {
 				if(s.isEmpty() || s.matches("^\\s*$")) {
 					//System.out.print("----------");
+					continue;
 				}
 				s = s.replace("* ", "");
 				s = s.replace(" *", "");
@@ -269,8 +270,9 @@ public class Parser {
 				for (String s : splitHeaders) {
 					if(s.isEmpty() || s.matches("^\\s*$")) {
 						//System.out.print("----------");
+						continue;
 					}
-					System.out.println(s);
+					System.out.println("Parser prefs: " + s);
 					modeHeaderList.add(s);
 					String[] modeHeaderArray = new String[modeHeaderList.size()];
 					modeHeaderList.toArray(modeHeaderArray);
@@ -328,7 +330,7 @@ public class Parser {
 		String headerString = "|";
 		for (String s : headers) {
 			if (!s.isEmpty()) {
-				System.out.println(s);
+				//System.out.println(s);
 				headerString += " *" + s + "* |";
 			}
 		}
