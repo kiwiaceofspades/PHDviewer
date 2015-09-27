@@ -234,7 +234,7 @@ public class PhDData {
 			// The user has changed the date (or the date has always been) in the incorrect format
 			date = student[11][1];
 		}
-		
+
 		// TODO
 		// A problem exists where date is passed as a DATE object, and not a
 		// string...
@@ -461,6 +461,20 @@ public class PhDData {
 			System.out.println("Can't find the table " + table
 					+ " to toggle the student's mark");
 		}
+	}
+
+	public String[] getHeaders() {
+		String[] headers = new String[notFullyAdmitted.getHeaders().size()];
+
+		for(int i = 0; i<notFullyAdmitted.getHeaders().size(); i++){
+			headers[i] = notFullyAdmitted.getHeaders().get(i);
+		}
+
+		return headers;
+	}
+
+	public Preferences getPreferences() {
+		return preferences;
 	}
 
 }
