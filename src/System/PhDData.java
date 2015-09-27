@@ -19,7 +19,7 @@ public class PhDData {
 	private Parser parser;
 
 	public PhDData(String filename) {
-		parser = new Parser(filename, this);
+		parser = new Parser(filename, this, preferences);
 	}
 
 	public UnderExamination getUnderExamination() {
@@ -119,6 +119,8 @@ public class PhDData {
 	 * @return boolean of whether the student was moved successfully
 	 */
 	public boolean moveStudent(String[][] student, String table) {
+		// Need to check which table the student is in, so we can remove the student from
+		// that table and assign it to the new one
 		int studentID = Integer.parseInt(student[1][1]);
 		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			Student studentMoved = notFullyAdmitted.removeStudent(studentID);
@@ -174,10 +176,8 @@ public class PhDData {
 	 * @return boolean as to whether the student was added or not
 	 */
 	public boolean addEntry(String[][] student, String table) {
-		// Find the student
 		if (student.length != 22) {
-			System.out
-					.println("Entry to add is a different size than expected!");
+			System.out.println("Entry to add is a different size than expected!");
 			return false;
 			// throw some sort of error?
 		}
