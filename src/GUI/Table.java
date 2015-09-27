@@ -3,16 +3,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EventObject;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JLabel;
@@ -25,7 +20,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 
 import System.CurrentFullyRegistered;
 import System.CurrentProvisionallyRegisteredStudents;
@@ -56,7 +50,7 @@ public class Table extends JPanel {
 	 * Headers that will be use in showing the data in the
 	 * PHData the fullHEad is a back up in case nothing was passed
 	 */
-	public final String[] fullHead = {"Name", "ID", "Degree","EFTS","Primary Supervisor", "Supervision Split 1",
+	public String[] fullHead = {"Name", "ID", "Degree","EFTS","Primary Supervisor", "Supervision Split 1",
 			"Secondary Supervisor","Supervision Split 2","Third Supervisor",
 			"Supervision Split 3","Scholarship", "Start Date",
 			"PhD Proposal Submission", "PhD Proposal Seminar",
@@ -88,8 +82,8 @@ public class Table extends JPanel {
 
 	private JScrollPane Scroll;
 
-
-
+	private String sortedBy = "";
+	private int SortedColumn = -1;
 
 	/**
 	 *
@@ -98,11 +92,11 @@ public class Table extends JPanel {
 	 * @param host Is a link to the HOST frame of this panel used for
 	 *  call back and passing information arround the program
 	 */
-	public Table (PhDData dATA2, String[] Header, PhDViewer host){
+	public Table (PhDData dATA2, String[] Header, String[] FULLHead, PhDViewer host){
 
 		HOST = host;
 		DATA =dATA2;
-
+		if(FULLHead!= null)fullHead = FULLHead;
 
 		if( Header == null) {
 			CurrentHead = fullHead;
@@ -122,6 +116,13 @@ public class Table extends JPanel {
 	 *
 	 */
 	public void setupTable() {
+		
+		for(int i=0; i<CurrentHead.length;i++){
+			if(CurrentHead[i].equalsIgnoreCase(sortedBy)){
+				SortedColumn= i;
+			}
+		}
+
 
 		if(Scroll!=null){
 			this.remove(Scroll);
@@ -245,9 +246,10 @@ public class Table extends JPanel {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println("Click CurrentFullyRegistered");
+					//System.out.println("Click CurrentFullyRegistered");
 					int col = CurrentFullyRegisteredTable.columnAtPoint(e.getPoint());
 					String head = CurrentFullyRegisteredTable.getColumnName(col);
+					sortedBy = head;
 					DATA.sort(head);
 					setupTable();
 				}
@@ -282,9 +284,10 @@ public class Table extends JPanel {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println("Click Not Fully Admitted");
+					//System.out.println("Click Not Fully Admitted");
 					int col = NotFullyAdmittedTable.columnAtPoint(e.getPoint());
 					String head = NotFullyAdmittedTable.getColumnName(col);
+					sortedBy = head;
 					DATA.sort(head);
 					setupTable();
 				}
@@ -322,6 +325,7 @@ public class Table extends JPanel {
 					System.out.println("Click PhD Proposal Under Examination");
 					int col = PhDProposalUnderExaminationTable.columnAtPoint(e.getPoint());
 					String head = PhDProposalUnderExaminationTable.getColumnName(col);
+					sortedBy = head;
 					DATA.sort(head);
 					setupTable();
 				}
@@ -359,6 +363,7 @@ public class Table extends JPanel {
 					System.out.println("Click Current Provisionally Registered Students");
 					int col = CurrentProvisionallyRegisteredStudentsTable.columnAtPoint(e.getPoint());
 					String head = CurrentProvisionallyRegisteredStudentsTable.getColumnName(col);
+					sortedBy = head;
 					DATA.sort(head);
 					setupTable();
 
@@ -397,6 +402,7 @@ public class Table extends JPanel {
 					System.out.println("Click Under Examination");
 					int col = UnderExaminationTable.columnAtPoint(e.getPoint());
 					String head = UnderExaminationTable.getColumnName(col);
+					sortedBy = head;
 					DATA.sort(head);
 					setupTable();
 				}
@@ -700,11 +706,6 @@ public class Table extends JPanel {
 	 */
 	public void Edit(String[][] axis, String table) {
 		DATA.makeChanges('e',axis,table);
-		System.out.println("Edit");
-		//		for(String[] a: axis){
-		//			System.out.println(a[0] +"= "+a[1]);
-		//		}
-
 		setupTable();
 
 	}
@@ -800,27 +801,37 @@ private class Render extends DefaultTableCellRenderer{
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		  Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		 
+		  
 		  if(YELLOW[row]==1){
 			  cell.setBackground(Color.YELLOW);
 			  cell.setForeground(Color.BLACK);
+			  
 		  }else if(RED[row]==1){
 			  cell.setBackground(Color.RED);
 			  cell.setForeground(Color.white);
 		  }else {
 			  cell.setBackground(Color.WHITE);
 			  cell.setForeground(Color.BLACK);
+			  if(column== SortedColumn){
+				cell.setBackground(Color.LIGHT_GRAY);  
+			  }
 		  }
 
 		  if(PURPLE[row] ==1){
 			  cell.setBackground(new Color(102,51,153));
 			  cell.setForeground(Color.white);
 		  } else if(RED[row]==1 ||YELLOW[row]==1){
-
+			  
 		  }else{
 		  	cell.setBackground(Color.WHITE);
 		  	cell.setForeground(Color.BLACK);
+		  	if(column== SortedColumn){
+				cell.setBackground(Color.LIGHT_GRAY);  
+			  }
 			}
-
+		  
+		  
 
 	    return cell;
 	}

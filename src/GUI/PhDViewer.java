@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import System.PhDData;
@@ -29,7 +30,7 @@ public class PhDViewer extends JFrame {
 	 *
 	 */
 	private static final long serialVersionUID = 1770606247378958128L;
-	//private JFrame Me = this;
+	private JFrame Me;
 	private Table Table;
 	private PhDData DATA;
 	private InfoPanel Info;
@@ -37,14 +38,17 @@ public class PhDViewer extends JFrame {
 	private JButton Add,remove;
 	private String currentTable;
 	private String ExtraPanel = "Info";
-			private String last="";
+	private String last="";
 
 	public PhDViewer(String string, PhDData pas) {
 
 		super(string);
+		Me = this;
 		DATA = pas;
 		this.setMinimumSize(new Dimension(800,600));
-		Table = new Table(DATA,null, this);
+		Table = new Table(DATA,
+				DATA.getPreferences().getHeadersForMode("default")
+				,DATA.getHeaders(), this);
 		Info = new InfoPanel(this.getSize(),this);
 		Head = new HeaderPanel(this.getSize(),this);
 		setLayout(new BorderLayout());
@@ -210,10 +214,10 @@ public class PhDViewer extends JFrame {
 			if(last.equals("Info")){
 				add(Info, BorderLayout.EAST);
 				ExtraPanel = "Info";
-				}
+			}
 			if(last.equals("Header")){
 				add(Head,BorderLayout.EAST);
-			ExtraPanel = "Header";
+				ExtraPanel = "Header";
 			}
 			last = "";
 		}else{
@@ -226,31 +230,31 @@ public class PhDViewer extends JFrame {
 	}
 
 
-		public void ResetSize(){
-			hidePanel();
-			Dimension size = getSize();
-			//Table
-			Dimension HeaderSize = new Dimension(size);
-			HeaderSize.width = (HeaderSize.width/3)*1;
-			HeaderSize.height = HeaderSize.height-50;
-			System.out.println("HEADERSIZE "+HeaderSize.toString());
-			System.out.println("Window Size "+size.toString());
-			Head.setSizeOverride(HeaderSize);
+	public void ResetSize(){
+		hidePanel();
+		Dimension size = getSize();
+		//Table
+		Dimension HeaderSize = new Dimension(size);
+		HeaderSize.width = (HeaderSize.width/3)*1;
+		HeaderSize.height = HeaderSize.height-50;
+		System.out.println("HEADERSIZE "+HeaderSize.toString());
+		System.out.println("Window Size "+size.toString());
+		Head.setSizeOverride(HeaderSize);
+		Info.setSizeOverride(HeaderSize);
+		System.out.println("Info Size "+Info.getSize().toString());
+		System.out.println("Head Size "+Head.getSize().toString());
+		if((Info.getSize().width!=0) && !(Info.getSize().width==HeaderSize.width)){
+			System.out.println("Info check");
 			Info.setSizeOverride(HeaderSize);
-			System.out.println("Info Size "+Info.getSize().toString());
-			System.out.println("Head Size "+Head.getSize().toString());
-			if((Info.getSize().width!=0) && !(Info.getSize().width==HeaderSize.width)){
-				System.out.println("Info check");
-				Info.setSizeOverride(HeaderSize);
-			}
-			if((Head.getSize().width!=0) && !(Head.getSize().width==HeaderSize.width)){
-				System.out.println("head check");
-				Head.setSizeOverride(HeaderSize);
-			}
-			validate();
-			hidePanel();
-
 		}
+		if((Head.getSize().width!=0) && !(Head.getSize().width==HeaderSize.width)){
+			System.out.println("head check");
+			Head.setSizeOverride(HeaderSize);
+		}
+		validate();
+		hidePanel();
+
+	}
 
 	/**
 	 * Called by the InfoPanel to declare that it wants to make
@@ -282,7 +286,7 @@ public class PhDViewer extends JFrame {
 
 		@Override
 		public void windowStateChanged(WindowEvent e) {
-			System.out.println("1");
+
 		}
 		@Override
 		public void windowOpened(WindowEvent e) {
@@ -291,9 +295,14 @@ public class PhDViewer extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 
-			DATA.writeToFoswiki();
-			System.out.println("Death To all Monkeys");
-			System.exit(0);
+			int answer = JOptionPane.showConfirmDialog(Me, "Would you like to save!!","Confirm Saving",JOptionPane.YES_NO_OPTION);
+			if(answer == 0){
+				DATA.writeToFoswiki();
+				System.exit(0);
+			} else if(answer == 1){
+				System.exit(0);
+			}
+
 		}
 		@Override
 		public void windowClosed(WindowEvent e) {

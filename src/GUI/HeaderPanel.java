@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import System.PhDData;
@@ -59,15 +60,31 @@ public class HeaderPanel extends JPanel {
 			}
 
 		});
-
 		this.add(button);
+		String[] t= HEADS.getPreferences().getNamesOfModes();
+		JComboBox ListofPreferences = new JComboBox(t);
+		ListofPreferences.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+				String list = (String) cb.getSelectedItem();
+				UpdateInfo(fullList,HEADS.getPreferences().getHeadersForMode(list));
+			}
+
+		});
+
+
+
+
+
 	}
 
 	public void UpdateInfo(String[] full, String[] current) {
 		if(Panel != null)remove(Panel);
 		Panel = new JPanel();
 		Panel.setLayout(new GridLayout(0,2));
-		
+
 		fullList = full;
 		TreeSet<heads> Treetemp = new TreeSet<heads>();
 		for(int i=0 ; i<current.length;i++){
