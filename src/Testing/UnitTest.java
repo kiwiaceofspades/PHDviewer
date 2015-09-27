@@ -26,8 +26,8 @@ public class UnitTest {
 	private String fullyRegiTable = "currentFullyRegistered";
 	private String underExamTable = "UnderExamination";
 
-	private Student student1 = new ECSStudent("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
-	private Student student2 = new ECSStudent("Harry", 1232, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "14/08/2015", "31/10/2015", "Prolly", "25/15/2016", "", "01/01/2017", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
+	private Student student1 = new ECSStudent("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "20150930", "20151031", "Prolly", "20160225", "", "20170101", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
+	private Student student2 = new ECSStudent("Harry", 1232, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "20150930", "20151031", "Prolly", "20160225", "", "20170101", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
 	private Student student3 = new ECSStudent("Alistair Eichler", 1, "COMP690", "EFTSdata", "Person:JamesNoble", "50%", "Person:NicholasCameron", "50%", "", "",  "Telstra Clear Postgraduate Scholarship", "20090427", " SUBMITTED", "PRESENTED",  "CONFIRMED", "20150116", "", "20150518", "", "", " Revisions: 20150901.", "D");
 	private Student student4 = new ECSStudent("Homer Simpson", 5, "NWEN690", "", "Person:IanWelch", "70%", " Person:WinstonSeah", " 30%", "", "", "", "20100719", "20120904", "20121019" , "20121220" ,"20130601 - 20130630 , 20130801 - 20130913, 20150101 - 20150228 ", "", "", "", "", "Expected submission date: 20150531.", "I ");
 
@@ -119,7 +119,7 @@ public class UnitTest {
 
 	}
 
-	//test that add works
+	//test that add works and should fail on this
 	@Test
 	public void test1(){
 		addToArrays();
@@ -155,6 +155,7 @@ public class UnitTest {
 			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
 		}
+		stu[11][1] = "20150202";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
@@ -218,12 +219,14 @@ public class UnitTest {
 			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
 		}
+		stu[11][1] = "20150815";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
 		assertTrue(phd.makeChanges('e', stu, fullyRegiTable));
 	}
 
+	//make changes should fail
 	@Test
 	public void test6(){
 		addToArrays();
@@ -394,7 +397,7 @@ public class UnitTest {
 		} catch (NullPointerException e ){ assertTrue(true);}
 	}
 
-	public PhDTable parserSetup(){
+	public CurrentFullyRegistered currentFullySetup(){
 		setupHeaders();
 		PhDData phd = new PhDData("SanitizedStudentswNames.txt");
 		Parser p = new Parser("SanitizedStudentswNames.txt", phd );
@@ -402,9 +405,12 @@ public class UnitTest {
 		return phd.getCurrentFullyRegistered();
 	}
 
+
+	//Irrelevant tests now
+	/**
 	@Test
 	public void testParser(){
-		CurrentFullyRegistered cfr = (CurrentFullyRegistered)parserSetup();
+		CurrentFullyRegistered cfr = currentFullySetup();
 		if(cfr ==  null) {fail();}
 		System.out.println(cfr.getHeaders()+"");
 		for(Student s : cfr.getStudents()){
@@ -419,5 +425,6 @@ public class UnitTest {
 		assertTrue(true);
 
 	}
+	*/
 
 }
