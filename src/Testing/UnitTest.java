@@ -336,8 +336,114 @@ public class UnitTest {
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
 		int[] wrong = phd.getIncorrectlyFormated(fullyRegiTable);
-		assertTrue(wrong[0]==0);
+		assertTrue(wrong[2]==0);
 	}
+
+	//test removing
+	@Test
+	public void test15(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(regiTable.removeStudent(1236)!=null);
+	}
+
+	//test removing
+	@Test
+	public void test16(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		assertFalse(regiTable.removeStudent(123)!=null);
+	}
+
+	//find student
+	@Test
+	public void test17(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(regiTable.findStudent(1236)!=-1);
+	}
+
+	//find student
+	@Test
+	public void test18(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(regiTable.findStudent(1236)==0);
+	}
+	//find student
+	@Test
+	public void test19(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		assertTrue(regiTable.findStudent(123)==-1);
+	}
+
+	//Test for marking students
+	@Test
+	public void test20(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		regiTable.toggleMark(1236);
+		assertTrue(regiTable.getStudents().get(0).isMarked());
+	}
+
+	@Test
+	public void test21(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		regiTable.toggleMark(1236);
+		assertFalse(regiTable.getStudents().get(1).isMarked());
+	}
+
 
 	//test for sorting
 	@Test
