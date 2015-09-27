@@ -19,6 +19,7 @@ public class PhDData {
 	private Parser parser;
 
 	public PhDData(String filename) {
+		preferences = new Preferences();
 		parser = new Parser(filename, this, preferences);
 	}
 

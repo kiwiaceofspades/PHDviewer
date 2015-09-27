@@ -17,9 +17,13 @@ public class Preferences {
 		this.viewingModes = viewingModes;
 	}
 
+	public Preferences(){
+		this.viewingModes = new ArrayList<Mode>();
+	}
+
 	public String[] getHeadersForMode(String mode){
 		for(int i = 0; i<viewingModes.size(); i++){
-			if(viewingModes.get(i).getName().equals(mode)){
+			if(viewingModes.get(i).getName().equalsIgnoreCase(mode)){
 				return viewingModes.get(i).getHeaders();
 			}
 		}
@@ -42,7 +46,7 @@ public class Preferences {
 
 	public boolean deleteMode(String name){
 		for(int i = 0; i<viewingModes.size(); i++){
-			if(viewingModes.get(i).getName().equals(name)){
+			if(viewingModes.get(i).getName().equalsIgnoreCase(name)){
 				viewingModes.remove(i);
 				return true;
 			}
