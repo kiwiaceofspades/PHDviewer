@@ -120,7 +120,7 @@ public class PhDData {
 	 * @return
 	 */
 	private boolean removeEntry(String[][] student, String table) {
-		//
+		System.out.println("Remove functionality not implemented yet");
 		return false;
 	}
 
@@ -138,48 +138,28 @@ public class PhDData {
 	public boolean moveStudent(String[][] student, String table) {
 		// Need to check which table the student is in, so we can remove the student from
 		// that table and assign it to the new one
-		int studentID = Integer.parseInt(student[1][1]);
-		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
-			Student studentMoved = notFullyAdmitted.removeStudent(studentID);
-			if (studentMoved != null) {
-				return currentProvisionallyRegisteredStudents
-						.addStudent(studentMoved);
-			}
-			// throw error?
-			System.out.println("Couldn't move Student with ID: " + studentID);
-		} else if (table
-				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
-			Student studentMoved = currentProvisionallyRegisteredStudents
-					.removeStudent(studentID);
-			if (studentMoved != null) {
-				return phDProposalUnderExamination.addStudent(studentMoved);
-			}
-			// throw error?
-			System.out.println("Couldn't move Student with ID: " + studentID);
-		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
-			Student studentMoved = phDProposalUnderExamination
-					.removeStudent(studentID);
-			if (studentMoved != null) {
-				return currentFullyRegistered.addStudent(studentMoved);
-			}
-			// throw error?
-			System.out.println("Couldn't move Student with ID: " + studentID);
-		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
-			Student studentMoved = currentFullyRegistered
-					.removeStudent(studentID);
-			if (studentMoved != null) {
-				return underExamination.addStudent(studentMoved);
-			}
-			// throw error?
-			System.out.println("Couldn't move Student with ID: " + studentID);
-		} else if (table.equalsIgnoreCase("UnderExamination")) {
-			Student studentMoved = underExamination.removeStudent(studentID);
-			// Possible print something out?
-			// throw error?
-			System.out.println("Couldn't move Student with ID: " + studentID);
+		int studentID = Integer.parseInt(findValueForHeader("ID", student));
+		PhDTable phDTable = getTable(table);
+		Student studentMoved = phDTable.removeStudent(studentID);
+		// If null, then student didn't exist, therefore don't move
+		if(studentMoved == null){
+			return false;
 		}
-		System.out.println("Can't find the table " + table
-				+ " to move the student from");
+		// Now add it to the new table
+		switch(table){
+			case "NotFullyAdmitted":
+				return notFullyAdmitted.addStudent(studentMoved);
+			case "CurrentProvisionallyRegisteredStudents":
+				return currentProvisionallyRegisteredStudents.addStudent(studentMoved);
+			case "PhDProposalUnderExamination":
+				return phDProposalUnderExamination.addStudent(studentMoved);
+			case "CurrentFullyRegistered":
+				return currentFullyRegistered.addStudent(studentMoved);
+			case "UnderExamination":
+				return underExamination.addStudent(studentMoved);
+			default:
+				System.out.println("Couldn't find table: " + table + " to move Student from");
+		}
 		return false;
 	}
 
@@ -193,18 +173,7 @@ public class PhDData {
 	 * @return boolean as to whether the student was added or not
 	 */
 	public boolean addEntry(String[][] student, String table) {
-		if (student.length != 22) {
-			System.out.println("Entry to add is a different size than expected!");
-			return false;
-			// throw some sort of error?
-		}
-		Student toAdd = new ECSStudent(student[0][1],
-				Integer.parseInt(student[1][1]), student[2][1], student[3][1],
-				student[4][1], student[5][1], student[6][1], student[7][1],
-				student[8][1], student[9][1], student[10][1], student[11][1],
-				student[12][1], student[13][1], student[14][1], student[15][1],
-				student[16][1], student[17][1], student[18][1], student[19][1],
-				student[20][1], student[21][1]);
+		Student toAdd = new ECSStudent(student);
 		// Now add it to the right table
 		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			return notFullyAdmitted.addStudent(toAdd);
@@ -234,23 +203,12 @@ public class PhDData {
 	 * @return boolean as to whether or not the student was edited successfully
 	 */
 	public boolean editEntry(String[][] student, String table) {
-		if (student.length != 22) {
-			System.out
-					.println("Entry to change is a different size than expected!");
-			return false;
-			// throw some sort of error?
-		}
-		int studentID = Integer.parseInt(student[1][1]);
-		int index = -1;
+		Student toAdd = new ECSStudent(student);
+		int studentID = Integer.parseInt(findValueForHeader("ID", student));
 
-		String date;
-		// Problem, the date that the GUI uses is not the correct format!
-		try{
-			date = convertDate(student[11][1]);
-		} catch (StringIndexOutOfBoundsException e){
-			// The user has changed the date (or the date has always been) in the incorrect format
-			date = student[11][1];
-		}
+		// Now send the edit command to the correct table
+		PhDTable phDTable = getTable(table);
+		return phDTable.editStudent(toAdd, studentID);
 
 		// TODO
 		// A problem exists where date is passed as a DATE object, and not a
@@ -261,30 +219,6 @@ public class PhDData {
 		// class
 		// which gets implemented by the calls which implements the Student
 		// class
-
-		Student toAdd = new ECSStudent(student[0][1], studentID, student[2][1],
-				student[3][1], student[4][1], student[5][1], student[6][1],
-				student[7][1], student[8][1], student[9][1], student[10][1],
-				date, student[12][1], student[13][1], student[14][1],
-				student[15][1], student[16][1], student[17][1], student[18][1],
-				student[19][1], student[20][1], student[21][1]);
-
-		// Now send the edit command to the correct table
-		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
-			return notFullyAdmitted.editStudent(toAdd, studentID);
-		} else if (table
-				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
-			return currentProvisionallyRegisteredStudents.editStudent(toAdd,
-					studentID);
-		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
-			return phDProposalUnderExamination.editStudent(toAdd, studentID);
-		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
-			return currentFullyRegistered.editStudent(toAdd, studentID);
-		} else if (table.equalsIgnoreCase("UnderExamination")) {
-			return underExamination.editStudent(toAdd, studentID);
-		}
-		System.out.println("Couldn't find " + table + " to add entry to");
-		return false;
 
 	}
 
@@ -363,23 +297,8 @@ public class PhDData {
 	 *         marked.
 	 */
 	public int[] getMarked(String table) {
-		int[] marked;
-		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
-			marked = notFullyAdmitted.getMarked();
-		} else if (table
-				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
-			marked = currentProvisionallyRegisteredStudents.getMarked();
-		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
-			marked = phDProposalUnderExamination.getMarked();
-		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
-			marked = currentFullyRegistered.getMarked();
-		} else if (table.equalsIgnoreCase("UnderExamination")) {
-			marked = underExamination.getMarked();
-		} else {
-			System.out.println("Couldn't get Marked for " + table);
-			return null;
-		}
-		return marked;
+		PhDTable phDTable = getTable(table);
+		return phDTable.getMarked();
 	}
 
 	/**
@@ -396,27 +315,8 @@ public class PhDData {
 	 *         formatted.
 	 */
 	public int[] getIncorrectlyFormated(String table) {
-		int[] incorrectlyFormatted;
-		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
-			incorrectlyFormatted = notFullyAdmitted.getIncorrectlyFormatted();
-		} else if (table
-				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
-			incorrectlyFormatted = currentProvisionallyRegisteredStudents
-					.getIncorrectlyFormatted();
-			;
-		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
-			incorrectlyFormatted = phDProposalUnderExamination
-					.getIncorrectlyFormatted();
-		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
-			incorrectlyFormatted = currentFullyRegistered
-					.getIncorrectlyFormatted();
-		} else if (table.equalsIgnoreCase("UnderExamination")) {
-			incorrectlyFormatted = underExamination.getIncorrectlyFormatted();
-		} else {
-			System.out.println("Couldn't get Highlighted for " + table);
-			return null;
-		}
-		return incorrectlyFormatted;
+		PhDTable phDTable = getTable(table);
+		return phDTable.getIncorrectlyFormatted();
 	}
 
 	/**
@@ -433,7 +333,6 @@ public class PhDData {
 	 *         marked.
 	 */
 	public int[] getHighlighted(String table) {
-		int[] highlighted;
 		PhDTable phDTable = getTable(table);
 		return phDTable.getHighlighted();
 	}
@@ -447,7 +346,7 @@ public class PhDData {
 	 *            that contains the student
 	 */
 	public void toggleMark(String[][] student, String table) {
-		int studentID = Integer.parseInt(student[1][1]);
+		int studentID = Integer.parseInt(findValueForHeader("ID", student));
 		PhDTable phDTable = getTable(table);
 		phDTable.toggleMark(studentID);
 	}
@@ -480,6 +379,20 @@ public class PhDData {
 		}
 
 		return headers;
+	}
+
+	public String findValueForHeader(String header, String[][] student){
+		// Go through the student object looking for header ID
+		String value = null;
+		for(int i = 0; i<student.length; i++){
+			if(student[i][0].equalsIgnoreCase(header)){
+				value = student[i][1];
+			}
+		}
+		if(value == null){
+			System.out.println("Couldn't find value for header: " + header);
+		}
+		return value;
 	}
 
 	public Preferences getPreferences() {

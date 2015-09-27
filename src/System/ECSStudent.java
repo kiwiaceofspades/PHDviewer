@@ -80,7 +80,95 @@ public class ECSStudent implements Student {
 		checkToHighlight();
 	}
 
+	public ECSStudent(String[][] headersAndValues){
+		String value = null;
+		int valueInt = 0;
+		Date valueDate = null;
 
+		value = findValueForHeader("Name", headersAndValues);
+		this.name = value;
+
+		valueInt = Integer.parseInt(findValueForHeader("ID", headersAndValues));
+		this.id = valueInt;
+
+		value = findValueForHeader("Degree", headersAndValues);
+		this.degree = value;
+
+		value = findValueForHeader("EFTS", headersAndValues);
+		this.efts = value;
+
+		value = findValueForHeader("Primary Supervisor", headersAndValues);
+		this.primarySupervisor = value;
+
+		value = findValueForHeader("Supervision Split 1", headersAndValues);
+		this.supervisionSplit1 = value;
+
+		value = findValueForHeader("Secondary Supervisor", headersAndValues);
+		this.secondarySupervisor = value;
+
+		value = findValueForHeader("Supervision Split 2", headersAndValues);
+		this.supervisionSplit2 = value;
+
+		value = findValueForHeader("Third Supervisor", headersAndValues);
+		this.thirdSupervisor = value;
+
+		value = findValueForHeader("Supervision Split 3", headersAndValues);
+		this.supervisionSplit3 = value;
+
+		value = findValueForHeader("Scholarship", headersAndValues);
+		this.scholarship = value;
+
+		value = findValueForHeader("Start Date", headersAndValues);
+		valueDate = convertToDate(convertDateString(value));
+		this.startDate = valueDate;
+
+		value = findValueForHeader("PhD Proposal Submission", headersAndValues);
+		this.phdProposalSubmission = value;
+
+		value = findValueForHeader("PhD Proposal Seminar", headersAndValues);
+		this.phdProposalSeminar = value;
+
+		value = findValueForHeader("PhD Proposal Confirmation Date", headersAndValues);
+		this.phdProposalConfirmationDate = value;
+
+		value = findValueForHeader("Suspension Dates", headersAndValues);
+		this.suspensionDates = value;
+
+		value = findValueForHeader("Thesis Submission And Examiners Appointed Date", headersAndValues);
+		this.thesisSubmissionAndExaminersAppointedDate = value;
+
+		value = findValueForHeader("FGR Completes Examination", headersAndValues);
+		this.supervisionSplit3 = value;
+
+		value = findValueForHeader("Revisions Finalised", headersAndValues);
+		this.revisionsFinalised = value;
+
+		value = findValueForHeader("Deposited In Library", headersAndValues);
+		this.depositedInLibrary = value;
+
+		value = findValueForHeader("Origin", headersAndValues);
+		this.origin = value;
+
+		value = findValueForHeader("Notes", headersAndValues);
+		this.notes = value;
+
+		this.timeSinceStartDate = generateTimeSinceStartDate();
+		checkToHighlight();
+	}
+
+	public String findValueForHeader(String header, String[][] student){
+		// Go through the student object looking for header ID
+		String value = null;
+		for(int i = 0; i<student.length; i++){
+			if(student[i][0].equalsIgnoreCase(header)){
+				value = student[i][1];
+			}
+		}
+		if(value == null){
+			System.out.println("Couldn't find value for header: " + header);
+		}
+		return value;
+	}
 
 	private void checkToHighlight() {
 		// logic to check if entry should be highlighted
@@ -89,7 +177,22 @@ public class ECSStudent implements Student {
 		}
 	}
 
-
+	/**
+	 * When editing a student, the date the GUI holds needs to be a date that
+	 * the student object recognizes
+	 *
+	 * @param date
+	 * @return
+	 */
+	public String convertDateString(String date) throws StringIndexOutOfBoundsException {
+		// format here is dd-mm-yyyy. needs to be format yyyymmdd
+		// TODO error checking to make sure date is of correct format... in case
+		// the user changes it
+		String day = date.substring(0, 2);
+		String month = date.substring(3, 5);
+		String year = date.substring(6, 10);
+		return year + month + day;
+	}
 
 	/**
 	 *
