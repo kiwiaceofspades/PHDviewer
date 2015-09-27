@@ -31,40 +31,21 @@ public class UnitTest {
 	private Student student3 = new ECSStudent("Alistair Eichler", 1, "COMP690", "EFTSdata", "Person:JamesNoble", "50%", "Person:NicholasCameron", "50%", "", "",  "Telstra Clear Postgraduate Scholarship", "20090427", " SUBMITTED", "PRESENTED",  "CONFIRMED", "20150116", "", "20150518", "", "", " Revisions: 20150901.", "D");
 	private Student student4 = new ECSStudent("Homer Simpson", 5, "NWEN690", "", "Person:IanWelch", "70%", " Person:WinstonSeah", " 30%", "", "", "", "20100719", "20120904", "20121019" , "20121220" ,"20130601 - 20130630 , 20130801 - 20130913, 20150101 - 20150228 ", "", "", "", "", "Expected submission date: 20150531.", "I ");
 
-
-
 	private ArrayList<Student> stues = new ArrayList<Student>();
 	private ArrayList<String> headers = new ArrayList<String>();
 
-	public void addToArrays(){
-		headers.add("Name");
-		headers.add("ID");
-		headers.add("Degree");
-		headers.add("EFTS");
-		headers.add("Primary Supervisor");
-		headers.add("Supervision Split");
-		headers.add("Secondary Supervisor");
-		headers.add("Supervision Split");
-		headers.add("Third Supervisor");
-		headers.add("Supervision Split");
-		headers.add("Scholarship");
-		headers.add("Start Date");
-		headers.add("PhD Proposal Submission");
-		headers.add("PhD Proposal Seminar");
-		headers.add("PhD Proposal Confirmation Date");
-		headers.add("Suspension Dates");
-		headers.add("Thesis Submission + Examiners Appointed Date");
-		headers.add("FGR Completes Examination");
-		headers.add("Revisions Finalised");
-		headers.add("Deposited in Library");
-		headers.add("Notes");
-		headers.add("Origin");
+	//adds some students to the table.
+	private void addToArrays(){
+		setupHeaders();
 		stues.add(student1);
 		stues.add(student2);
-
 	}
 
-	public void setupHeaders(){
+	/**
+	 * This can be called on its own.
+	 */
+	private void setupHeaders(){
+		headers.add("Total Time Taken");
 		headers.add("Name");
 		headers.add("ID");
 		headers.add("Degree");
@@ -89,7 +70,8 @@ public class UnitTest {
 		headers.add("Origin");
 	}
 
-	public void addExtras(){
+	//must be called after either setupHeaders or addToArrays as this doesn't set up the headers and addToArrays does.
+	private void addExtras(){
 		stues.add(student3);
 		stues.add(student4);
 	}
@@ -155,7 +137,7 @@ public class UnitTest {
 			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
 		}
-		stu[11][1] = "20150202";
+		stu[11][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
@@ -315,7 +297,46 @@ public class UnitTest {
 			phd.addEntry(null, null);
 			fail();
 		} catch (NullPointerException e ){assertTrue(true);}
+	}
 
+	//test that the convertDate works
+	@Test
+	public void test12(){
+		addToArrays();
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		assertEquals(phd.convertDate("25-02-2015"), "20150225");
+	}
+
+	//tests that incorrect format is working
+	@Test
+	public void test13(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		int[] wrong = phd.getIncorrectlyFormated(fullyRegiTable);
+		System.out.println("Wrong : " + wrong.length);
+		assertTrue(wrong[2]==1);
+	}
+
+	@Test
+	public void test14(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][0] = ""+i;
+			stu[i][1] = ""+i;
+		}
+		stu[11][1] = "20150225";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		int[] wrong = phd.getIncorrectlyFormated(fullyRegiTable);
+		assertTrue(wrong[0]==0);
 	}
 
 	//test for sorting
@@ -397,13 +418,15 @@ public class UnitTest {
 		} catch (NullPointerException e ){ assertTrue(true);}
 	}
 
-	public CurrentFullyRegistered currentFullySetup(){
+	private CurrentFullyRegistered currentFullySetup(){
 		setupHeaders();
 		PhDData phd = new PhDData("SanitizedStudentswNames.txt");
 		Parser p = new Parser("SanitizedStudentswNames.txt", phd );
 		System.out.println("phd "+phd.getUnderExamination());
 		return phd.getCurrentFullyRegistered();
 	}
+
+
 
 
 	//Irrelevant tests now
@@ -425,6 +448,6 @@ public class UnitTest {
 		assertTrue(true);
 
 	}
-	*/
+	 */
 
 }
