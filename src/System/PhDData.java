@@ -18,44 +18,56 @@ public class PhDData {
 
 	private Parser parser;
 
-	public PhDData(String filename){
+	public PhDData(String filename) {
 		parser = new Parser(filename, this);
 	}
 
 	public UnderExamination getUnderExamination() {
 		return underExamination;
 	}
+
 	public void setUnderExamination(UnderExamination underExamination) {
 		this.underExamination = underExamination;
 	}
+
 	public CurrentFullyRegistered getCurrentFullyRegistered() {
 		return currentFullyRegistered;
 	}
-	public void setCurrentFullyRegistered(CurrentFullyRegistered currentFullyRegistered) {
+
+	public void setCurrentFullyRegistered(
+			CurrentFullyRegistered currentFullyRegistered) {
 		this.currentFullyRegistered = currentFullyRegistered;
 	}
+
 	public CurrentProvisionallyRegisteredStudents getCurrentProvisionallyRegisteredStudents() {
 		return currentProvisionallyRegisteredStudents;
 	}
+
 	public void setCurrentProvisionallyRegisteredStudents(
 			CurrentProvisionallyRegisteredStudents currentProvisionallyRegisteredStudents) {
 		this.currentProvisionallyRegisteredStudents = currentProvisionallyRegisteredStudents;
 	}
+
 	public NotFullyAdmitted getNotFullyAdmitted() {
 		return notFullyAdmitted;
 	}
+
 	public void setNotFullyAdmitted(NotFullyAdmitted notFullyAdmitted) {
 		this.notFullyAdmitted = notFullyAdmitted;
 	}
+
 	public OtherUniversities getOtherUniversities() {
 		return otherUniversities;
 	}
+
 	public void setOtherUniversities(OtherUniversities otherUniversities) {
 		this.otherUniversities = otherUniversities;
 	}
+
 	public OtherSchoolsAtVUW getOtherSchoolsAtVUW() {
 		return otherSchoolsAtVUW;
 	}
+
 	public void setOtherSchoolsAtVUW(OtherSchoolsAtVUW otherSchoolsAtVUW) {
 		this.otherSchoolsAtVUW = otherSchoolsAtVUW;
 	}
@@ -71,109 +83,124 @@ public class PhDData {
 
 	/**
 	 * Method called by GUI to make change to the data in the system.
-	 * @param type of change to make
-	 * @param student to make the change on
-	 * @param table that contains the student to make the change on
+	 *
+	 * @param type
+	 *            of change to make
+	 * @param student
+	 *            to make the change on
+	 * @param table
+	 *            that contains the student to make the change on
 	 * @return boolean of whether the change was made or not
 	 */
-	public boolean makeChanges(char type, String[][] student, String table){
-		switch(type){
-			case 'a':
-				// add a new entry
-				return addEntry(student, table);
-			case 'e':
-				// edit a entry that already exists
-				return editEntry(student, table);
-			default:
-				// type of change not accepted
-				System.out.println("Change of type: " + type + " not allowed");
-				return false;
+	public boolean makeChanges(char type, String[][] student, String table) {
+		switch (type) {
+		case 'a':
+			// add a new entry
+			return addEntry(student, table);
+		case 'e':
+			// edit a entry that already exists
+			return editEntry(student, table);
+		default:
+			// type of change not accepted
+			System.out.println("Change of type: " + type + " not allowed");
+			return false;
 		}
 	}
 
 	// NB: ID should not be hide-able.
 	/**
-	 * Moves the student from the current table it is in, to the table above (table order is hardcoded)
-	 * @param student that is to be moved
-	 * @param table that contains the student that is being moved
+	 * Moves the student from the current table it is in, to the table above
+	 * (table order is hardcoded)
+	 *
+	 * @param student
+	 *            that is to be moved
+	 * @param table
+	 *            that contains the student that is being moved
 	 * @return boolean of whether the student was moved successfully
 	 */
-	public boolean moveStudent(String[][] student, String table){
+	public boolean moveStudent(String[][] student, String table) {
 		int studentID = Integer.parseInt(student[1][1]);
-		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			Student studentMoved = notFullyAdmitted.removeStudent(studentID);
-			if(studentMoved != null){
-				return currentProvisionallyRegisteredStudents.addStudent(studentMoved);
+			if (studentMoved != null) {
+				return currentProvisionallyRegisteredStudents
+						.addStudent(studentMoved);
 			}
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
-		}
-		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
-			Student studentMoved = currentProvisionallyRegisteredStudents.removeStudent(studentID);
-			if(studentMoved != null){
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
+			Student studentMoved = currentProvisionallyRegisteredStudents
+					.removeStudent(studentID);
+			if (studentMoved != null) {
 				return phDProposalUnderExamination.addStudent(studentMoved);
 			}
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
-		}
-		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
-			Student studentMoved = phDProposalUnderExamination.removeStudent(studentID);
-			if(studentMoved != null){
+		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
+			Student studentMoved = phDProposalUnderExamination
+					.removeStudent(studentID);
+			if (studentMoved != null) {
 				return currentFullyRegistered.addStudent(studentMoved);
 			}
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
-		}
-		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
-			Student studentMoved = currentFullyRegistered.removeStudent(studentID);
-			if(studentMoved != null){
+		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
+			Student studentMoved = currentFullyRegistered
+					.removeStudent(studentID);
+			if (studentMoved != null) {
 				return underExamination.addStudent(studentMoved);
 			}
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
-		}
-		else if(table.equalsIgnoreCase("UnderExamination")){
+		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			Student studentMoved = underExamination.removeStudent(studentID);
 			// Possible print something out?
 			// throw error?
 			System.out.println("Couldn't move Student with ID: " + studentID);
 		}
-		System.out.println("Can't find the table " + table + " to move the student from");
+		System.out.println("Can't find the table " + table
+				+ " to move the student from");
 		return false;
 	}
 
 	/**
 	 * Adds a student into a table
-	 * @param student to be added
-	 * @param table that the student is to be added to
+	 *
+	 * @param student
+	 *            to be added
+	 * @param table
+	 *            that the student is to be added to
 	 * @return boolean as to whether the student was added or not
 	 */
-	public boolean addEntry(String[][] student, String table){
+	public boolean addEntry(String[][] student, String table) {
 		// Find the student
-		if(student.length != 22){
-			System.out.println("Entry to add is a different size than expected!");
+		if (student.length != 22) {
+			System.out
+					.println("Entry to add is a different size than expected!");
 			return false;
 			// throw some sort of error?
 		}
-		Student toAdd = new ECSStudent(student[0][1], Integer.parseInt(student[1][1]), student[2][1], student[3][1], student[4][1], student[5][1], student[6][1],
-				student[7][1], student[8][1], student[9][1], student[10][1], student[11][1], student[12][1], student[13][1], student[14][1], student[15][1],
-				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
+		Student toAdd = new ECSStudent(student[0][1],
+				Integer.parseInt(student[1][1]), student[2][1], student[3][1],
+				student[4][1], student[5][1], student[6][1], student[7][1],
+				student[8][1], student[9][1], student[10][1], student[11][1],
+				student[12][1], student[13][1], student[14][1], student[15][1],
+				student[16][1], student[17][1], student[18][1], student[19][1],
+				student[20][1], student[21][1]);
 		// Now add it to the right table
-		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			return notFullyAdmitted.addStudent(toAdd);
-		}
-		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
 			return currentProvisionallyRegisteredStudents.addStudent(toAdd);
-		}
-		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
 			return phDProposalUnderExamination.addStudent(toAdd);
-		}
-		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
 			return currentFullyRegistered.addStudent(toAdd);
-		}
-		else if(table.equalsIgnoreCase("UnderExamination")){
+		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			System.out.println("To add : " + toAdd.toFoswiki());
-			System.out.println("Under exam : "+underExamination);
+			System.out.println("Under exam : " + underExamination);
 			return underExamination.addStudent(toAdd);
 		}
 		System.out.println("Couldn't find " + table + " to add entry to");
@@ -182,46 +209,61 @@ public class PhDData {
 
 	/**
 	 * Edits a existing student in a table
-	 * @param student to be edited
-	 * @param table that contains the student that is to be edited.
+	 *
+	 * @param student
+	 *            to be edited
+	 * @param table
+	 *            that contains the student that is to be edited.
 	 * @return boolean as to whether or not the student was edited successfully
 	 */
-	public boolean editEntry(String[][] student, String table){
-		if(student.length != 22){
-			System.out.println("Entry to change is a different size than expected!");
+	public boolean editEntry(String[][] student, String table) {
+		if (student.length != 22) {
+			System.out
+					.println("Entry to change is a different size than expected!");
 			return false;
 			// throw some sort of error?
 		}
 		int studentID = Integer.parseInt(student[1][1]);
 		int index = -1;
 
+		String date;
 		// Problem, the date that the GUI uses is not the correct format!
-		String date = convertDate(student[11][1]);
-
+		try{
+			date = convertDate(student[11][1]);
+		} catch (StringIndexOutOfBoundsException e){
+			// The user has changed the date (or the date has always been) in the incorrect format
+			date = student[11][1];
+		}
+		
 		// TODO
-		// A problem exists where date is passed as a DATE object, and not a string...
-		// For now, I will just convert the date object into a string, but in future
-		// the formation of this toAdd student should occur with the Student class
-		// which gets implemented by the calls which implements the Student class
+		// A problem exists where date is passed as a DATE object, and not a
+		// string...
+		// For now, I will just convert the date object into a string, but in
+		// future
+		// the formation of this toAdd student should occur with the Student
+		// class
+		// which gets implemented by the calls which implements the Student
+		// class
 
-		Student toAdd = new ECSStudent(student[0][1], studentID, student[2][1], student[3][1], student[4][1], student[5][1], student[6][1],
-				student[7][1], student[8][1], student[9][1], student[10][1], date, student[12][1], student[13][1], student[14][1], student[15][1],
-				student[16][1], student[17][1], student[18][1], student[19][1], student[20][1], student[21][1]);
+		Student toAdd = new ECSStudent(student[0][1], studentID, student[2][1],
+				student[3][1], student[4][1], student[5][1], student[6][1],
+				student[7][1], student[8][1], student[9][1], student[10][1],
+				date, student[12][1], student[13][1], student[14][1],
+				student[15][1], student[16][1], student[17][1], student[18][1],
+				student[19][1], student[20][1], student[21][1]);
 
 		// Now send the edit command to the correct table
-		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			return notFullyAdmitted.editStudent(toAdd, studentID);
-		}
-		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
-			return currentProvisionallyRegisteredStudents.editStudent(toAdd, studentID);
-		}
-		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
+			return currentProvisionallyRegisteredStudents.editStudent(toAdd,
+					studentID);
+		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
 			return phDProposalUnderExamination.editStudent(toAdd, studentID);
-		}
-		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
 			return currentFullyRegistered.editStudent(toAdd, studentID);
-		}
-		else if(table.equalsIgnoreCase("UnderExamination")){
+		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			return underExamination.editStudent(toAdd, studentID);
 		}
 		System.out.println("Couldn't find " + table + " to add entry to");
@@ -230,23 +272,26 @@ public class PhDData {
 	}
 
 	/**
-	 * When editing a student, the date the GUI holds needs to be a date that the student object recognizes
+	 * When editing a student, the date the GUI holds needs to be a date that
+	 * the student object recognizes
+	 *
 	 * @param date
 	 * @return
 	 */
-	public String convertDate(String date){
+	public String convertDate(String date) throws StringIndexOutOfBoundsException {
 		// format here is dd-mm-yyyy. needs to be format yyyymmdd
-		// TODO error checking to make sure date is of correct format... in case the user changes it
+		// TODO error checking to make sure date is of correct format... in case
+		// the user changes it
 		String day = date.substring(0, 2);
 		String month = date.substring(3, 5);
 		String year = date.substring(6, 10);
-		return year+month+day;
+		return year + month + day;
 	}
 
 	/**
 	 * Writes all the data to a foswiki file. Called when the program is closed.
 	 */
-	public void writeToFoswiki(){
+	public void writeToFoswiki() {
 		try {
 			parser.writeToFile(this);
 		} catch (IOException e) {
@@ -259,28 +304,30 @@ public class PhDData {
 
 	/**
 	 * Sorts every table by the header provided
-	 * @param header that each table should be sorted by
+	 *
+	 * @param header
+	 *            that each table should be sorted by
 	 * @return boolean as to whether the table was successfully sorted or not
 	 */
-	public boolean sort(String header){
+	public boolean sort(String header) {
 		// Will only for ecs student for now
-		if(!underExamination.sort(header)){
+		if (!underExamination.sort(header)) {
 			System.out.println("Couldn't sort");
 			return false;
 		}
-		if(!notFullyAdmitted.sort(header)){
+		if (!notFullyAdmitted.sort(header)) {
 			System.out.println("Couldn't sort");
 			return false;
 		}
-		if(!currentProvisionallyRegisteredStudents.sort(header)){
+		if (!currentProvisionallyRegisteredStudents.sort(header)) {
 			System.out.println("Couldn't sort");
 			return false;
 		}
-		if(!phDProposalUnderExamination.sort(header)){
+		if (!phDProposalUnderExamination.sort(header)) {
 			System.out.println("Couldn't sort");
 			return false;
 		}
-		if(!currentFullyRegistered.sort(header)){
+		if (!currentFullyRegistered.sort(header)) {
 			System.out.println("Couldn't sort");
 			return false;
 		}
@@ -288,30 +335,30 @@ public class PhDData {
 	}
 
 	/**
-	 * Returns an array of integers. Array contains which students in a specific table are marked.
-	 * The index of the student entry in the returned array matches up with the index of corresponding student
-	 * in the table. 1 = student is marked. 0 = student is not marked.
-	 * @param table that you want to check
-	 * @return int[] that contains what students should and should not be marked.
+	 * Returns an array of integers. Array contains which students in a specific
+	 * table are marked. The index of the student entry in the returned array
+	 * matches up with the index of corresponding student in the table. 1 =
+	 * student is marked. 0 = student is not marked.
+	 *
+	 * @param table
+	 *            that you want to check
+	 * @return int[] that contains what students should and should not be
+	 *         marked.
 	 */
-	public int[] getMarked(String table){
+	public int[] getMarked(String table) {
 		int[] marked;
-		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			marked = notFullyAdmitted.getMarked();
-		}
-		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
 			marked = currentProvisionallyRegisteredStudents.getMarked();
-		}
-		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
 			marked = phDProposalUnderExamination.getMarked();
-		}
-		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
 			marked = currentFullyRegistered.getMarked();
-		}
-		else if(table.equalsIgnoreCase("UnderExamination")){
+		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			marked = underExamination.getMarked();
-		}
-		else {
+		} else {
 			System.out.println("Couldn't get Marked for " + table);
 			return null;
 		}
@@ -319,31 +366,36 @@ public class PhDData {
 	}
 
 	/**
-	 * Returns an array of integers. Array contains which students in a specific table have fields that are incorrectly formated.
-	 * Usually bad formatting is on a date entry.
-	 * The index of the student entry in the returned array matches up with the index of corresponding student in the table.
-	 * 1 = student has a field that is incorrectly formated. 0 = student is does not have a field that is incorrectly formatted.
-	 * @param table that you want to check
-	 * @return int[] that contains what students are and are not incorrectly formatted.
+	 * Returns an array of integers. Array contains which students in a specific
+	 * table have fields that are incorrectly formated. Usually bad formatting
+	 * is on a date entry. The index of the student entry in the returned array
+	 * matches up with the index of corresponding student in the table. 1 =
+	 * student has a field that is incorrectly formated. 0 = student is does not
+	 * have a field that is incorrectly formatted.
+	 *
+	 * @param table
+	 *            that you want to check
+	 * @return int[] that contains what students are and are not incorrectly
+	 *         formatted.
 	 */
-	public int[] getIncorrectlyFormated(String table){
+	public int[] getIncorrectlyFormated(String table) {
 		int[] incorrectlyFormatted;
-		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			incorrectlyFormatted = notFullyAdmitted.getIncorrectlyFormatted();
-		}
-		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
-			incorrectlyFormatted = currentProvisionallyRegisteredStudents.getIncorrectlyFormatted();;
-		}
-		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
-			incorrectlyFormatted = phDProposalUnderExamination.getIncorrectlyFormatted();
-		}
-		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
-			incorrectlyFormatted = currentFullyRegistered.getIncorrectlyFormatted();
-		}
-		else if(table.equalsIgnoreCase("UnderExamination")){
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
+			incorrectlyFormatted = currentProvisionallyRegisteredStudents
+					.getIncorrectlyFormatted();
+			;
+		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
+			incorrectlyFormatted = phDProposalUnderExamination
+					.getIncorrectlyFormatted();
+		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
+			incorrectlyFormatted = currentFullyRegistered
+					.getIncorrectlyFormatted();
+		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			incorrectlyFormatted = underExamination.getIncorrectlyFormatted();
-		}
-		else {
+		} else {
 			System.out.println("Couldn't get Highlighted for " + table);
 			return null;
 		}
@@ -351,31 +403,33 @@ public class PhDData {
 	}
 
 	/**
-	 * Returns an array of integers. Array contains which students in a specific table are highlighted.
-	 * An entry will be highlighted if it needs attention (which is calculated using logic provided within the Student class).
-	 * The index of the student entry in the returned array matches up with the index of corresponding student
-	 * in the table. 1 = student should be highlighted . 0 = student is not marked.
-	 * @param table that you want to check
-	 * @return int[] that contains what students should and should not be marked.
+	 * Returns an array of integers. Array contains which students in a specific
+	 * table are highlighted. An entry will be highlighted if it needs attention
+	 * (which is calculated using logic provided within the Student class). The
+	 * index of the student entry in the returned array matches up with the
+	 * index of corresponding student in the table. 1 = student should be
+	 * highlighted . 0 = student is not marked.
+	 *
+	 * @param table
+	 *            that you want to check
+	 * @return int[] that contains what students should and should not be
+	 *         marked.
 	 */
-	public int[] getHighlighted(String table){
+	public int[] getHighlighted(String table) {
 		int[] highlighted;
-		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			highlighted = notFullyAdmitted.getHighlighted();
-		}
-		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
-			highlighted = currentProvisionallyRegisteredStudents.getHighlighted();
-		}
-		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
+			highlighted = currentProvisionallyRegisteredStudents
+					.getHighlighted();
+		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
 			highlighted = phDProposalUnderExamination.getHighlighted();
-		}
-		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
 			highlighted = currentFullyRegistered.getHighlighted();
-		}
-		else if(table.equalsIgnoreCase("UnderExamination")){
+		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			highlighted = underExamination.getHighlighted();
-		}
-		else {
+		} else {
 			System.out.println("Couldn't get Highlighted for " + table);
 			return null;
 		}
@@ -384,28 +438,28 @@ public class PhDData {
 
 	/**
 	 * Toggles the marked field on a student in a specific table
-	 * @param student that you want to mark (or unmark)
-	 * @param table that contains the student
+	 *
+	 * @param student
+	 *            that you want to mark (or unmark)
+	 * @param table
+	 *            that contains the student
 	 */
-	public void toggleMark(String[][] student, String table){
+	public void toggleMark(String[][] student, String table) {
 		int studentID = Integer.parseInt(student[1][1]);
-		if(table.equalsIgnoreCase("NotFullyAdmitted")){
+		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			notFullyAdmitted.toggleMark(studentID);
-		}
-		else if(table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
 			currentProvisionallyRegisteredStudents.toggleMark(studentID);
-		}
-		else if(table.equalsIgnoreCase("PhDProposalUnderExamination")){
+		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
 			phDProposalUnderExamination.toggleMark(studentID);
-		}
-		else if(table.equalsIgnoreCase("CurrentFullyRegistered")){
+		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
 			currentFullyRegistered.toggleMark(studentID);
-		}
-		else if(table.equalsIgnoreCase("UnderExamination")){
+		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			underExamination.toggleMark(studentID);
-		}
-		else{
-			System.out.println("Can't find the table " + table + " to toggle the student's mark");
+		} else {
+			System.out.println("Can't find the table " + table
+					+ " to toggle the student's mark");
 		}
 	}
 
