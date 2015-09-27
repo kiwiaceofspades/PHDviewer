@@ -1,12 +1,9 @@
 package System;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -69,7 +66,7 @@ public class Parser {
 		data.setNotFullyAdmitted(notFullyAdmitted);
 
 		// Populate empty Preferences object
-		pref.setModes(parsePreferences("header.txt"));
+		pref.setModes(parsePreferences("preferences.txt"));
 	}
 
 	/**
@@ -271,6 +268,7 @@ public class Parser {
 					if(s.isEmpty() || s.matches("^\\s*$")) {
 						//System.out.print("----------");
 					}
+					System.out.println(s);
 					modeHeaderList.add(s);
 					String[] modeHeaderArray = (String[]) modeHeaderList.toArray();
 					modes.add(new Mode(splitHeaders[0], modeHeaderArray));
@@ -292,7 +290,7 @@ public class Parser {
 	public void writeToPreferencesFile(Preferences prefs) throws IOException {
 		ArrayList<String> formattedPrefs = prefs.toFoswiki();
 
-		PrintWriter pw = new PrintWriter(new FileWriter(new File("headers.txt")));
+		PrintWriter pw = new PrintWriter(new FileWriter(new File("preferences.txt")));
 		//pw.flush();
 
 		for (String line : formattedPrefs) {
