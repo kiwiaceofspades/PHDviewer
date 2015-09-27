@@ -113,10 +113,11 @@ public class PhDData {
 
 	/**
 	 * Removes the student from the current table it is in
+	 *
 	 * @param student
-	 * 			that is to be removed
+	 *            that is to be removed
 	 * @param table
-	 * 			from where the student will be removed from
+	 *            from where the student will be removed from
 	 * @return
 	 */
 	private boolean removeEntry(String[][] student, String table) {
@@ -136,29 +137,32 @@ public class PhDData {
 	 * @return boolean of whether the student was moved successfully
 	 */
 	public boolean moveStudent(String[][] student, String table) {
-		// Need to check which table the student is in, so we can remove the student from
+		// Need to check which table the student is in, so we can remove the
+		// student from
 		// that table and assign it to the new one
 		int studentID = Integer.parseInt(findValueForHeader("ID", student));
 		PhDTable phDTable = getTable(table);
 		Student studentMoved = phDTable.removeStudent(studentID);
 		// If null, then student didn't exist, therefore don't move
-		if(studentMoved == null){
+		if (studentMoved == null) {
 			return false;
 		}
 		// Now add it to the new table
-		switch(table){
-			case "NotFullyAdmitted":
-				return notFullyAdmitted.addStudent(studentMoved);
-			case "CurrentProvisionallyRegisteredStudents":
-				return currentProvisionallyRegisteredStudents.addStudent(studentMoved);
-			case "PhDProposalUnderExamination":
-				return phDProposalUnderExamination.addStudent(studentMoved);
-			case "CurrentFullyRegistered":
-				return currentFullyRegistered.addStudent(studentMoved);
-			case "UnderExamination":
-				return underExamination.addStudent(studentMoved);
-			default:
-				System.out.println("Couldn't find table: " + table + " to move Student from");
+		switch (table) {
+		case "NotFullyAdmitted":
+			return notFullyAdmitted.addStudent(studentMoved);
+		case "CurrentProvisionallyRegisteredStudents":
+			return currentProvisionallyRegisteredStudents
+					.addStudent(studentMoved);
+		case "PhDProposalUnderExamination":
+			return phDProposalUnderExamination.addStudent(studentMoved);
+		case "CurrentFullyRegistered":
+			return currentFullyRegistered.addStudent(studentMoved);
+		case "UnderExamination":
+			return underExamination.addStudent(studentMoved);
+		default:
+			System.out.println("Couldn't find table: " + table
+					+ " to move Student from");
 		}
 		return false;
 	}
@@ -209,17 +213,6 @@ public class PhDData {
 		// Now send the edit command to the correct table
 		PhDTable phDTable = getTable(table);
 		return phDTable.editStudent(toAdd, studentID);
-
-		// TODO
-		// A problem exists where date is passed as a DATE object, and not a
-		// string...
-		// For now, I will just convert the date object into a string, but in
-		// future
-		// the formation of this toAdd student should occur with the Student
-		// class
-		// which gets implemented by the calls which implements the Student
-		// class
-
 	}
 
 	/**
@@ -229,7 +222,8 @@ public class PhDData {
 	 * @param date
 	 * @return
 	 */
-	public String convertDate(String date) throws StringIndexOutOfBoundsException {
+	public String convertDate(String date)
+			throws StringIndexOutOfBoundsException {
 		// format here is dd-mm-yyyy. needs to be format yyyymmdd
 		// TODO error checking to make sure date is of correct format... in case
 		// the user changes it
@@ -351,11 +345,12 @@ public class PhDData {
 		phDTable.toggleMark(studentID);
 	}
 
-	public PhDTable getTable(String table){
+	public PhDTable getTable(String table) {
 		PhDTable phDTable = null;
 		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			phDTable = notFullyAdmitted;
-		} else if (table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
+		} else if (table
+				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
 			phDTable = currentProvisionallyRegisteredStudents;
 		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
 			phDTable = phDProposalUnderExamination;
@@ -373,7 +368,7 @@ public class PhDData {
 	public String[] getHeaders() {
 		String[] headers = new String[notFullyAdmitted.getHeaders().size()];
 
-		for(int i = 0; i<notFullyAdmitted.getHeaders().size(); i++){
+		for (int i = 0; i < notFullyAdmitted.getHeaders().size(); i++) {
 			headers[i] = notFullyAdmitted.getHeaders().get(i);
 			System.out.println("Header: " + headers[i]);
 		}
@@ -381,15 +376,15 @@ public class PhDData {
 		return headers;
 	}
 
-	public String findValueForHeader(String header, String[][] student){
+	public String findValueForHeader(String header, String[][] student) {
 		// Go through the student object looking for header ID
 		String value = null;
-		for(int i = 0; i<student.length; i++){
-			if(student[i][0].equalsIgnoreCase(header)){
+		for (int i = 0; i < student.length; i++) {
+			if (student[i][0].equalsIgnoreCase(header)) {
 				value = student[i][1];
 			}
 		}
-		if(value == null){
+		if (value == null) {
 			System.out.println("Couldn't find value for header: " + header);
 		}
 		return value;

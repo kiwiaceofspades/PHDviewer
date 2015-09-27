@@ -208,8 +208,6 @@ public class ECSStudent implements Student {
 		int month = Integer.parseInt(formattedCurrentDate.substring(4, 6));
 		int day = Integer.parseInt(formattedCurrentDate.substring(6, 8));
 		Date currentDate = new Date(day, month, year);
-
-
 		// Now lets calculate the time since the startDate
 		if(isIncorrectlyFormatted == true){
 			// The startDate has is incorrectly formatted, therefore time cannot be calculated
@@ -217,6 +215,8 @@ public class ECSStudent implements Student {
 		}
 
 		int days = currentDate.since(startDate);
+
+		days = days / 30;
 		return days;
 	}
 
@@ -345,7 +345,7 @@ public class ECSStudent implements Student {
 					value = "";
 					value = suspensionDates;
 					break;
-				case "Thesis Submission And Examiners Appointed Date":
+				case "Thesis Submission+Examiners Appointed Date":
 					value = thesisSubmissionAndExaminersAppointedDate;
 					break;
 				case "FGR Completes Examination":
@@ -362,6 +362,9 @@ public class ECSStudent implements Student {
 					break;
 				case "Origin":
 					value = origin;
+					break;
+				case "Total time taken":
+					value = "" + timeSinceStartDate;
 					break;
 				default:
 					value = null; // added as null cause it will cause an error, which makes the issue easily identifiable

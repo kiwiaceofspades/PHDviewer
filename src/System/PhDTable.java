@@ -221,6 +221,7 @@ public abstract class PhDTable {
 			typeBuffer = "Integer";
 		}
 
+
 		final String[] finalHeader = {header};
 		final String type = typeBuffer;
 		final int[] error = new int[1];
