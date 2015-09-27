@@ -295,7 +295,7 @@ public class PhDViewer extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 
-			int answer = JOptionPane.showConfirmDialog(Me, "Would you like to save!!","Confirm Saving",JOptionPane.YES_NO_OPTION);
+			int answer = JOptionPane.showConfirmDialog(Me, "Would you like to save?","Confirm Saving =)",JOptionPane.YES_NO_OPTION);
 			if(answer == 0){
 				DATA.writeToFoswiki();
 				System.exit(0);

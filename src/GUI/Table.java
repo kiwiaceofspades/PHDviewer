@@ -82,9 +82,13 @@ public class Table extends JPanel {
 
 	private JScrollPane Scroll;
 
-	private String sortedBy = "";
+	private String sortedBy = "none";
 	private int SortedColumn = -1;
 
+
+	private boolean started;
+
+	private int ScrollX,ScrollY;
 	/**
 	 *
 	 * @param dATA2 is a ArrayList of Students
@@ -93,7 +97,7 @@ public class Table extends JPanel {
 	 *  call back and passing information arround the program
 	 */
 	public Table (PhDData dATA2, String[] Header, String[] FULLHead, PhDViewer host){
-
+		started = false;
 		HOST = host;
 		DATA =dATA2;
 		if(FULLHead!= null)fullHead = FULLHead;
@@ -105,7 +109,7 @@ public class Table extends JPanel {
 			CurrentHead = Header;}
 
 		setupTable();
-
+		started = true;
 
 	}
 
@@ -116,7 +120,10 @@ public class Table extends JPanel {
 	 *
 	 */
 	public void setupTable() {
-		
+		if(started){
+			ScrollX = Scroll.getHorizontalScrollBar().getValue();
+			ScrollY = Scroll.getVerticalScrollBar().getValue();
+		}
 		for(int i=0; i<CurrentHead.length;i++){
 			if(CurrentHead[i].equalsIgnoreCase(sortedBy)){
 				SortedColumn= i;
@@ -196,6 +203,12 @@ public class Table extends JPanel {
 
 		this.setLayout(new BorderLayout());
 		add(Scroll,BorderLayout.CENTER);
+
+		if(started){
+			Scroll.getHorizontalScrollBar().setValue(ScrollX);
+			Scroll.getVerticalScrollBar().setValue(ScrollY);
+		}
+
 
 		validate();
 		repaint();
@@ -801,12 +814,12 @@ private class Render extends DefaultTableCellRenderer{
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		  Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		 
-		  
+
+
 		  if(YELLOW[row]==1){
 			  cell.setBackground(Color.YELLOW);
 			  cell.setForeground(Color.BLACK);
-			  
+
 		  }else if(RED[row]==1){
 			  cell.setBackground(Color.RED);
 			  cell.setForeground(Color.white);
@@ -814,7 +827,7 @@ private class Render extends DefaultTableCellRenderer{
 			  cell.setBackground(Color.WHITE);
 			  cell.setForeground(Color.BLACK);
 			  if(column== SortedColumn){
-				cell.setBackground(Color.LIGHT_GRAY);  
+				cell.setBackground(Color.LIGHT_GRAY);
 			  }
 		  }
 
@@ -822,16 +835,16 @@ private class Render extends DefaultTableCellRenderer{
 			  cell.setBackground(new Color(102,51,153));
 			  cell.setForeground(Color.white);
 		  } else if(RED[row]==1 ||YELLOW[row]==1){
-			  
+
 		  }else{
 		  	cell.setBackground(Color.WHITE);
 		  	cell.setForeground(Color.BLACK);
 		  	if(column== SortedColumn){
-				cell.setBackground(Color.LIGHT_GRAY);  
+				cell.setBackground(Color.LIGHT_GRAY);
 			  }
 			}
-		  
-		  
+
+
 
 	    return cell;
 	}
