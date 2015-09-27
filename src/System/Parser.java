@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // Author: Shreyas (ramasushre)
@@ -66,7 +67,8 @@ public class Parser {
 		data.setNotFullyAdmitted(notFullyAdmitted);
 
 		// Populate empty Preferences object
-		pref.setModes(parsePreferences("../preferences.txt"));
+		ArrayList<Mode> mode = parsePreferences("../preferences.txt");
+		pref.setModes(mode);
 	}
 
 	/**
@@ -270,7 +272,8 @@ public class Parser {
 					}
 					System.out.println(s);
 					modeHeaderList.add(s);
-					String[] modeHeaderArray = (String[]) modeHeaderList.toArray();
+					String[] modeHeaderArray = new String[modeHeaderList.size()];
+					modeHeaderList.toArray(modeHeaderArray);
 					modes.add(new Mode(splitHeaders[0], modeHeaderArray));
 				}
 			}
