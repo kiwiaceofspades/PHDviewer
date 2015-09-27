@@ -204,14 +204,17 @@ public class Table extends JPanel {
 		this.setLayout(new BorderLayout());
 		add(Scroll,BorderLayout.CENTER);
 
+	
+
+
+		validate();
+		
 		if(started){
 			Scroll.getHorizontalScrollBar().setValue(ScrollX);
 			Scroll.getVerticalScrollBar().setValue(ScrollY);
 		}
-
-
-		validate();
 		repaint();
+		
 
 	}
 
