@@ -21,7 +21,7 @@ public class Main {
 	 */
 	public static void main(String args[]){
 		if(args.length <= 0 ){//checks to make sure a file is specified
-				System.out.println("No file specified");
+			System.out.println("No file specified");
 		}
 		else{
 			File headers = new File("../preferences.txt");

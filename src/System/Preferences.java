@@ -17,6 +17,10 @@ public class Preferences {
 		this.viewingModes = viewingModes;
 	}
 
+	public Preferences(){
+		this.viewingModes = new ArrayList<Mode>();
+	}
+
 	public String[] getHeadersForMode(String mode){
 		for(int i = 0; i<viewingModes.size(); i++){
 			if(viewingModes.get(i).getName().equalsIgnoreCase(mode)){
