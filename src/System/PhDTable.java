@@ -23,11 +23,15 @@ public abstract class PhDTable {
 	}
 
 	public ArrayList<String> getHeaders() {
+		return headers;
+		// Previously used an arraylist of headers
+		/*
 		ArrayList<String> headersFormatted = new ArrayList<String>();
 		for(int i = 0; i<headers.size(); i++){
 			headersFormatted.add(i, formatHeader(headers.get(i)));
+
 		}
-		return headersFormatted;
+		return headersFormatted;*/
 	}
 
 	public String formatHeader(String header){

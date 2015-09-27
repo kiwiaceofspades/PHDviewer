@@ -101,11 +101,27 @@ public class PhDData {
 		case 'e':
 			// edit a entry that already exists
 			return editEntry(student, table);
+		case 'r':
+			// remove an entry
+			return removeEntry(student, table);
 		default:
 			// type of change not accepted
 			System.out.println("Change of type: " + type + " not allowed");
 			return false;
 		}
+	}
+
+	/**
+	 * Removes the student from the current table it is in
+	 * @param student
+	 * 			that is to be removed
+	 * @param table
+	 * 			from where the student will be removed from
+	 * @return
+	 */
+	private boolean removeEntry(String[][] student, String table) {
+		//
+		return false;
 	}
 
 	// NB: ID should not be hide-able.
@@ -418,23 +434,8 @@ public class PhDData {
 	 */
 	public int[] getHighlighted(String table) {
 		int[] highlighted;
-		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
-			highlighted = notFullyAdmitted.getHighlighted();
-		} else if (table
-				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
-			highlighted = currentProvisionallyRegisteredStudents
-					.getHighlighted();
-		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
-			highlighted = phDProposalUnderExamination.getHighlighted();
-		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
-			highlighted = currentFullyRegistered.getHighlighted();
-		} else if (table.equalsIgnoreCase("UnderExamination")) {
-			highlighted = underExamination.getHighlighted();
-		} else {
-			System.out.println("Couldn't get Highlighted for " + table);
-			return null;
-		}
-		return highlighted;
+		PhDTable phDTable = getTable(table);
+		return phDTable.getHighlighted();
 	}
 
 	/**
@@ -447,21 +448,27 @@ public class PhDData {
 	 */
 	public void toggleMark(String[][] student, String table) {
 		int studentID = Integer.parseInt(student[1][1]);
+		PhDTable phDTable = getTable(table);
+		phDTable.toggleMark(studentID);
+	}
+
+	public PhDTable getTable(String table){
+		PhDTable phDTable = null;
 		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
-			notFullyAdmitted.toggleMark(studentID);
-		} else if (table
-				.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
-			currentProvisionallyRegisteredStudents.toggleMark(studentID);
+			phDTable = notFullyAdmitted;
+		} else if (table.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")) {
+			phDTable = currentProvisionallyRegisteredStudents;
 		} else if (table.equalsIgnoreCase("PhDProposalUnderExamination")) {
-			phDProposalUnderExamination.toggleMark(studentID);
+			phDTable = phDProposalUnderExamination;
 		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
-			currentFullyRegistered.toggleMark(studentID);
+			phDTable = currentFullyRegistered;
 		} else if (table.equalsIgnoreCase("UnderExamination")) {
-			underExamination.toggleMark(studentID);
+			phDTable = underExamination;
 		} else {
 			System.out.println("Can't find the table " + table
 					+ " to toggle the student's mark");
 		}
+		return phDTable;
 	}
 
 	public String[] getHeaders() {
@@ -469,6 +476,7 @@ public class PhDData {
 
 		for(int i = 0; i<notFullyAdmitted.getHeaders().size(); i++){
 			headers[i] = notFullyAdmitted.getHeaders().get(i);
+			System.out.println("Header: " + headers[i]);
 		}
 
 		return headers;
