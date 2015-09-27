@@ -138,6 +138,8 @@ public class Parser {
 	 * @param line
 	 */
 	private void parseHeaders(String line) {
+		headers.add("Total time taken");
+		int count = 1;
 		String[] splitHeaders = line.split("\\|", 0);
 			for (String s : splitHeaders) {
 				if(s.isEmpty() || s.matches("^\\s*$")) {
@@ -145,6 +147,9 @@ public class Parser {
 				}
 				s = s.replace("* ", "");
 				s = s.replace(" *", "");
+				if (s.equalsIgnoreCase("Supervision Split")) {
+					s = s + " " + count++;
+				}
 				headers.add(s);
 				//System.out.println(s);
 			}
@@ -285,12 +290,14 @@ public class Parser {
 	 * @throws IOException
 	 */
 	public void writeToPreferencesFile(Preferences prefs) throws IOException {
-		//load preferences file
+		ArrayList<String> formattedPrefs = prefs.toFoswiki();
 
 		PrintWriter pw = new PrintWriter(new FileWriter(new File("headers.txt")));
 		//pw.flush();
-		//pw.println()
 
+		for (String line : formattedPrefs) {
+			pw.println(line);
+		}
 
 		pw.close();
 	}
