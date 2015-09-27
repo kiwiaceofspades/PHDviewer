@@ -398,6 +398,7 @@ public class UnitTest {
 		phd.addEntry(stu, fullyRegiTable);
 		assertTrue(regiTable.findStudent(1236)==0);
 	}
+
 	//find student
 	@Test
 	public void test19(){
