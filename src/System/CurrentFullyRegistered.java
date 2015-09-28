@@ -8,12 +8,7 @@ public class CurrentFullyRegistered extends PhDTable {
 			ArrayList<String> headers) {
 		super(students, headers);
 	}
-/*
-	@Override
-	public int[] getHighlighted() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-*/
+
+
 }

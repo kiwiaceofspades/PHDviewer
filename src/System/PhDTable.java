@@ -188,19 +188,6 @@ public abstract class PhDTable {
 	 * 0 = student entry should not be highlighted.
 	 * @return int[] of which student entries should be highlighted.
 	 */
-	/*public int[] getHighlighted(){
-		int[] highlighted = new int[students.size()];
-		for(int i = 0; i < students.size(); i++){
-			Student stud = students.get(i);
-			if(stud.isHighlighted() == true){
-				highlighted[i] = 1;
-			}
-			else{
-				highlighted[i] = 0;
-			}
-		}
-		return highlighted;
-	}*/
 
 	public int[] getHighlighted(){
 		// All entries do not need to be highlighted
