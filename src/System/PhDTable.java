@@ -220,6 +220,12 @@ public abstract class PhDTable {
 		if(header.equals("ID")){
 			typeBuffer = "Integer";
 		}
+		else if(header.contains("Supervision Split")){
+			typeBuffer = "Percentage";
+		}
+		else if(header.equals("Start Date")){
+			typeBuffer = "StDay";
+		}
 
 
 		final String[] finalHeader = {header};
@@ -241,6 +247,60 @@ public abstract class PhDTable {
 					// Just get the first entry
 					return o1value - o2value;
 				}
+				else if(type.equals("Percentage")){
+					String o1val = ((ECSStudent)o1).getValues(finalHeader)[0];
+					String o2val = ((ECSStudent)o2).getValues(finalHeader)[0];
+
+					//the following if statements are to keep it inline with the general contract
+					if(o1val.isEmpty() && o2val.isEmpty()){
+						return 0;
+					}
+					if(o1val.isEmpty()){
+						return -1;
+					}
+					if(o2val.isEmpty()){
+						return 1;
+					}
+					int o1value = Integer.parseInt(o1val.substring(0, o1val.length()-1));
+					int o2value = Integer.parseInt(o2val.substring(0, o2val.length()-1));
+					return o1value - o2value;
+
+				}
+				else if(type.equals("StDay")){
+					String o1val = ((ECSStudent)o1).getValues(finalHeader)[0];
+					String o2val = ((ECSStudent)o2).getValues(finalHeader)[0];
+
+					//the following if statements are to keep it inline with the general contract
+					if(o1val.isEmpty() && o2val.isEmpty()){
+						return 0;
+					}
+					if(o1val.isEmpty()){
+						return -1;
+					}
+					if(o2val.isEmpty()){
+						return 1;
+					}
+					try{
+					int o1value = Integer.parseInt(o1val.substring(6, o1val.length()-1));
+					int o2value = Integer.parseInt(o2val.substring(6, o2val.length()-1));
+					if((o1value -o2value) == 0){
+						o1value = Integer.parseInt(o1val.substring(3, 5));
+						o2value = Integer.parseInt(o2val.substring(3, 5));
+						if((o1value -o2value) == 0){
+							o1value = Integer.parseInt(o1val.substring(0, 2));
+							o2value = Integer.parseInt(o2val.substring(0, 2));
+							return o1value - o2value;
+						}
+						return o1value - o2value;
+					}
+					return o1value - o2value;
+					}
+					catch(StringIndexOutOfBoundsException e){
+						System.err.println("Date is in incorrect format" + e);
+						return -1;
+					}
+
+				}
 				else{
 					// Then we have an error
 					error[0] = 1;
@@ -251,7 +311,7 @@ public abstract class PhDTable {
 
 		if(error[0] == 1){
 			// Then we have an error!
-			System.out.println("Type wasn't set correctly in sort");
+			System.err.println("Type wasn't set correctly in sort");
 			return false;
 		}
 
