@@ -818,22 +818,24 @@ private class Render extends DefaultTableCellRenderer{
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		  Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-
+		  boolean other = false;
 		  if(YELLOW[row]==1){
 			  cell.setBackground(Color.GREEN);
 			  cell.setForeground(Color.BLACK);
+			  other = true;
 
 		  }else if(YELLOW[row]==2){
 			  cell.setBackground(Color.ORANGE);
 			  cell.setForeground(Color.BLACK);
-
+			  other = true;
 		  }else if(YELLOW[row]==3){
 			  cell.setBackground(Color.red);
 			  cell.setForeground(Color.BLACK);
-
+			  other = true;
 		  }else if(RED[row]==1){
 			  cell.setBackground(Color.black);
 			  cell.setForeground(Color.white);
+			  other = true;
 		  }else {
 			  cell.setBackground(Color.WHITE);
 			  cell.setForeground(Color.BLACK);
@@ -847,7 +849,7 @@ private class Render extends DefaultTableCellRenderer{
 			  cell.setForeground(Color.white);
 		  } else if(RED[row]==1 ||YELLOW[row]==1){
 
-		  }else{
+		  }else if(!other){
 		  	cell.setBackground(Color.WHITE);
 		  	cell.setForeground(Color.BLACK);
 		  	if(column== SortedColumn){

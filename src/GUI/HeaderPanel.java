@@ -186,7 +186,11 @@ public class HeaderPanel extends JPanel {
 			String f= full[i];
 			JCheckBox temp = new JCheckBox(f);
 			for(String c: current){
-				if(f.equals(c)) temp.setSelected(true);
+				if(f.equals(c)){
+					temp.setSelected(true);
+					Treetemp.add(new heads(f,i));
+
+				}
 			}
 			temp.addActionListener(new clickListener(f,i));
 			Panel.add(temp);
@@ -219,7 +223,8 @@ public class HeaderPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(!currentSelected.add(head)){
+			boolean temp = currentSelected.add(head);
+			if(!temp){
 				currentSelected.remove(head);
 			}
 		}
