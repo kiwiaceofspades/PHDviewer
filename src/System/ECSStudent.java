@@ -77,7 +77,6 @@ public class ECSStudent implements Student {
 		this.origin = origin;
 
 		this.timeSinceStartDate = generateTimeSinceStartDate();
-		checkToHighlight();
 	}
 
 	public ECSStudent(String[][] headersAndValues){
@@ -153,7 +152,6 @@ public class ECSStudent implements Student {
 		this.notes = value;
 
 		this.timeSinceStartDate = generateTimeSinceStartDate();
-		checkToHighlight();
 	}
 
 	public String findValueForHeader(String header, String[][] student){
@@ -168,13 +166,6 @@ public class ECSStudent implements Student {
 			System.out.println("Couldn't find value for header: " + header);
 		}
 		return value;
-	}
-
-	private void checkToHighlight() {
-		// logic to check if entry should be highlighted
-		if(timeSinceStartDate == 173){
-			isHighlighted = true;
-		}
 	}
 
 	/**
@@ -199,25 +190,21 @@ public class ECSStudent implements Student {
 	 * @return
 	 */
 	private int generateTimeSinceStartDate() {
-		// get current date
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Calendar calobj = Calendar.getInstance();
-		String currentDateString = dateFormat.format(calobj.getTime());
-		String formattedCurrentDate = currentDateString.substring(0, 10).replace("/", "");
-		int year = Integer.parseInt(formattedCurrentDate.substring(0, 4));
-		int month = Integer.parseInt(formattedCurrentDate.substring(4, 6));
-		int day = Integer.parseInt(formattedCurrentDate.substring(6, 8));
-		Date currentDate = new Date(day, month, year);
-		// Now lets calculate the time since the startDate
 		if(isIncorrectlyFormatted == true){
 			// The startDate has is incorrectly formatted, therefore time cannot be calculated
 			return 0;
 		}
-
-		int days = currentDate.since(startDate);
-
-		days = days / 30;
-		return days;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar calobj = Calendar.getInstance();
+		String currentDateString = dateFormat.format(calobj.getTime());
+		String formattedCurrentDate = currentDateString.substring(0, 10).replace("/", "");
+		int currentYear = Integer.parseInt(formattedCurrentDate.substring(0, 4));
+		int currentMonth = Integer.parseInt(formattedCurrentDate.substring(4, 6));
+		// year difference
+		int yearDiff = currentYear - startDate.getYear();
+		System.out.println("current months: " + yearDiff*12);
+		int	monthDiff = currentMonth - startDate.getMonth();
+		return (yearDiff*12 + monthDiff);
 	}
 
 	/*

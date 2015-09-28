@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public abstract class PhDTable {
 
-	private ArrayList<Student> students;
+	protected ArrayList<Student> students;
 	private ArrayList<String> headers;
 
 	public PhDTable(ArrayList<Student> students, ArrayList<String> headers){
@@ -188,7 +188,7 @@ public abstract class PhDTable {
 	 * 0 = student entry should not be highlighted.
 	 * @return int[] of which student entries should be highlighted.
 	 */
-	public int[] getHighlighted(){
+	/*public int[] getHighlighted(){
 		int[] highlighted = new int[students.size()];
 		for(int i = 0; i < students.size(); i++){
 			Student stud = students.get(i);
@@ -200,7 +200,16 @@ public abstract class PhDTable {
 			}
 		}
 		return highlighted;
-	}
+	}*/
+
+	public int[] getHighlighted(){
+		// All entries do not need to be highlighted
+		int[] highlighted = new int[students.size()];
+		for(int i = 0; i < students.size(); i++){
+			highlighted[i] = 0;
+		}
+		return highlighted;
+	};
 
 	/**
 	 * Sorts the table by a header provided

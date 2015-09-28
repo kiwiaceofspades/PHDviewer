@@ -106,7 +106,7 @@ public class PhDData {
 			return removeEntry(student, table);
 		default:
 			// type of change not accepted
-			System.out.println("Change of type: " + type + " not allowed");
+			System.err.println("Change of type: " + type + " not allowed");
 			return false;
 		}
 	}
@@ -161,7 +161,7 @@ public class PhDData {
 		case "UnderExamination":
 			return underExamination.addStudent(studentMoved);
 		default:
-			System.out.println("Couldn't find table: " + table
+			System.err.println("Couldn't find table: " + table
 					+ " to move Student from");
 		}
 		return false;
@@ -193,7 +193,7 @@ public class PhDData {
 			System.out.println("Under exam : " + underExamination);
 			return underExamination.addStudent(toAdd);
 		}
-		System.out.println("Couldn't find " + table + " to add entry to");
+		System.err.println("Couldn't find " + table + " to add entry to");
 		return false;
 	}
 
@@ -244,7 +244,14 @@ public class PhDData {
 			e.printStackTrace();
 		}
 		// to be implemented !
+	}
 
+	/**
+	 *
+	 */
+	public void computeHighlighting(){
+		// run through each table checking who should be highlighted
+		underExamination.getHighlighted();
 	}
 
 	/**
@@ -257,23 +264,23 @@ public class PhDData {
 	public boolean sort(String header) {
 		// Will only for ecs student for now
 		if (!underExamination.sort(header)) {
-			System.out.println("Couldn't sort");
+			System.err.println("Couldn't sort");
 			return false;
 		}
 		if (!notFullyAdmitted.sort(header)) {
-			System.out.println("Couldn't sort");
+			System.err.println("Couldn't sort");
 			return false;
 		}
 		if (!currentProvisionallyRegisteredStudents.sort(header)) {
-			System.out.println("Couldn't sort");
+			System.err.println("Couldn't sort");
 			return false;
 		}
 		if (!phDProposalUnderExamination.sort(header)) {
-			System.out.println("Couldn't sort");
+			System.err.println("Couldn't sort");
 			return false;
 		}
 		if (!currentFullyRegistered.sort(header)) {
-			System.out.println("Couldn't sort");
+			System.err.println("Couldn't sort");
 			return false;
 		}
 		return true;
@@ -359,7 +366,7 @@ public class PhDData {
 		} else if (table.equalsIgnoreCase("UnderExamination")) {
 			phDTable = underExamination;
 		} else {
-			System.out.println("Can't find the table " + table
+			System.err.println("Can't find the table " + table
 					+ " to toggle the student's mark");
 		}
 		return phDTable;
@@ -385,7 +392,7 @@ public class PhDData {
 			}
 		}
 		if (value == null) {
-			System.out.println("Couldn't find value for header: " + header);
+			System.err.println("Couldn't find value for header: " + header);
 		}
 		return value;
 	}

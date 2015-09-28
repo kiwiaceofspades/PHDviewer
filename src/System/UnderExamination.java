@@ -9,5 +9,10 @@ public class UnderExamination extends PhDTable {
 		super(students, headers);
 		// TODO Auto-generated constructor stub
 	}
-
+/*
+	@Override
+	public int[] getHighlighted() {
+		return null;
+	}
+*/
 }

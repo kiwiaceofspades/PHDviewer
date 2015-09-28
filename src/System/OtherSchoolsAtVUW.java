@@ -10,5 +10,11 @@ public class OtherSchoolsAtVUW extends PhDTable{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public int[] getHighlighted() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
