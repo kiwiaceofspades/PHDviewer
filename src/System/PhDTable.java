@@ -226,7 +226,7 @@ public abstract class PhDTable {
 
 		String typeBuffer = "String";
 		// Special cases
-		if(header.equals("ID")){
+		if(header.equals("ID") || header.equals("Total time taken")){
 			typeBuffer = "Integer";
 		}
 		else if(header.contains("Supervision Split")){

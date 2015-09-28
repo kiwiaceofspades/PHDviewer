@@ -137,7 +137,7 @@ public class Parser {
 	 * @param line
 	 */
 	private void parseHeaders(String line) {
-		headers.add("Total time taken");
+		headers.add("Total Time Taken");
 		int count = 1;
 		String[] splitHeaders = line.split("\\|", 0);
 			for (String s : splitHeaders) {
@@ -260,6 +260,7 @@ public class Parser {
 	 */
 	private ArrayList<Mode> parsePreferences(String filename) {
 		ArrayList<Mode> modes = new ArrayList<Mode>();
+
 		try {
 			Scanner sc = new Scanner(new File(filename));
 
@@ -267,18 +268,26 @@ public class Parser {
 				ArrayList<String> modeHeaderList = new ArrayList<String>();
 				String line = sc.nextLine();
 				String[] splitHeaders = line.split("\\|", 0);
-				for (String s : splitHeaders) {
+
+				for (int i = 2; i < splitHeaders.length-1; i++) {
+					String s = splitHeaders[i];
 					if(s.isEmpty() || s.matches("^\\s*$")) {
 						//System.out.print("----------");
 						continue;
 					}
-					System.out.println("Parser prefs: " + s);
+
 					modeHeaderList.add(s);
-					String[] modeHeaderArray = new String[modeHeaderList.size()];
-					modeHeaderList.toArray(modeHeaderArray);
-					modes.add(new Mode(splitHeaders[0], modeHeaderArray));
 				}
+				Mode m = new Mode(splitHeaders[1], modeHeaderList.toArray(new String[0]));
+				modes.add(m);
 			}
+//				System.out.println("Parser prefs: " + s);
+//
+//				String[] modeHeaderArray = new String[modeHeaderList.size()];
+//				modeHeaderList.toArray(modeHeaderArray);
+//				modes.add(new Mode(splitHeaders[0], modeHeaderArray));
+
+
 			sc.close();
 		}
 		catch(FileNotFoundException e) {
