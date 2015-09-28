@@ -14,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import System.PhDData;
@@ -35,7 +36,11 @@ public class HeaderPanel extends JPanel {
 	private String[] fullList = null;
 	private JPanel Panel;
 	private PhDData HEADS;
+	private JPanel ButtonsPanel;
 
+
+	private JComboBox<String> ListofPreferences;
+	private String HeaderList="";
 
 	public HeaderPanel(Dimension tt, PhDViewer main){
 		HOST = main;
@@ -43,44 +48,128 @@ public class HeaderPanel extends JPanel {
 		HEADS = main.getDATA();
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		this.setPreferredSize(tt);
+
+
+		setupComboBox();
+		Dimension panDimension= new Dimension(tt.width,100);
+		ButtonsPanel.setMinimumSize(panDimension);
+		ButtonsPanel.setPreferredSize(panDimension);
+		ButtonsPanel.setMaximumSize(panDimension);
+
+	}
+
+	/**
+	 *
+	 */
+	protected void setupComboBox() {
+		if(ButtonsPanel!=null)remove(ButtonsPanel);
+
+		ButtonsPanel = new JPanel();
 		JButton button = new JButton("Apply Header Changes");
 		button.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				heads temp[] = new heads[1];
 				String sTemp[] = new String[currentSelected.size()];
 				TreeSet<heads> local = currentSelected;
 				Iterator<heads> iterator = currentSelected.iterator();
 				for(int i =0;i<sTemp.length;i++){
 					sTemp[i]= iterator.next().header;
-
 				}
 				HOST.changeTableHead(sTemp);
 			}
 
 		});
-		this.add(button);
-		String[] t= HEADS.getPreferences().getNamesOfModes();
-		JComboBox ListofPreferences = new JComboBox(t);
+		ButtonsPanel.add(button);
+		String[] preferencesList= HEADS.getPreferences().getNamesOfModes();
+		ListofPreferences = new JComboBox<String>(preferencesList);
 		ListofPreferences.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
 				String list = (String) cb.getSelectedItem();
+				HeaderList = list;
 				UpdateInfo(fullList,HEADS.getPreferences().getHeadersForMode(list));
 			}
 
 		});
 
+		for (int i= 0; i<preferencesList.length-1;i++){
+			if(HeaderList.equalsIgnoreCase(preferencesList[i])){
+				ListofPreferences.setSelectedIndex(i);
+			}
+		}
+		ButtonsPanel.add(ListofPreferences);
+		JButton jj = new JButton("Add");
+		jj.addActionListener(new ActionListener(){
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String sTemp[] = new String[currentSelected.size()];
+				TreeSet<heads> local = currentSelected;
+				Iterator<heads> iterator = currentSelected.iterator();
+				for(int i =0;i<sTemp.length;i++){
+					sTemp[i]= iterator.next().header;
+				}
+				String s = (String)JOptionPane.showInputDialog(
+	                    HOST,
+	                    "Please give a name to this header view",
+	                    "Adding Header View",
+	                    JOptionPane.PLAIN_MESSAGE
+	                    );
+				if(s!=null){
+					HEADS.getPreferences().addMode(s, sTemp);
+					setupComboBox();
+					UpdateInfo(fullList,sTemp);
+				}
+			}});
 
+		ButtonsPanel.add(jj);
+		jj = new JButton("Clear");
+		jj.addActionListener(new ActionListener(){
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String sTemp[] = new String[currentSelected.size()];
+				TreeSet<heads> local = currentSelected;
+				Iterator<heads> iterator = currentSelected.iterator();
+				for(int i =0;i<sTemp.length;i++){
+					sTemp[i]= iterator.next().header;
+				}
+				String list = (String) ListofPreferences.getSelectedItem();
+				HeaderList = list;
+				HEADS.getPreferences().deleteMode(list);
+				setupComboBox();
+				UpdateInfo(fullList,sTemp);
+			}});
+		ButtonsPanel.add(jj);
+		jj = new JButton("Edit");
+		jj.addActionListener(new ActionListener(){
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String sTemp[] = new String[currentSelected.size()];
+				TreeSet<heads> local = currentSelected;
+				Iterator<heads> iterator = currentSelected.iterator();
+				for(int i =0;i<sTemp.length;i++){
+					sTemp[i]= iterator.next().header;
+				}
+
+				String list = (String) ListofPreferences.getSelectedItem();
+				HeaderList = list;
+
+				HEADS.getPreferences().editMode(list, sTemp);
+				setupComboBox();
+				UpdateInfo(fullList,sTemp);
+
+			}});
+		ButtonsPanel.add(jj);
+		this.add(ButtonsPanel);
 	}
 
 	public void UpdateInfo(String[] full, String[] current) {
+		if(full==null || current == null)return;
 		if(Panel != null)remove(Panel);
 		Panel = new JPanel();
 		Panel.setLayout(new GridLayout(0,2));
@@ -104,7 +193,8 @@ public class HeaderPanel extends JPanel {
 		}
 		this.add(Panel);
 
-
+		HOST.hidePanel();
+		HOST.hidePanel();
 	}
 	/**
 	 * This class is still under development problems have arisen as to how i go about
@@ -188,6 +278,10 @@ public class HeaderPanel extends JPanel {
 	public void setSizeOverride(Dimension size) {
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);
+		Dimension panDimension= new Dimension(size.width,100);
+		ButtonsPanel.setMinimumSize(panDimension);
+		ButtonsPanel.setPreferredSize(panDimension);
+		ButtonsPanel.setMaximumSize(panDimension);
 		validate();
 	}
 

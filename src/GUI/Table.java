@@ -820,11 +820,19 @@ private class Render extends DefaultTableCellRenderer{
 
 
 		  if(YELLOW[row]==1){
-			  cell.setBackground(Color.YELLOW);
+			  cell.setBackground(Color.GREEN);
+			  cell.setForeground(Color.BLACK);
+
+		  }else if(YELLOW[row]==2){
+			  cell.setBackground(Color.orange);
+			  cell.setForeground(Color.BLACK);
+
+		  }else if(YELLOW[row]==3){
+			  cell.setBackground(Color.red);
 			  cell.setForeground(Color.BLACK);
 
 		  }else if(RED[row]==1){
-			  cell.setBackground(Color.RED);
+			  cell.setBackground(Color.black);
 			  cell.setForeground(Color.white);
 		  }else {
 			  cell.setBackground(Color.WHITE);

@@ -54,10 +54,23 @@ public class Preferences {
 		return false;
 	}
 
+	public boolean editMode(String name, String[] headers){
+		for(Mode m : viewingModes){
+			if(m.getName().equalsIgnoreCase(name)){
+				m.setHeaders(headers);
+				return true;
+			}
+		}
+
+
+		return false;
+	}
+
 	public boolean setModes(ArrayList<Mode> modes){
 		viewingModes = modes;
 		return true;
 	}
+
 
 	public ArrayList<String> toFoswiki(){
 		ArrayList<String> foswikiList = new ArrayList<String>();

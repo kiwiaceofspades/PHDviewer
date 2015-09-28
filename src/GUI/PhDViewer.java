@@ -61,7 +61,7 @@ public class PhDViewer extends JFrame {
 
 			@Override
 			public void componentResized(ComponentEvent e) {
-				System.out.println("Big");
+
 				ResetSize();
 
 			}
