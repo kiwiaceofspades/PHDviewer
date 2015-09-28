@@ -9,13 +9,6 @@ public class PhDProposalUnderExamination extends PhDTable {
 		super(students, headers);
 		// TODO Auto-generated constructor stub
 	}
-/*
-	@Override
-	public int[] getHighlighted() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-*/
 
 
 }

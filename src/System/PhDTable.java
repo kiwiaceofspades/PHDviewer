@@ -188,7 +188,7 @@ public abstract class PhDTable {
 	 * 0 = student entry should not be highlighted.
 	 * @return int[] of which student entries should be highlighted.
 	 */
-
+	// NB: Method is overwritten in tables which have rules.
 	public int[] getHighlighted(){
 		// All entries do not need to be highlighted
 		int[] highlighted = new int[students.size()];

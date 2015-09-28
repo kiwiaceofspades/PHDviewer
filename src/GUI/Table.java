@@ -204,17 +204,17 @@ public class Table extends JPanel {
 		this.setLayout(new BorderLayout());
 		add(Scroll,BorderLayout.CENTER);
 
-	
+
 
 
 		validate();
-		
+
 		if(started){
 			Scroll.getHorizontalScrollBar().setValue(ScrollX);
 			Scroll.getVerticalScrollBar().setValue(ScrollY);
 		}
 		repaint();
-		
+
 
 	}
 
@@ -824,7 +824,7 @@ private class Render extends DefaultTableCellRenderer{
 			  cell.setForeground(Color.BLACK);
 
 		  }else if(YELLOW[row]==2){
-			  cell.setBackground(Color.orange);
+			  cell.setBackground(Color.ORANGE);
 			  cell.setForeground(Color.BLACK);
 
 		  }else if(YELLOW[row]==3){

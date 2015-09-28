@@ -11,6 +11,7 @@ public class PhDData {
 	private CurrentFullyRegistered currentFullyRegistered;
 	private UnderExamination underExamination;
 
+	/* These tables have not been implemented */
 	private OtherSchoolsAtVUW otherSchoolsAtVUW;
 	private OtherUniversities otherUniversities;
 
@@ -113,7 +114,6 @@ public class PhDData {
 
 	/**
 	 * Removes the student from the current table it is in
-	 *
 	 * @param student
 	 *            that is to be removed
 	 * @param table
@@ -121,8 +121,12 @@ public class PhDData {
 	 * @return
 	 */
 	private boolean removeEntry(String[][] student, String table) {
-		System.out.println("Remove functionality not implemented yet");
-		return false;
+		int studentID = Integer.parseInt(findValueForHeader("ID", student));
+		PhDTable phDTable = getTable(table);
+		Student studentMoved = phDTable.removeStudent(studentID);
+		// If not null, student was found and deleted
+		return studentMoved != null;
+
 	}
 
 	// NB: ID should not be hide-able.
@@ -209,7 +213,6 @@ public class PhDData {
 	public boolean editEntry(String[][] student, String table) {
 		Student toAdd = new ECSStudent(student);
 		int studentID = Integer.parseInt(findValueForHeader("ID", student));
-
 		// Now send the edit command to the correct table
 		PhDTable phDTable = getTable(table);
 		return phDTable.editStudent(toAdd, studentID);
@@ -244,14 +247,6 @@ public class PhDData {
 			e.printStackTrace();
 		}
 		// to be implemented !
-	}
-
-	/**
-	 *
-	 */
-	public void computeHighlighting(){
-		// run through each table checking who should be highlighted
-		underExamination.getHighlighted();
 	}
 
 	/**
