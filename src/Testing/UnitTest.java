@@ -19,11 +19,11 @@ import System.UnderExamination;
 
 public class UnitTest {
 
-	private int sizeOfArray = 22;
+	private int sizeOfArray = 23;
 
 	private String testFile = "test.txt";
 	private String[][] stu = new String[sizeOfArray][2];
-	private String fullyRegiTable = "currentFullyRegistered";
+	private String fullyRegiTable = "CurrentFullyRegistered";
 	private String underExamTable = "UnderExamination";
 
 	private Student student1 = new ECSStudent("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "20150930", "20151031", "Prolly", "20160225", "", "20170101", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
@@ -51,18 +51,18 @@ public class UnitTest {
 		headers.add("Degree");
 		headers.add("EFTS");
 		headers.add("Primary Supervisor");
-		headers.add("Supervision Split");
+		headers.add("Supervision Split 1");
 		headers.add("Secondary Supervisor");
-		headers.add("Supervision Split");
+		headers.add("Supervision Split 2");
 		headers.add("Third Supervisor");
-		headers.add("Supervision Split");
+		headers.add("Supervision Split 3");
 		headers.add("Scholarship");
 		headers.add("Start Date");
 		headers.add("PhD Proposal Submission");
 		headers.add("PhD Proposal Seminar");
 		headers.add("PhD Proposal Confirmation Date");
 		headers.add("Suspension Dates");
-		headers.add("Thesis Submission + Examiners Appointed Date");
+		headers.add("Thesis Submission+Examiners Appointed Date");
 		headers.add("FGR Completes Examination");
 		headers.add("Revisions Finalised");
 		headers.add("Deposited in Library");
@@ -87,107 +87,150 @@ public class UnitTest {
 	 */
 	@Test
 	public void test0(){
-
 		addToArrays();
-
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		PhDData phd = new PhDData(testFile);
-		phd.setCurrentFullyRegistered(regiTable );
 
+		stu[12][1] = "02-02-2015";
+
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
 		assertTrue(phd.addEntry(stu, fullyRegiTable));
 
 	}
-
+	//Irrelevant test now
 	//test that add works and should fail on this
+	/**
 	@Test
 	public void test1(){
 		addToArrays();
 		stu = new String[sizeOfArray-2][2];
 		for(int i=0; i<sizeOfArray-2; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		assertFalse(phd.addEntry(stu, fullyRegiTable));
 	}
+	*/
 
+	//Test irrelevant now
+	/**
 	@Test
 	public void test1_2(){
 		addToArrays();
 		stu = new String[sizeOfArray+2][2];
 		for(int i=0; i<sizeOfArray+2; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			if(i < headers.size()){
+				stu[i][0] = headers.get(i);
+			}
+			else {
+				stu[i][0] = ""+i;
+			}
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
-		assertFalse(phd.addEntry(stu, fullyRegiTable));
-	}
+		try{
+			phd.addEntry(stu, fullyRegiTable);
+			fail();
+		} catch (IndexOutOfBoundsException e) { assertTrue(true); }
 
+	}
+	*/
 
 	//test that edit works
 	@Test
 	public void test2(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "02-02-2015";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
 		assertTrue(phd.editEntry(stu,fullyRegiTable));
 	}
 
+	//irrevent tests now
+	/**
 	@Test
 	public void test3(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
 		stu = new String[sizeOfArray-2][2];
 		for(int i=0; i<sizeOfArray-2; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		assertFalse(phd.editEntry(stu,fullyRegiTable));
 	}
+	*/
 
+	//test irrelevant now
+	/**
 	@Test
 	public void test3_2(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
 		stu = new String[sizeOfArray+2][2];
 		for(int i=0; i<sizeOfArray+2; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			if(i<headers.size()){
+				stu[i][0] = headers.get(i);
+			}
+			else{
+				stu[i][0] = ""+i;
+			}
 		}
-		assertFalse(phd.editEntry(stu,fullyRegiTable));
+
+		stu[12][1] = "02-02-2015";
+		try{
+			phd.editEntry(stu,fullyRegiTable);
+			fail();
+		} catch (IndexOutOfBoundsException e) { assertTrue(true); }
+
 	}
+	*/
 
 	//test that make change works
 	@Test
 	public void test4(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
@@ -198,10 +241,11 @@ public class UnitTest {
 	public void test5(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150815";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
@@ -213,22 +257,28 @@ public class UnitTest {
 	public void test6(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
 		assertFalse(phd.makeChanges('r', stu, fullyRegiTable));
 	}
 
+	//Irrelevant test now
+	/**
 	@Test
 	public void test7(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
@@ -239,15 +289,18 @@ public class UnitTest {
 		}
 		assertFalse(phd.makeChanges('a', stu, fullyRegiTable));
 	}
+	*/
 
 	//test that move works
 	@Test
 	public void test8(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.setUnderExamination(underTable);
@@ -259,13 +312,15 @@ public class UnitTest {
 	public void test9(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
-		stu[1][1] = "999";
+		stu[2][1] = "999";
 		assertFalse(phd.moveStudent(stu, fullyRegiTable));
 	}
 
@@ -273,10 +328,13 @@ public class UnitTest {
 	//test for nulls
 	@Test
 	public void test10(){
+		setupHeaders();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		try{
 			phd.addEntry(stu, fullyRegiTable);
@@ -288,9 +346,11 @@ public class UnitTest {
 	public void test11(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable );
 		try{
@@ -313,9 +373,11 @@ public class UnitTest {
 	public void test13(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
+
+		stu[12][1] = "2015-02-02";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -328,10 +390,11 @@ public class UnitTest {
 	public void test14(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -344,10 +407,11 @@ public class UnitTest {
 	public void test15(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -359,10 +423,11 @@ public class UnitTest {
 	public void test16(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -374,10 +439,11 @@ public class UnitTest {
 	public void test17(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -389,10 +455,11 @@ public class UnitTest {
 	public void test18(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -404,10 +471,11 @@ public class UnitTest {
 	public void test19(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -419,10 +487,11 @@ public class UnitTest {
 	public void test20(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
@@ -434,10 +503,11 @@ public class UnitTest {
 	public void test21(){
 		addToArrays();
 		for(int i=0; i<sizeOfArray; i++){
-			stu[i][0] = ""+i;
 			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
 		}
-		stu[11][1] = "20150225";
+
+		stu[12][1] = "02-02-2015";
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
