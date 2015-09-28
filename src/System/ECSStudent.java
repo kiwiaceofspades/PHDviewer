@@ -455,6 +455,7 @@ public class ECSStudent implements Student {
 		return startDate.toString();
 	}
 
+
 	public void setStartDate(String startDate) {
 		Date date = new Date(startDate);
 		this.startDate = date;
@@ -540,6 +541,10 @@ public class ECSStudent implements Student {
 
 	public void setOrigin(String origin) {
 		this.origin = origin;
+	}
+
+	public int getTimeSinceStartDate(){
+		return timeSinceStartDate;
 	}
 
 	public String toFoswiki(){
