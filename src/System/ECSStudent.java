@@ -282,75 +282,75 @@ public class ECSStudent implements Student {
 		for(int i = 0; i<headers.length; i++){
 			String header = headers[i];
 			String value;
-			switch (header){
-				case "Name":
+			switch (header.toUpperCase()){
+				case "NAME":
 					value = name;
 					break;
 				case "ID":
 					value = ""+id;
 					break;
-				case "Degree":
+				case "DEGREE":
 					value = degree;
 					break;
 				case "EFTS":
 					value = efts;
 					break;
-				case "Primary Supervisor":
+				case "PRIMARY SUPERVISOR":
 					value = primarySupervisor;
 					break;
-				case "Supervision Split 1":
+				case "SUPERVISION SPLIT 1":
 					value = supervisionSplit1;
 					break;
-				case "Secondary Supervisor":
+				case "SECONDARY SUPERVISOR":
 					value = secondarySupervisor;
 					break;
-				case "Supervision Split 2":
+				case "SUPERVISION SPLIT 2":
 					value = supervisionSplit2;
 					break;
-				case "Third Supervisor":
+				case "THIRD SUPERVISOR":
 					value = thirdSupervisor;
 					break;
-				case "Supervision Split 3":
+				case "SUPERVISION SPLIT 3":
 					value = supervisionSplit3;
 					break;
-				case "Scholarship":
+				case "SCHOLARSHIP":
 					value = scholarship;
 					break;
-				case "Start Date":
+				case "START DATE":
 					value = startDate.toString();
 					break;
-				case "PhD Proposal Submission":
+				case "PHD PROPOSAL SUBMISSION":
 					value = phdProposalSubmission;
 					break;
-				case "PhD Proposal Seminar":
+				case "PHD PROPOSAL SEMINAR":
 					value = phdProposalSeminar;
 					break;
-				case "PhD Proposal Confirmation Date":
+				case "PHD PROPOSAL CONFIRMATION DATE":
 					value = phdProposalConfirmationDate.toString();
 					break;
-				case "Suspension Dates":
+				case "SUSPENSION DATES":
 					value = "";
 					value = suspensionDates;
 					break;
-				case "Thesis Submission+Examiners Appointed Date":
+				case "THESIS SUBMISSION+EXAMINERS APPOINTED DATE":
 					value = thesisSubmissionAndExaminersAppointedDate;
 					break;
-				case "FGR Completes Examination":
+				case "FGR COMPLETES EXAMINATION":
 					value = fgrCompletesExamination;
 					break;
-				case "Revisions Finalised":
+				case "REVISIONS FINALISED":
 					value = revisionsFinalised;
 					break;
-				case "Deposited in Library":
+				case "DEPOSITED IN LIBRARY":
 					value = depositedInLibrary;
 					break;
-				case "Notes":
+				case "NOTES":
 					value = notes;
 					break;
-				case "Origin":
+				case "ORIGIN":
 					value = origin;
 					break;
-				case "Total time taken":
+				case "TOTAL TIME TAKEN":
 					value = "" + timeSinceStartDate;
 					break;
 				default:
