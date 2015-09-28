@@ -134,7 +134,7 @@ public class ECSStudent implements Student {
 		value = findValueForHeader("Suspension Dates", headersAndValues);
 		this.suspensionDates = value;
 
-		value = findValueForHeader("Thesis Submission And Examiners Appointed Date", headersAndValues);
+		value = findValueForHeader("Thesis Submission+Examiners Appointed Date", headersAndValues);
 		this.thesisSubmissionAndExaminersAppointedDate = value;
 
 		value = findValueForHeader("FGR Completes Examination", headersAndValues);
