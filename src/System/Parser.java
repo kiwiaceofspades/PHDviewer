@@ -137,7 +137,7 @@ public class Parser {
 	 * @param line
 	 */
 	private void parseHeaders(String line) {
-		headers.add("Total time taken");
+		headers.add("Total Time Taken");
 		int count = 1;
 		String[] splitHeaders = line.split("\\|", 0);
 			for (String s : splitHeaders) {
@@ -260,6 +260,7 @@ public class Parser {
 	 */
 	private ArrayList<Mode> parsePreferences(String filename) {
 		ArrayList<Mode> modes = new ArrayList<Mode>();
+
 		try {
 			Scanner sc = new Scanner(new File(filename));
 
@@ -267,12 +268,14 @@ public class Parser {
 				ArrayList<String> modeHeaderList = new ArrayList<String>();
 				String line = sc.nextLine();
 				String[] splitHeaders = line.split("\\|", 0);
-				for (int i=2; i<splitHeaders.length-1;i++) {
+
+				for (int i = 2; i < splitHeaders.length-1; i++) {
 					String s = splitHeaders[i];
 					if(s.isEmpty() || s.matches("^\\s*$")) {
 						//System.out.print("----------");
 						continue;
 					}
+
 					modeHeaderList.add(s);
 				}
 				Mode m = new Mode(splitHeaders[1], modeHeaderList.toArray(new String[0]));
