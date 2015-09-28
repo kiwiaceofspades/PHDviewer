@@ -176,10 +176,13 @@ public class HeaderPanel extends JPanel {
 
 		fullList = full;
 		TreeSet<heads> Treetemp = new TreeSet<heads>();
+		Treetemp.clear();
+		for(int k=0;k<full.length;k++){
 		for(int i=0 ; i<current.length;i++){
-			Treetemp.add(new heads(current[i],i));
+			if(full[k].equalsIgnoreCase(current[i]))
+			Treetemp.add(new heads(current[i],k));
 		}
-
+		}
 		currentSelected =Treetemp;
 
 		for( int i =0 ;i<full.length;i++){
@@ -188,7 +191,6 @@ public class HeaderPanel extends JPanel {
 			for(String c: current){
 				if(f.equals(c)){
 					temp.setSelected(true);
-					Treetemp.add(new heads(f,i));
 
 				}
 			}
