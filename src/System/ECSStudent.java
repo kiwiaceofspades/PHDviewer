@@ -210,7 +210,7 @@ public class ECSStudent implements Student {
 	/*
 	 * Date gets parsed as a String. convertToDate converts the String into a Date object
 	 */
-	private Date convertToDate(String dateArgument) {
+	public Date convertToDate(String dateArgument) {
 		dateArgument = dateArgument.trim();
 		Date date = null;
 		int year = -1;
