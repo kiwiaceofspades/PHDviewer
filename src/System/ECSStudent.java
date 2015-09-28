@@ -4,7 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+* Limitations
+*/
 public class ECSStudent implements Student {
+
 
 	private String name;
 	private int id;
@@ -154,8 +158,14 @@ public class ECSStudent implements Student {
 		this.timeSinceStartDate = generateTimeSinceStartDate();
 	}
 
+	/**
+	 * Maps the header to a value in the 2D array
+	 * @param header to look for in the 2D array
+	 * @param student which is the value that corresponds to the header
+	 * @return the value
+	 */
 	public String findValueForHeader(String header, String[][] student){
-		// Go through the student object looking for header ID
+		// Go through the student 2D array looking for header
 		String value = null;
 		for(int i = 0; i<student.length; i++){
 			if(student[i][0].equalsIgnoreCase(header)){
@@ -169,14 +179,13 @@ public class ECSStudent implements Student {
 	}
 
 	/**
-	 * When editing a student, the date the GUI holds needs to be a date that
-	 * the student object recognizes
-	 *
+	 * When editing a student, the date String that GUI uses is of a readable format.
+	 * The Student object stores the date String in a different format, so need to convert it
+	 * the readable string back into the format that the Student class recognizes.
 	 * @param date
-	 * @return
+	 * @return the String reformated in the way the ECSStudent class understands
 	 */
 	public String convertDateString(String date) throws StringIndexOutOfBoundsException {
-		// format here is dd-mm-yyyy. needs to be format yyyymmdd
 		// TODO error checking to make sure date is of correct format... in case
 		// the user changes it
 		String day = date.substring(0, 2);
@@ -186,29 +195,32 @@ public class ECSStudent implements Student {
 	}
 
 	/**
-	 *
-	 * @return
+	 * Calculates how many months since the student began their PhD.
+	 * @return int of how many months since the student began their PhD
 	 */
 	private int generateTimeSinceStartDate() {
 		if(isIncorrectlyFormatted == true){
 			// The startDate has is incorrectly formatted, therefore time cannot be calculated
 			return 0;
 		}
+		// Find the current year and month
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Calendar calobj = Calendar.getInstance();
 		String currentDateString = dateFormat.format(calobj.getTime());
 		String formattedCurrentDate = currentDateString.substring(0, 10).replace("/", "");
 		int currentYear = Integer.parseInt(formattedCurrentDate.substring(0, 4));
 		int currentMonth = Integer.parseInt(formattedCurrentDate.substring(4, 6));
-		// year difference
+		// Get year and month difference and use that to calculate the end result
 		int yearDiff = currentYear - startDate.getYear();
-		System.out.println("current months: " + yearDiff*12);
 		int	monthDiff = currentMonth - startDate.getMonth();
 		return (yearDiff*12 + monthDiff);
 	}
 
-	/*
-	 * Date gets parsed as a String. convertToDate converts the String into a Date object
+	/**
+	 * Converts the date string (which is in the format of YYYYMMDD) into a Date
+	 * object.
+	 * @param dateArgument which is a string that needs to be converted into a Date
+	 * @return Date
 	 */
 	public Date convertToDate(String dateArgument) {
 		dateArgument = dateArgument.trim();
@@ -221,13 +233,15 @@ public class ECSStudent implements Student {
 		if(dateArgument.length() != 8){
 			date = new Date(dateArgument);
 			isIncorrectlyFormatted = true;
-			System.out.println("Not correct length " + dateArgument);
 			return date;
 		}
 
 		int mode = 0; // 0 = year, 1 = month, 2 = day
 		int pointer = 0;
 		char[] buffer = new char[4];
+
+		// Go through the date string, and get values for day
+		// month and year
 		for(int i = 0; i<dateArgument.length(); i++){
 			char character = dateArgument.charAt(i);
 			if(Character.isDigit(character) == false){
@@ -238,7 +252,7 @@ public class ECSStudent implements Student {
 			buffer[pointer] = character;
 			pointer++;
 			if(pointer == 4 && mode == 0){
-				// We have a year done
+				// We have finished making the year string
 				String yearString = new String(buffer);
 				year = Integer.parseInt(yearString);
 				mode++;
@@ -246,7 +260,7 @@ public class ECSStudent implements Student {
 				pointer = 0;
 			}
 			if(pointer == 2 && mode == 1){
-				// We have a month done
+				// We have finished making the month string
 				String monthString = new String(buffer);
 				month = Integer.parseInt(monthString);
 				mode++;
@@ -254,28 +268,30 @@ public class ECSStudent implements Student {
 				pointer = 0;
 			}
 			if(pointer == 2 && mode == 2){
-				// We have a month done
+				// We have finished making the day string
 				String dayString = new String(buffer);
 				day = Integer.parseInt(dayString);
 				break;
 			}
 		}
-
-		// All done!
+		// If the day, month and year have been assigned correctly
+		// construct a Date object
 		if(day != -1 && month != -1 && year != -2){
 			date = new Date(day, month, year);
 			isIncorrectlyFormatted = false;
 		}
-
+		// If date has still not been assigned, the Date object will
+		// have to just use the dateArgument string
 		if(date == null){
-			System.out.println("Converting date did not work!");
+			date = new Date(dateArgument);
+			isIncorrectlyFormatted = true;
 		}
 
 		return date;
 	}
 
-	/*
-	 * Requests the values for a list of headers provided as an argument
+	/**
+	 * Uses the list of headers provided as an argument
 	 */
 	public String[] getValues(String[] headers){
 		String[] values = new String[headers.length];

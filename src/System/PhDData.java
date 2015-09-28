@@ -129,11 +129,9 @@ public class PhDData {
 
 	}
 
-	// NB: ID should not be hide-able.
 	/**
 	 * Moves the student from the current table it is in, to the table above
 	 * (table order is hardcoded)
-	 *
 	 * @param student
 	 *            that is to be moved
 	 * @param table
@@ -154,16 +152,17 @@ public class PhDData {
 		// Now add it to the new table
 		switch (table) {
 		case "NotFullyAdmitted":
-			return notFullyAdmitted.addStudent(studentMoved);
-		case "CurrentProvisionallyRegisteredStudents":
 			return currentProvisionallyRegisteredStudents
 					.addStudent(studentMoved);
-		case "PhDProposalUnderExamination":
+		case "CurrentProvisionallyRegisteredStudents":
 			return phDProposalUnderExamination.addStudent(studentMoved);
-		case "CurrentFullyRegistered":
+		case "PhDProposalUnderExamination":
 			return currentFullyRegistered.addStudent(studentMoved);
-		case "UnderExamination":
+		case "CurrentFullyRegistered":
 			return underExamination.addStudent(studentMoved);
+		case "UnderExamination":
+			// UnderExamination is the highest level
+			return true;
 		default:
 			System.err.println("Couldn't find table: " + table
 					+ " to move Student from");
@@ -173,7 +172,6 @@ public class PhDData {
 
 	/**
 	 * Adds a student into a table
-	 *
 	 * @param student
 	 *            to be added
 	 * @param table
@@ -182,7 +180,7 @@ public class PhDData {
 	 */
 	public boolean addEntry(String[][] student, String table) {
 		Student toAdd = new ECSStudent(student);
-		// Now add it to the right table
+		// Add it to the right table
 		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			return notFullyAdmitted.addStudent(toAdd);
 		} else if (table
@@ -203,7 +201,6 @@ public class PhDData {
 
 	/**
 	 * Edits a existing student in a table
-	 *
 	 * @param student
 	 *            to be edited
 	 * @param table
@@ -213,28 +210,10 @@ public class PhDData {
 	public boolean editEntry(String[][] student, String table) {
 		Student toAdd = new ECSStudent(student);
 		int studentID = Integer.parseInt(findValueForHeader("ID", student));
-		// Now send the edit command to the correct table
 		PhDTable phDTable = getTable(table);
 		return phDTable.editStudent(toAdd, studentID);
 	}
 
-	/**
-	 * When editing a student, the date the GUI holds needs to be a date that
-	 * the student object recognizes
-	 *
-	 * @param date
-	 * @return
-	 */
-	public String convertDate(String date)
-			throws StringIndexOutOfBoundsException {
-		// format here is dd-mm-yyyy. needs to be format yyyymmdd
-		// TODO error checking to make sure date is of correct format... in case
-		// the user changes it
-		String day = date.substring(0, 2);
-		String month = date.substring(3, 5);
-		String year = date.substring(6, 10);
-		return year + month + day;
-	}
 
 	/**
 	 * Writes all the data to a foswiki file. Called when the program is closed.
@@ -251,7 +230,6 @@ public class PhDData {
 
 	/**
 	 * Sorts every table by the header provided
-	 *
 	 * @param header
 	 *            that each table should be sorted by
 	 * @return boolean as to whether the table was successfully sorted or not
@@ -367,6 +345,11 @@ public class PhDData {
 		return phDTable;
 	}
 
+	/**
+	 * Gets the headers for the tables. Current implementation assumes that all tables have  
+	 * the same headers as notFullyAdmitted are 
+	 * @return
+	 */
 	public String[] getHeaders() {
 		String[] headers = new String[notFullyAdmitted.getHeaders().size()];
 
