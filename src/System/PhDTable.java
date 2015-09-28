@@ -220,6 +220,9 @@ public abstract class PhDTable {
 		if(header.equals("ID")){
 			typeBuffer = "Integer";
 		}
+		else if(header.contains("Supervision Split")){
+			typeBuffer = "Percentage";
+		}
 
 
 		final String[] finalHeader = {header};
@@ -241,6 +244,25 @@ public abstract class PhDTable {
 					// Just get the first entry
 					return o1value - o2value;
 				}
+				else if(type.equals("Percentage")){
+					String o1val = ((ECSStudent)o1).getValues(finalHeader)[0];
+					String o2val = ((ECSStudent)o2).getValues(finalHeader)[0];
+
+					//the following if statements are to keep it inline with the general contract
+					if(o1val.isEmpty() && o2val.isEmpty()){
+						return 0;
+					}
+					if(o1val.isEmpty()){
+						return -1;
+					}
+					if(o2val.isEmpty()){
+						return 1;
+					}
+					int o1value = Integer.parseInt(o1val.substring(0, o1val.length()-1));
+					int o2value = Integer.parseInt(o2val.substring(0, o2val.length()-1));;
+					return o1value - o2value;
+
+				}
 				else{
 					// Then we have an error
 					error[0] = 1;
@@ -251,7 +273,7 @@ public abstract class PhDTable {
 
 		if(error[0] == 1){
 			// Then we have an error!
-			System.out.println("Type wasn't set correctly in sort");
+			System.err.println("Type wasn't set correctly in sort");
 			return false;
 		}
 
