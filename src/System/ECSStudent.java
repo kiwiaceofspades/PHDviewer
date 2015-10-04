@@ -9,7 +9,6 @@ import java.util.Calendar;
 */
 public class ECSStudent implements Student {
 
-
 	private String name;
 	private int id;
 	private String degree;

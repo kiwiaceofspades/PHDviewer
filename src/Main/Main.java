@@ -27,6 +27,7 @@ public class Main {
 			File headers = new File("../preferences.txt");
 			try {
 				if(headers.createNewFile()){//checks whether there is a headers file containing prefernces
+					System.out.println("File does not exist");
 					fillWithDefualts(headers); //if there isn't create one with default values
 				}
 			} catch (IOException e) {
@@ -41,7 +42,7 @@ public class Main {
 	 * @param headers File which will contain the headers
 	 * @throws IOException -  if the file exists but is a directory rather than a regular file, does not exist but cannot
 	 be created, or cannot be opened for any other reason
-	 */
+	*/
 	private static void fillWithDefualts(File headers) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(headers.getAbsoluteFile()));
 		bw.write("|Total Time Taken|Defualt View|Yes|Name|ID|Degree|EFTS|Primary Supervisor|Supervision Split 1|Secondary Supervisor|Supervision Split 2|Third Supervisor|Supervision Split 3|Scholarship|Start Date|PhD Proposal Submission|PhD Proposal Seminar|PhD Proposal Confirmation Date|Suspension Dates|Thesis Submission + Examiners Appointed Date|FGR Completes Examination|Revisions Finalised|Deposited in Library|Notes|Origin|");

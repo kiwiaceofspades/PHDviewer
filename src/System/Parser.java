@@ -58,7 +58,7 @@ public class Parser {
 	 */
 	public Parser(String fname, PhDData data, Preferences pref) {
 		runParser(fname);
-
+		System.out.println("hello");
 		// Populate empty PhDData object
 		data.setUnderExamination(underExamination);
 		data.setCurrentFullyRegistered(currentFullyRegistered);
@@ -68,6 +68,7 @@ public class Parser {
 
 		// Populate empty Preferences object
 		ArrayList<Mode> mode = parsePreferences("../preferences.txt");
+		System.out.println("Modes length " + mode.size());
 		pref.setModes(mode);
 	}
 
@@ -267,6 +268,7 @@ public class Parser {
 			while (sc.hasNextLine()) {
 				ArrayList<String> modeHeaderList = new ArrayList<String>();
 				String line = sc.nextLine();
+				System.out.println(line);
 				String[] splitHeaders = line.split("\\|", 0);
 
 				for (int i = 2; i < splitHeaders.length-1; i++) {
@@ -304,7 +306,7 @@ public class Parser {
 	public void writeToPreferencesFile(Preferences prefs) throws IOException {
 		ArrayList<String> formattedPrefs = prefs.toFoswiki();
 
-		PrintWriter pw = new PrintWriter(new FileWriter(new File("preferences.txt")));
+		PrintWriter pw = new PrintWriter(new FileWriter(new File("../preferences.txt")));
 		//pw.flush();
 
 		for (String line : formattedPrefs) {

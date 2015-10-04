@@ -25,7 +25,7 @@ public class Preferences {
 				return viewingModes.get(i).getHeaders();
 			}
 		}
-		System.out.println("Couldn't find mode: " + mode);
+		System.err.println("Couldn't find mode: " + mode);
 		return null;
 	}
 
@@ -84,6 +84,7 @@ public class Preferences {
 	}
 
 	public void writeToFile(){
+		System.out.println("Writing preferences to file");
 		if(parser == null){
 			System.err.println("No parser object to write to");
 			return;

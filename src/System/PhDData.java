@@ -138,7 +138,7 @@ public class PhDData {
 	 *            that contains the student that is being moved
 	 * @return boolean of whether the student was moved successfully
 	 */
-	public boolean moveStudent(String[][] student, String table) {
+	public boolean moveStudent(String[][] student, String table, String toAdd) {
 		// Need to check which table the student is in, so we can remove the
 		// student from
 		// that table and assign it to the new one
