@@ -86,12 +86,21 @@ public class Table extends JPanel {
 	private boolean started;
 
 	private int ScrollX,ScrollY;
+
+	/**
+	 *
+	 * @param dATA2 is a ArrayList of Students
+	 * @param Header is the header data that the table will look for in the PHDData
+	 * @param host Is a link to the HOST frame of this panel used for call back and passing information around the program
+	 */
+
+
 	/**
 	 * Constructor for this Class
 	 * @param dATA2 is a ArrayList of Students
 	 * @param Header is the header data that the table will look for in the PHDData
-	 * @param host Is a link to the HOST frame of this panel used for
-	 *  call back and passing information arround the program
+	 * @param FULLHead List of the all Headers used by this program.
+	 * @param host Is a link to the HOST frame of this panel used for call back and passing information arround the program
 	 */
 	public Table (PhDData dATA2, String[] Header, String[] FULLHead, PhDViewer host){
 		started = false;
@@ -215,8 +224,8 @@ public class Table extends JPanel {
 
 	/**
 	 * Sets up the table of the Class.
-	 * @param Table
-	 * @return
+	 * @param Table The name of the table being set up
+	 * @return the Jtable that we have set up corresponding to the Table Param
 	 */
 	private JTable setTable(String Table){
 		JTable temp = getTableData(Table);
@@ -258,8 +267,8 @@ public class Table extends JPanel {
 
 	/**
 	 *Builds the Mouse Listener for the desired table
-	 * @param tableName
-	 * @return MouseListener
+	 * @param tableName The Name of the table that this Mouse Listener works on
+	 * @return MouseListener That we have just build.
 	 */
 	private MouseListener getMouse(String tableName) {
 		if(tableName.equalsIgnoreCase("CurrentFullyRegistered")){
@@ -458,9 +467,9 @@ public class Table extends JPanel {
 	}
 
 	/**
-	 *
-	 *
-	 * @return
+	 * Creates a Selection Listener for the desired table.
+	 * @param string tells Which table we are creating the SelectionListener for.
+	 * @return ListSelectionListener  the SelectionListener we just created
 	 */
 	private ListSelectionListener getSelectionListener(final String string) {
 		if(string.equalsIgnoreCase("CurrentFullyRegistered")){
@@ -558,7 +567,10 @@ public class Table extends JPanel {
 	}
 
 	/**
+	 * Creates the JTable we are showing on the Panel defined by the vallue in string.
 	 *
+	 * @param string Used to define which table we are creating.
+	 * @return the JTable that we have just created
 	 */
 	private JTable getTableData(String string) {
 		JTable temp = null;
@@ -576,9 +588,10 @@ public class Table extends JPanel {
 		return temp;
 	}
 
-	/*
-	 *
-	 * @return
+	/**
+	 * Gets the data out of the database and formats it into a string array
+	 * so that the jTable can show it. Method name defines which table we are working on.
+	 * @return A 2D Array of Strings containing the information on display.
 	 */
 	private String[][] setupNotPhDProposalUnderExaminationData() {
 		ArrayList<String[]> Data = new ArrayList<String[]>();
@@ -593,9 +606,10 @@ public class Table extends JPanel {
 	}
 
 
-	/*
-	 * Setup Not Fully Admitted Data
-	 * @return
+	/**
+	 * Gets the data out of the database and formats it into a string array
+	 * so that the jTable can show it. Method name defines which table we are working on.
+	 * @return A 2D Array of Strings containing the information on display.
 	 */
 	private String[][] setupNotFullyAdmittedData() {
 		ArrayList<String[]> Data = new ArrayList<String[]>();
@@ -611,8 +625,8 @@ public class Table extends JPanel {
 
 	/**
 	 * Gets the data out of the database and formats it into a string array
-	 * so that the jtable can show it.
-	 * @return
+	 * so that the jTable can show it. Method name defines which table we are working on.
+	 * @return A 2D Array of Strings containing the information on display.
 	 */
 	private String[][] setupCurrentFullyRegisteredData(){
 		ArrayList<String[]> Data = new ArrayList<String[]>();
@@ -625,11 +639,10 @@ public class Table extends JPanel {
 		String [][] tat = new String[1][1];
 		return Data.toArray(tat);
 	}
-
 	/**
 	 * Gets the data out of the database and formats it into a string array
-	 * so that the jtable can show it.
-	 * @return
+	 * so that the jTable can show it. Method name defines which table we are working on.
+	 * @return A 2D Array of Strings containing the information on display.
 	 */
 	private String[][] setupUnderExaminationData(){
 		ArrayList<String[]> Data = new ArrayList<String[]>();
@@ -645,8 +658,8 @@ public class Table extends JPanel {
 
 	/**
 	 * Gets the data out of the database and formats it into a string array
-	 * so that the jtable can show it.
-	 * @return
+	 * so that the jTable can show it. Method name defines which table we are working on.
+	 * @return A 2D Array of Strings containing the information on display.
 	 */
 	private String[][] setupCurrentProvisionallyRegisteredStudentsData(){
 		ArrayList<String[]> Data = new ArrayList<String[]>();
@@ -664,7 +677,7 @@ public class Table extends JPanel {
 
 	/**
 	 * Controls the size of the panel so it all looks correct;
-	 * @param size
+	 * @param size the size that you are trying to set the panel to.
 	 */
 	public void setSizeOver(Dimension size) {
 		this.setMinimumSize(size);
@@ -678,27 +691,27 @@ public class Table extends JPanel {
 
 	/**
 	 * gets a signal line out of the table for the info panel to display
-	 * @param fist
-	 * @param string
+	 * @param tableIndex gives us the position in the 2D array of the information that we are getting.
+	 * @param tableName Gives the name of the table we are using.
 	 */
-	private void getData(int fist, String string){
+	private void getData(int tableIndex, String tableName){
 		Student temp = null;
 
-		if(string.equalsIgnoreCase("CurrentFullyRegistered")){
+		if(tableName.equalsIgnoreCase("CurrentFullyRegistered")){
 			CurrentFullyRegistered Full = DATA.getCurrentFullyRegistered();
-			temp = Full.getStudents().get(fist);
-		}else if(string.equalsIgnoreCase("NotFullyAdmitted")){
+			temp = Full.getStudents().get(tableIndex);
+		}else if(tableName.equalsIgnoreCase("NotFullyAdmitted")){
 			NotFullyAdmitted Full = DATA.getNotFullyAdmitted();
-			temp = Full.getStudents().get(fist);
-		}else if(string.equalsIgnoreCase("PhDProposalUnderExamination")){
+			temp = Full.getStudents().get(tableIndex);
+		}else if(tableName.equalsIgnoreCase("PhDProposalUnderExamination")){
 			PhDProposalUnderExamination Full = DATA.getPhDProposalUnderExamination();
-			temp = Full.getStudents().get(fist);
-		}else if(string.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+			temp = Full.getStudents().get(tableIndex);
+		}else if(tableName.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
 			CurrentProvisionallyRegisteredStudents Full = DATA.getCurrentProvisionallyRegisteredStudents();
-			temp = Full.getStudents().get(fist);
-		} else if(string.equalsIgnoreCase("UnderExamination")){
+			temp = Full.getStudents().get(tableIndex);
+		} else if(tableName.equalsIgnoreCase("UnderExamination")){
 			UnderExamination Full = DATA.getUnderExamination();
-			temp = Full.getStudents().get(fist);
+			temp = Full.getStudents().get(tableIndex);
 
 		}
 
@@ -709,24 +722,20 @@ public class Table extends JPanel {
 			fullInfo[i][0]=fullHead[i];
 			fullInfo[i][1]=info[i];
 		}
-		HOST.UpInfo(fullInfo,string,false);
+		HOST.UpInfo(fullInfo,tableName,false);
 
 	}
 
 	/**
 	 * Adds a new entry in the table
 	 *
-	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
+	 * @param studentInformation is a row contained with in the data base with its changed values it contains the {{headers,values},{headers,values}}
 	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
-	 * @param tabel tells teh PHDdata which table is being edited in the system.
+	 * @param tableName tells the PHDdata which table is being edited in the system.
 	 */
-	public void Add(String[][] axis, String table2) {
+	public void Add(String[][] studentInformation, String tableName) {
 
-		DATA.makeChanges('a',axis,table2);
-		System.out.println("Add");
-		//		for(String[] a: axis){
-		//			System.out.println(a[0] +"= "+a[1]);
-		//		}
+		DATA.makeChanges('a',studentInformation,tableName);
 		setupTable();
 
 	}
@@ -734,12 +743,12 @@ public class Table extends JPanel {
 	/**
 	 * Edits a entry in the table
 	 *
-	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
+	 * @param studentInformation is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
 	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
-	 * @param tabel tells teh PHDdata which table is being edited in the system.
+	 * @param tableName tells the PHDdata which table is being edited in the system.
 	 */
-	public void Edit(String[][] axis, String table) {
-		DATA.makeChanges('e',axis,table);
+	public void Edit(String[][] studentInformation, String tableName) {
+		DATA.makeChanges('e',studentInformation,tableName);
 		setupTable();
 
 	}
@@ -805,7 +814,7 @@ public class Table extends JPanel {
 	 * Sets the CurrentHeader information for the table.
 	 *
 	 * @param currentHead All changes currently have to be
-	 * consistant with what the PHDData is looking if they
+	 * Consistent with what the PHDData is looking if they
 	 * are not PHDDAta will throw a Error. FullHead value
 	 * contains a list of all the currently available strings
 	 */
@@ -841,10 +850,10 @@ private class Render extends DefaultTableCellRenderer{
 	private int[] PURPLE;
 
 /**
- *
- * @param yellow
- * @param red
- * @param purple
+ * Constructor
+ * @param yellow This is the system defined highlighting which is generated by the system.
+ * @param red This is the highlighting defined by the user and should be saved on exit If the person saves there changes.
+ * @param purple Purple is used to show any formating errors that make it impossible for the system to work out if it belongs in the Yellow highlighting system.
  */
 	public Render(int[] yellow,int[]red, int[] purple){
 		YELLOW=yellow;

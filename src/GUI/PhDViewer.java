@@ -43,7 +43,7 @@ public class PhDViewer extends JFrame {
 
 	/**
 	 * Constructor for this JFrame.
-	 * @param string
+	 * @param string The JFrame Title.
 	 * @param pas  The Backbone to this JFrame were all of the Data work is done.
 	 */
 	public PhDViewer(String string, PhDData pas) {
@@ -182,7 +182,8 @@ public class PhDViewer extends JFrame {
 
 	/**
 	 * Tells the back PhDData to move a student up the table system.
-	 *
+	 * will return if nothing is selected.
+	 * @param s Date that this move has happened
 	 */
 	protected void MoveUp(String s) {
 		if(currentTable==null) return;
@@ -195,9 +196,9 @@ public class PhDViewer extends JFrame {
 
 	/**
 	 * Called when you are using the InfoPanel
-	 * @param infothe Information to be displayed in the panel
+	 * @param info the Information to be displayed in the panel
 	 * @param table what table is this table from
-	 * @param b wether we are editing of addign to the table.
+	 * @param b weather we are editing of adding to the table.
 	 */
 	protected void UpInfo(String[][] info, String table, boolean b){
 
@@ -205,6 +206,8 @@ public class PhDViewer extends JFrame {
 			if(ExtraPanel.equals("Header")) remove(Head);
 			add(Info, BorderLayout.EAST);
 			ExtraPanel = "Info";
+			Toggle.setText("Hide Panel");
+
 		}
 
 		currentTable = table;
@@ -216,14 +219,15 @@ public class PhDViewer extends JFrame {
 	/**
 	 * Shows the HeaderPanel and gives it the
 	 * most up to date information to use.
-	 * @param full
-	 * @param current
+	 * @param full Full List of the headers that the program supports.
+	 * @param current the current list of headers that are been use in the JTabel
 	 */
 	protected void showHeaderPanel(String[] full, String[] current) {
 		if(!ExtraPanel.equals("Header")){
 			if(ExtraPanel.equals("Info"))remove(Info);
 			add(Head,BorderLayout.EAST);
 			ExtraPanel = "Header";
+			Toggle.setText("Hide Panel");
 		}
 		Head.UpdateInfo(full,current);
 		validate();
@@ -299,7 +303,7 @@ public class PhDViewer extends JFrame {
 	 * changes to the Table in the Table.class
 	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
 	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
-	 * @param tabel tells teh PHDdata which table is being edited in the system.
+	 * @param table tells the PHDdata which table is being edited in the system.
 	 */
 	public void add(String[][] axis, String table){
 		Table.Add(axis,table);
@@ -317,7 +321,7 @@ public class PhDViewer extends JFrame {
 	}
 	/**
 	 * Just gets The PhDData object tied to this JFrame.
-	 * @return
+	 * @return Returns the PhDData object being used.
 	 */
 	public PhDData getDATA() {
 		return DATA;
@@ -375,7 +379,7 @@ public class PhDViewer extends JFrame {
 
 	/**
 	 * Changes the Current Headers being shown.
-	 * @param currentSelected
+	 * @param currentSelected the Lsit of Headers to be shown.
 	 */
 	public void changeTableHead(String[] currentSelected) {
 		Table.setCurrentHead(currentSelected);
