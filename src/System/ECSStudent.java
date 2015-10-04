@@ -68,6 +68,9 @@ public class ECSStudent implements Student {
 		// Need to try convert the date
 		Date stDate = convertToDate(startDate);
 		this.startDate = stDate;
+		if(!stDate.isConverted()){
+			isIncorrectlyFormatted = true;
+		}
 
 		this.phdProposalSubmission = phdProposalSubmission;
 		this.phdProposalSeminar = phdProposalSeminar;
@@ -124,6 +127,9 @@ public class ECSStudent implements Student {
 		value = findValueForHeader("Start Date", headersAndValues);
 		valueDate = convertToDate(convertDateString(value));
 		this.startDate = valueDate;
+		if(!this.startDate.isConverted()){
+			this.isIncorrectlyFormatted = true;
+		}
 
 		value = findValueForHeader("PhD Proposal Submission", headersAndValues);
 		this.phdProposalSubmission = value;
@@ -195,6 +201,49 @@ public class ECSStudent implements Student {
 	}
 
 	/**
+	 * First converts the suspended dates field into Dates.
+	 * Then calculates the number of days that the user has suspended their PHD for
+	 */
+	public int suspendedMonths(){
+		// Must be in the format YYYYMMDD - YYYYMMDD, ....
+		int monthsSuspended = 0;
+		if(!suspensionDates.equals("")){
+			String[] suspendedDatesPeriods = suspensionDates.split(",");
+
+			for(int i = 0; i < suspendedDatesPeriods.length; i++){
+				String period = suspendedDatesPeriods[i];
+				// Format for period YYYYMMDD - YYYYMMDD
+				String[] dates = period.split("-");
+				if(dates.length != 2){
+					isIncorrectlyFormatted = true;
+					return 0;
+				}
+
+				Date startDate = convertToDate(dates[0].trim());
+				if(!startDate.isConverted()){
+					isIncorrectlyFormatted = true;
+					return 0;
+				}
+
+				Date endDate = convertToDate(dates[1].trim());
+				if(!endDate.isConverted()){
+					isIncorrectlyFormatted = true;
+					return 0;
+				}
+				int yearDiff = endDate.getYear() - startDate.getYear();
+				int monthDiff = endDate.getMonth() - startDate.getMonth();
+
+				if(monthDiff < 0){
+					yearDiff -= 1;
+					monthDiff += (12 + monthDiff);
+				}
+				monthsSuspended = (yearDiff * 12) + monthDiff + 1;
+			}
+		}
+		return monthsSuspended;
+	}
+
+	/**
 	 * Calculates how many months since the student began their PhD.
 	 * @return int of how many months since the student began their PhD
 	 */
@@ -208,12 +257,19 @@ public class ECSStudent implements Student {
 		Calendar calobj = Calendar.getInstance();
 		String currentDateString = dateFormat.format(calobj.getTime());
 		String formattedCurrentDate = currentDateString.substring(0, 10).replace("/", "");
+
 		int currentYear = Integer.parseInt(formattedCurrentDate.substring(0, 4));
 		int currentMonth = Integer.parseInt(formattedCurrentDate.substring(4, 6));
+		int currentDay = Integer.parseInt(formattedCurrentDate.substring(6, 8));
+
+		Date currentDate = new Date(currentDay, currentMonth, currentYear);
+
 		// Get year and month difference and use that to calculate the end result
 		int yearDiff = currentYear - startDate.getYear();
 		int	monthDiff = currentMonth - startDate.getMonth();
-		return (yearDiff*12 + monthDiff);
+
+		int daysSuspended = suspendedMonths();
+		return (yearDiff*12 + monthDiff - suspendedMonths());
 	}
 
 	/**
@@ -232,7 +288,6 @@ public class ECSStudent implements Student {
 		// Format of string YYYYMMDD
 		if(dateArgument.length() != 8){
 			date = new Date(dateArgument);
-			isIncorrectlyFormatted = true;
 			return date;
 		}
 
@@ -246,7 +301,6 @@ public class ECSStudent implements Student {
 			char character = dateArgument.charAt(i);
 			if(Character.isDigit(character) == false){
 				date = new Date(dateArgument);
-				isIncorrectlyFormatted = true;
 				return date;
 			}
 			buffer[pointer] = character;
@@ -278,13 +332,11 @@ public class ECSStudent implements Student {
 		// construct a Date object
 		if(day != -1 && month != -1 && year != -2){
 			date = new Date(day, month, year);
-			isIncorrectlyFormatted = false;
 		}
 		// If date has still not been assigned, the Date object will
 		// have to just use the dateArgument string
 		if(date == null){
 			date = new Date(dateArgument);
-			isIncorrectlyFormatted = true;
 		}
 
 		return date;

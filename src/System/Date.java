@@ -85,14 +85,5 @@ public class Date {
 		return converted;
 	}
 
-	public int since(Date dateToCompare) {
-		final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
-		java.util.Date currentDate = new java.util.Date(dateToCompare.year-1900, dateToCompare.month-1, dateToCompare.day);
-		java.util.Date StartDate = new java.util.Date(this.year-1900, this.month-1, this.day);
-
-		int diffInDays = Math.round((int) ((StartDate.getTime() - currentDate.getTime()) / DAY_IN_MILLIS));
-
-		return diffInDays;
-	}
 
 }
