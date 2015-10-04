@@ -42,6 +42,12 @@ public class HeaderPanel extends JPanel {
 	private JComboBox<String> ListofPreferences;
 	private String HeaderList="";
 
+
+	/**
+	 *
+	 * @param Size of the Main Window
+	 * @param main The main JFrame that this program is hosted on
+	 */
 	public HeaderPanel(Dimension tt, PhDViewer main){
 		HOST = main;
 		tt.width = 300;
@@ -59,7 +65,8 @@ public class HeaderPanel extends JPanel {
 	}
 
 	/**
-	 *
+	 * Builds and adds teh Buttons and comboBox on the panel that is
+	 * loaded into the first part of the headers panel.
 	 */
 	protected void setupComboBox() {
 		if(ButtonsPanel!=null)remove(ButtonsPanel);
@@ -80,6 +87,7 @@ public class HeaderPanel extends JPanel {
 			}
 
 		});
+
 		ButtonsPanel.add(button);
 		String[] preferencesList= HEADS.getPreferences().getNamesOfModes();
 		ListofPreferences = new JComboBox<String>(preferencesList);
@@ -100,7 +108,9 @@ public class HeaderPanel extends JPanel {
 				ListofPreferences.setSelectedIndex(i);
 			}
 		}
+
 		ButtonsPanel.add(ListofPreferences);
+
 		JButton jj = new JButton("Add");
 		jj.addActionListener(new ActionListener(){
 
@@ -126,6 +136,7 @@ public class HeaderPanel extends JPanel {
 			}});
 
 		ButtonsPanel.add(jj);
+
 		jj = new JButton("Clear");
 		jj.addActionListener(new ActionListener(){
 
@@ -143,7 +154,9 @@ public class HeaderPanel extends JPanel {
 				setupComboBox();
 				UpdateInfo(fullList,sTemp);
 			}});
+
 		ButtonsPanel.add(jj);
+
 		jj = new JButton("Edit");
 		jj.addActionListener(new ActionListener(){
 
@@ -164,10 +177,18 @@ public class HeaderPanel extends JPanel {
 				UpdateInfo(fullList,sTemp);
 
 			}});
+
 		ButtonsPanel.add(jj);
+
 		this.add(ButtonsPanel);
 	}
 
+	/**
+	 * Updates the list of headers in the header selection area full MUST
+	 *  always contain a complete list of the headers.
+	 * @param full Cannot be Null or Empty.
+	 * @param current Cannot be Null but can be empty.
+	 */
 	public void UpdateInfo(String[] full, String[] current) {
 		if(full==null || current == null)return;
 		if(Panel != null)remove(Panel);
@@ -203,14 +224,7 @@ public class HeaderPanel extends JPanel {
 		HOST.hidePanel();
 	}
 	/**
-	 * This class is still under development problems have arisen as to how i go about
-	 * working out were we are in the full data and making sure it remains constaint
-	 * against the full data. if this is not kept then we could have columns wondering
-	 * around the table which we do not want also has to be done fst and effient as it
-	 * could happen lots of times in a very short amount of time and we don't want a
-	 * high level of lag will it ticks off.
-	 *
-	 *
+	 * The Action Listener for the header selection in the header panel.
 	 * @author schmidmatt
 	 *
 	 */
@@ -233,6 +247,12 @@ public class HeaderPanel extends JPanel {
 
 	}
 
+
+	/**
+	 * Is a subclass to help sort the headers so they always appear in order.
+	 * @author schmidmatt
+	 *
+	 */
 	private class heads implements Comparable<heads>{
 
 		private String header;
@@ -281,7 +301,10 @@ public class HeaderPanel extends JPanel {
 
 
 	}
-
+	/**
+	 * Controls the size of the panel in the screen its called once were changed.
+	 * @param size
+	 */
 	public void setSizeOverride(Dimension size) {
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);

@@ -696,7 +696,7 @@ public class Table extends JPanel {
 	}
 
 	/**
-	 * Adds a new entrie in the table
+	 * Adds a new Entry in the table
 	 *
 	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
 	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata

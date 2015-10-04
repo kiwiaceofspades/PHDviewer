@@ -298,6 +298,7 @@ public class PhDViewer extends JFrame {
 			int answer = JOptionPane.showConfirmDialog(Me, "Would you like to save?","Confirm Saving =)",JOptionPane.YES_NO_OPTION);
 			if(answer == 0){
 				DATA.writeToFoswiki();
+				DATA.getPreferences().toFoswiki();
 				System.exit(0);
 			} else if(answer == 1){
 				System.exit(0);
