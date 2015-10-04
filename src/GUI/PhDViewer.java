@@ -35,11 +35,17 @@ public class PhDViewer extends JFrame {
 	private PhDData DATA;
 	private InfoPanel Info;
 	private HeaderPanel Head;
-	private JButton Add,remove;
+	private JButton Add,remove,Toggle;
 	private String currentTable;
 	private String ExtraPanel = "Info";
 	private String last="";
 
+
+	/**
+	 * Constructor for this JFrame.
+	 * @param string
+	 * @param pas  The Backbone to this JFrame were all of the Data work is done.
+	 */
 	public PhDViewer(String string, PhDData pas) {
 
 		super(string);
@@ -128,8 +134,8 @@ public class PhDViewer extends JFrame {
 
 		});
 
-		JButton Hide = new JButton("Hide Panels");
-		Hide.addActionListener(new ActionListener(){
+		Toggle = new JButton("Show Panels");
+		Toggle.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +150,18 @@ public class PhDViewer extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MoveUp();
+				String s = (String)JOptionPane.showInputDialog(
+						Me,
+						"Please give a date as to\n"
+								+ "when this move takes place\n",
+								"Moving Student",
+								JOptionPane.PLAIN_MESSAGE
+						);
+				if(s.length()<7){
+					JOptionPane.showMessageDialog(Me, "You have no inputed a proper date","Error",JOptionPane.ERROR_MESSAGE);
+				}else{
+					MoveUp(s);
+				}
 
 			}
 
@@ -154,19 +171,24 @@ public class PhDViewer extends JFrame {
 		Buttons.add(remove);
 		Buttons.add(MoveUp);
 		Buttons.add(Headers);
-		Buttons.add(Hide);
+		Buttons.add(Toggle);
 
 		this.add(Buttons, BorderLayout.NORTH);
+		this.hidePanel();
 
 		Table.setVisible(true);
 		setVisible(true);
 	}
 
 	/**
+	 * Tells the back PhDData to move a student up the table system.
 	 *
 	 */
-	protected void MoveUp() {
-		DATA.moveStudent(Info.getCurrentData(),currentTable);
+	protected void MoveUp(String s) {
+		if(currentTable==null) return;
+		String[][] temp = Info.getCurrentData();
+		if(temp== null) return;
+		//DATA.moveStudent(temp,currentTable,s);
 		Table.setupTable();
 
 	}
@@ -191,7 +213,12 @@ public class PhDViewer extends JFrame {
 		repaint();
 
 	}
-
+	/**
+	 * Shows the HeaderPanel and gives it the
+	 * most up to date information to use.
+	 * @param full
+	 * @param current
+	 */
 	protected void showHeaderPanel(String[] full, String[] current) {
 		if(!ExtraPanel.equals("Header")){
 			if(ExtraPanel.equals("Info"))remove(Info);
@@ -203,13 +230,17 @@ public class PhDViewer extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Hides the Info Panel on the right hand side of
+	 * the screen and changes the words in the button.
+	 */
 	protected void hidePanel(){
 
 
 		if(ExtraPanel.equals("Info"))remove(Info);
 		if(ExtraPanel.equals("Header")) remove(Head);
 		if(ExtraPanel.equals("Hide")){
-
+			Toggle.setText("Hide Panel");
 
 			if(last.equals("Info")){
 				add(Info, BorderLayout.EAST);
@@ -221,15 +252,22 @@ public class PhDViewer extends JFrame {
 			}
 			last = "";
 		}else{
+
 			last = ExtraPanel;
 			ExtraPanel = "Hide";
+
+			Toggle.setText("Show Panel");
 		}
+
+
 
 		validate();
 		repaint();
 	}
 
-
+	/**
+	 * Called when the window changes size.
+	 */
 	public void ResetSize(){
 		hidePanel();
 		Dimension size = getSize();
@@ -237,20 +275,20 @@ public class PhDViewer extends JFrame {
 		Dimension HeaderSize = new Dimension(size);
 		HeaderSize.width = (HeaderSize.width/3)*1;
 		HeaderSize.height = HeaderSize.height-50;
-		System.out.println("HEADERSIZE "+HeaderSize.toString());
-		System.out.println("Window Size "+size.toString());
+		//System.out.println("HEADERSIZE "+HeaderSize.toString());
+		//System.out.println("Window Size "+size.toString());
 		Head.setSizeOverride(HeaderSize);
 		Info.setSizeOverride(HeaderSize);
-		System.out.println("Info Size "+Info.getSize().toString());
-		System.out.println("Head Size "+Head.getSize().toString());
-		if((Info.getSize().width!=0) && !(Info.getSize().width==HeaderSize.width)){
-			System.out.println("Info check");
-			Info.setSizeOverride(HeaderSize);
-		}
-		if((Head.getSize().width!=0) && !(Head.getSize().width==HeaderSize.width)){
-			System.out.println("head check");
-			Head.setSizeOverride(HeaderSize);
-		}
+		//System.out.println("Info Size "+Info.getSize().toString());
+		//System.out.println("Head Size "+Head.getSize().toString());
+//		if((Info.getSize().width!=0) && !(Info.getSize().width==HeaderSize.width)){
+//			//System.out.println("Info check");
+//			//Info.setSizeOverride(HeaderSize);
+//		}
+//		if((Head.getSize().width!=0) && !(Head.getSize().width==HeaderSize.width)){
+//			System.out.println("head check");
+//			Head.setSizeOverride(HeaderSize);
+//		}
 		validate();
 		hidePanel();
 
@@ -277,7 +315,10 @@ public class PhDViewer extends JFrame {
 		Table.Edit(axis,table2);
 
 	}
-
+	/**
+	 * Just gets The PhDData object tied to this JFrame.
+	 * @return
+	 */
 	public PhDData getDATA() {
 		return DATA;
 	}
@@ -298,7 +339,7 @@ public class PhDViewer extends JFrame {
 			int answer = JOptionPane.showConfirmDialog(Me, "Would you like to save?","Confirm Saving =)",JOptionPane.YES_NO_OPTION);
 			if(answer == 0){
 				DATA.writeToFoswiki();
-				DATA.getPreferences().toFoswiki();
+				DATA.getPreferences().writeToFile();
 				System.exit(0);
 			} else if(answer == 1){
 				System.exit(0);
@@ -332,13 +373,21 @@ public class PhDViewer extends JFrame {
 
 	}
 
+	/**
+	 * Changes the Current Headers being shown.
+	 * @param currentSelected
+	 */
 	public void changeTableHead(String[] currentSelected) {
 		Table.setCurrentHead(currentSelected);
 
 	}
-
-	public void makeRed(String[][] i, String t) {
-		DATA.toggleMark(i,t);
+	/**
+	 *  Tells teh backbone to mark the Student Red.
+	 * @param information Containing the data to make the changes to
+	 * @param table the table that we are working on
+	 */
+	public void makeRed(String[][] information, String table) {
+		DATA.toggleMark(information,table);
 		Table.setupTable();
 	}
 
