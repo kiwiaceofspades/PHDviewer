@@ -29,9 +29,6 @@ import System.PhDProposalUnderExamination;
 import System.Student;
 import System.UnderExamination;
 
-/**
- *
- */
 
 /**
  * @author schmidmatt
@@ -48,7 +45,7 @@ public class Table extends JPanel {
 
 	/*
 	 * Headers that will be use in showing the data in the
-	 * PHData the fullHEad is a back up in case nothing was passed
+	 * PHData the fullHead is a back up in case nothing was passed in
 	 */
 	public String[] fullHead = {"Name", "ID", "Degree","EFTS","Primary Supervisor", "Supervision Split 1",
 			"Secondary Supervisor","Supervision Split 2","Third Supervisor",
@@ -72,7 +69,7 @@ public class Table extends JPanel {
 
 
 	/*
-	 * JTables for clobal links to them as they are called in other methods
+	 * JTables for Global links to them as they are called in other methods
 	 */
 	private JTable NotFullyAdmittedTable;
 	private JTable CurrentProvisionallyRegisteredStudentsTable;
@@ -90,7 +87,7 @@ public class Table extends JPanel {
 
 	private int ScrollX,ScrollY;
 	/**
-	 *
+	 * Constructor for this Class
 	 * @param dATA2 is a ArrayList of Students
 	 * @param Header is the header data that the table will look for in the PHDData
 	 * @param host Is a link to the HOST frame of this panel used for
@@ -116,7 +113,7 @@ public class Table extends JPanel {
 	/**
 	 * Sets up the Data in the main table is called everytime the table is updated
 	 * i got lazy and i feel there wont be used on a big table or having massive
-	 * changes happend in mass.
+	 * changes happen in mass.
 	 *
 	 */
 	public void setupTable() {
@@ -214,10 +211,13 @@ public class Table extends JPanel {
 			Scroll.getVerticalScrollBar().setValue(ScrollY);
 		}
 		repaint();
-
-
 	}
 
+	/**
+	 * Sets up the table of the Class.
+	 * @param Table
+	 * @return
+	 */
 	private JTable setTable(String Table){
 		JTable temp = getTableData(Table);
 
@@ -256,8 +256,13 @@ public class Table extends JPanel {
 
 	}
 
-	private MouseListener getMouse(String string) {
-		if(string.equalsIgnoreCase("CurrentFullyRegistered")){
+	/**
+	 *Builds the Mouse Listener for the desired table
+	 * @param tableName
+	 * @return MouseListener
+	 */
+	private MouseListener getMouse(String tableName) {
+		if(tableName.equalsIgnoreCase("CurrentFullyRegistered")){
 			return new MouseListener(){
 
 				@Override
@@ -295,7 +300,7 @@ public class Table extends JPanel {
 				}
 
 			};
-		}else if(string.equalsIgnoreCase("NotFullyAdmitted")){
+		}else if(tableName.equalsIgnoreCase("NotFullyAdmitted")){
 			return new MouseListener(){
 
 				@Override
@@ -333,7 +338,7 @@ public class Table extends JPanel {
 				}
 
 			};
-		}else if(string.equalsIgnoreCase("PhDProposalUnderExamination")){
+		}else if(tableName.equalsIgnoreCase("PhDProposalUnderExamination")){
 			return new MouseListener(){
 
 				@Override
@@ -371,7 +376,7 @@ public class Table extends JPanel {
 				}
 
 			};
-		}else if(string.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
+		}else if(tableName.equalsIgnoreCase("CurrentProvisionallyRegisteredStudents")){
 			return new MouseListener(){
 
 				@Override
@@ -410,7 +415,7 @@ public class Table extends JPanel {
 				}
 
 			};
-		} else if(string.equalsIgnoreCase("UnderExamination")){
+		} else if(tableName.equalsIgnoreCase("UnderExamination")){
 			return new MouseListener(){
 
 				@Override
@@ -453,6 +458,8 @@ public class Table extends JPanel {
 	}
 
 	/**
+	 *
+	 *
 	 * @return
 	 */
 	private ListSelectionListener getSelectionListener(final String string) {
@@ -550,6 +557,9 @@ public class Table extends JPanel {
 
 	}
 
+	/**
+	 *
+	 */
 	private JTable getTableData(String string) {
 		JTable temp = null;
 		if(string.equalsIgnoreCase("CurrentFullyRegistered")){
@@ -566,7 +576,10 @@ public class Table extends JPanel {
 		return temp;
 	}
 
-
+	/*
+	 *
+	 * @return
+	 */
 	private String[][] setupNotPhDProposalUnderExaminationData() {
 		ArrayList<String[]> Data = new ArrayList<String[]>();
 		String[] temp;
@@ -579,6 +592,11 @@ public class Table extends JPanel {
 		return Data.toArray(tat);
 	}
 
+
+	/*
+	 * Setup Not Fully Admitted Data
+	 * @return
+	 */
 	private String[][] setupNotFullyAdmittedData() {
 		ArrayList<String[]> Data = new ArrayList<String[]>();
 		String[] temp;
@@ -696,7 +714,7 @@ public class Table extends JPanel {
 	}
 
 	/**
-	 * Adds a new Entry in the table
+	 * Adds a new entry in the table
 	 *
 	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
 	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
@@ -714,7 +732,7 @@ public class Table extends JPanel {
 	}
 
 	/**
-	 * Edits a entrie in the table
+	 * Edits a entry in the table
 	 *
 	 * @param axis is a row contained with in the data base with its changed valuse it contains the {{headers,values},{headers,values}}
 	 * so if the system is working under partial headers we still know what data points were changed in the PHDdata
@@ -729,7 +747,7 @@ public class Table extends JPanel {
 	/**
 	 * This removes a row from the table it work os a principle of last table
 	 * selected knows what you wanted you have selected since each table is a
-	 * seperate table.
+	 * Separate table.
 	 * @param currentTable Name Of the Table that has the information on what line is to be removed.
 	 */
 	public void Remove(String currentTable){
@@ -760,7 +778,7 @@ public class Table extends JPanel {
 	}
 
 	/**
-	 * So this meathod just adds the headers to the data that we are playing
+	 * So this method just adds the headers to the data that we are playing
 	 * with just to keep the calls and submitions to the PHDData is consistant
 	 * @param strings this the list of data that we are removing
 	 * @return returns a standized data for the PHDdata remove function
@@ -784,7 +802,8 @@ public class Table extends JPanel {
 	}
 
 	/**
-	 * Sets the CurrentHeader information for the table
+	 * Sets the CurrentHeader information for the table.
+	 *
 	 * @param currentHead All changes currently have to be
 	 * consistant with what the PHDData is looking if they
 	 * are not PHDDAta will throw a Error. FullHead value
@@ -796,10 +815,30 @@ public class Table extends JPanel {
 	}
 
 
-
+/**
+ * This class overrides the default rendering of each cell in the JTabel and
+ * defines what color it should be.
+ * @author schmidmatt
+ *
+ */
 private class Render extends DefaultTableCellRenderer{
 
-	private int[] YELLOW,RED,PURPLE;
+
+	/**
+	 * This is the system defined highlighting which is generated by the system.
+	 */
+	private int[] YELLOW;
+	/**
+	 * This is the highlighting defined by the user and should be saved on exit
+	 * If the person saves there changes.
+	 */
+	private int[] RED;
+
+	/**
+	 * Purple is used to show any formating errors that make it impossible for the
+	 * system to work out if it belongs in the Yellow highlighting system.
+	 */
+	private int[] PURPLE;
 
 /**
  *
@@ -813,6 +852,10 @@ private class Render extends DefaultTableCellRenderer{
 		PURPLE = purple;
 	}
 
+	/**
+	 * Adds the highlighting to each cell that was defined.
+	 * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+	 */
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
@@ -830,7 +873,7 @@ private class Render extends DefaultTableCellRenderer{
 			  other = true;
 		  }else if(YELLOW[row]==3){
 			  cell.setBackground(Color.red);
-			  cell.setForeground(Color.BLACK);
+			  cell.setForeground(Color.WHITE);
 			  other = true;
 		  }else if(RED[row]==1){
 			  cell.setBackground(Color.black);

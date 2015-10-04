@@ -26,7 +26,7 @@ import System.PhDData;
 public class HeaderPanel extends JPanel {
 
 
-	/**
+	/*
 	 * A link to the main host of the JPanel
 	 * so that we can pass methods around the window
 	 */
@@ -186,6 +186,7 @@ public class HeaderPanel extends JPanel {
 	/**
 	 * Updates the list of headers in the header selection area full MUST
 	 *  always contain a complete list of the headers.
+	 *
 	 * @param full Cannot be Null or Empty.
 	 * @param current Cannot be Null but can be empty.
 	 */
@@ -223,8 +224,10 @@ public class HeaderPanel extends JPanel {
 		HOST.hidePanel();
 		HOST.hidePanel();
 	}
+
 	/**
 	 * The Action Listener for the header selection in the header panel.
+	 *
 	 * @author schmidmatt
 	 *
 	 */
@@ -301,6 +304,7 @@ public class HeaderPanel extends JPanel {
 
 
 	}
+
 	/**
 	 * Controls the size of the panel in the screen its called once were changed.
 	 * @param size

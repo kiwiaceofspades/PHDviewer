@@ -18,18 +18,16 @@ import javax.swing.event.DocumentListener;
 
 public class InfoPanel extends JPanel {
 
-	/**
-	 *
-	 */
+
 	private static final long serialVersionUID = -1098644150408872540L;
 
-	/**
+	/*
 	 * A link to the main host of the JPanel
 	 * so that we can pass methods around the window
 	 */
 	private PhDViewer HOST;
 
-	/**
+	/*
 	 * info is all the data that is
 	 */
 	private String[][] info;
@@ -57,12 +55,16 @@ public class InfoPanel extends JPanel {
 	private String Table;
 
 
-
-	public InfoPanel(Dimension tt,PhDViewer Main){
+	/**
+	 *
+	 * @param hostSize The Size of the host to configure the size of this panel.
+	 * @param Main Who is the host of this Panel.
+	 */
+	public InfoPanel(Dimension hostSize,PhDViewer Main){
 		HOST = Main;
-		tt.width = 300;
+		hostSize.width = 300;
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-		this.setPreferredSize(tt);
+		this.setPreferredSize(hostSize);
 		pan = new JPanel();
 		apply = new JButton("Apply Changes");
 		apply.addActionListener(new ActionListener(){
@@ -88,7 +90,7 @@ public class InfoPanel extends JPanel {
 
 		});
 		pan.add(but);
-		Dimension panDimension= new Dimension(tt.width,40);
+		Dimension panDimension= new Dimension(hostSize.width,40);
 		pan.setMinimumSize(panDimension);
 		pan.setPreferredSize(panDimension);
 		pan.setMaximumSize(panDimension);
@@ -97,9 +99,9 @@ public class InfoPanel extends JPanel {
 	}
 
 	/**
-	 *
+	 * Updates the Contents of the info panel every time it is run it will delete everything and refresh all data.
 	 * @param INFO The information on the Row and the Headers that this information relates to
-	 * @param b	Wether this is a add or not.
+	 * @param b	Weather this is a add or not.
 	 * @param table Which table are we working on.
 	 */
 	public void updateInfo (String[][] INFO, boolean b, String table){
@@ -157,10 +159,20 @@ public class InfoPanel extends JPanel {
 		repaint();
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public String[][] getCurrentData(){
 		return info;
 	}
 
+
+	/**
+	 *
+	 * @author schmidmatt
+	 *
+	 */
 	private class DocListen implements DocumentListener{
 
 		private int index;
@@ -196,6 +208,10 @@ public class InfoPanel extends JPanel {
 
 	}
 
+	/**
+	 * Sets the size of the Panel.
+	 * @param size
+	 */
 	public void setSizeOverride(Dimension size) {
 		this.setMinimumSize(size);
 		this.setPreferredSize(size);
