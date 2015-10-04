@@ -15,13 +15,13 @@ public class PhDData {
 	private OtherSchoolsAtVUW otherSchoolsAtVUW;
 	private OtherUniversities otherUniversities;
 
-	private Preferences preferences;
-
+	Preferences preferences;
 	private Parser parser;
 
 	public PhDData(String filename) {
 		preferences = new Preferences();
 		parser = new Parser(filename, this, preferences);
+		preferences.setParser(parser);
 	}
 
 	public UnderExamination getUnderExamination() {
@@ -346,8 +346,8 @@ public class PhDData {
 	}
 
 	/**
-	 * Gets the headers for the tables. Current implementation assumes that all tables have  
-	 * the same headers as notFullyAdmitted are 
+	 * Gets the headers for the tables. Current implementation assumes that all tables have
+	 * the same headers as notFullyAdmitted are
 	 * @return
 	 */
 	public String[] getHeaders() {

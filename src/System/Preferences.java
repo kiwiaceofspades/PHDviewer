@@ -1,5 +1,6 @@
 package System;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -12,10 +13,7 @@ import java.util.ArrayList;
 public class Preferences {
 
 	private ArrayList<Mode> viewingModes;
-
-	public Preferences(ArrayList<Mode> viewingModes){
-		this.viewingModes = viewingModes;
-	}
+	private Parser parser;
 
 	public Preferences(){
 		this.viewingModes = new ArrayList<Mode>();
@@ -66,6 +64,10 @@ public class Preferences {
 		return false;
 	}
 
+	public void setParser(Parser parser){
+		this.parser = parser;
+	}
+
 	public boolean setModes(ArrayList<Mode> modes){
 		viewingModes = modes;
 		return true;
@@ -81,5 +83,17 @@ public class Preferences {
 		return foswikiList;
 	}
 
+	public void writeToFile(){
+		if(parser == null){
+			System.err.println("No parser object to write to");
+			return;
+		}
+		try {
+			parser.writeToPreferencesFile(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
