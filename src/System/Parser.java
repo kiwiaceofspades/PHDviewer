@@ -58,7 +58,6 @@ public class Parser {
 	 */
 	public Parser(String fname, PhDData data, Preferences pref) {
 		runParser(fname);
-		System.out.println("hello");
 		// Populate empty PhDData object
 		data.setUnderExamination(underExamination);
 		data.setCurrentFullyRegistered(currentFullyRegistered);
