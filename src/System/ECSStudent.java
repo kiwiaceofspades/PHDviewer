@@ -231,11 +231,26 @@ public class ECSStudent implements Student {
 				}
 				int yearDiff = endDate.getYear() - startDate.getYear();
 				int monthDiff = endDate.getMonth() - startDate.getMonth();
+				int dayDiff = endDate.getDay() - startDate.getDay();
 
-				if(monthDiff < 0){
-					yearDiff -= 1;
-					monthDiff += (12 + monthDiff);
+				// Edge Cases begin --------
+				if(dayDiff == 0 && monthDiff == 0 && yearDiff == 0){
+					isIncorrectlyFormatted = true;
+					return 0;
 				}
+				if(yearDiff < 0){
+					isIncorrectlyFormatted = true;
+				}
+				if(monthDiff < 0  && yearDiff == 0){
+					isIncorrectlyFormatted = true;
+					return 0;
+				}
+				if(dayDiff < 0 && monthDiff == 0 && yearDiff == 0){
+					isIncorrectlyFormatted = true;
+					return 0;
+				}
+				// Edge Cases end ----------
+
 				monthsSuspended = (yearDiff * 12) + monthDiff + 1;
 			}
 		}

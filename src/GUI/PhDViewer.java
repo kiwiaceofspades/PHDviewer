@@ -150,18 +150,8 @@ public class PhDViewer extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String s = (String)JOptionPane.showInputDialog(
-						Me,
-						"Please give a date as to\n"
-								+ "when this move takes place\n",
-								"Moving Student",
-								JOptionPane.PLAIN_MESSAGE
-						);
-				if(s.length()<7){
-					JOptionPane.showMessageDialog(Me, "You have no inputed a proper date","Error",JOptionPane.ERROR_MESSAGE);
-				}else{
-					MoveUp(s);
-				}
+
+					MoveUp();
 
 			}
 
@@ -185,12 +175,31 @@ public class PhDViewer extends JFrame {
 	 * will return if nothing is selected.
 	 * @param s Date that this move has happened
 	 */
-	protected void MoveUp(String s) {
+	protected void MoveUp() {
 		if(currentTable==null) return;
+		String s = "";
+		if(!(currentTable.equalsIgnoreCase("NotFullyAdmitted")
+				||currentTable.equalsIgnoreCase("UnderExamination"))){
+		 s = (String)JOptionPane.showInputDialog(
+				Me,
+				"Please give a date as to\n"
+						+ "when this move takes place\n",
+						"Moving Student",
+						JOptionPane.PLAIN_MESSAGE
+				);
+		if(s ==null||(s!=null&&s.length()<7)){
+			JOptionPane.showMessageDialog(Me,
+					"You have no inputed a proper date",
+					"Error",JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		}
 		String[][] temp = Info.getCurrentData();
 		if(temp== null) return;
-		//DATA.moveStudent(temp,currentTable,s);
+
+		DATA.moveStudent(temp,currentTable,s);
 		Table.setupTable();
+
 
 	}
 
