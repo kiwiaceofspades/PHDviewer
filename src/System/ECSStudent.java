@@ -146,7 +146,7 @@ public class ECSStudent implements Student {
 		this.thesisSubmissionAndExaminersAppointedDate = value;
 
 		value = findValueForHeader("FGR Completes Examination", headersAndValues);
-		this.supervisionSplit3 = value;
+		this.fgrCompletesExamination = value;
 
 		value = findValueForHeader("Revisions Finalised", headersAndValues);
 		this.revisionsFinalised = value;
