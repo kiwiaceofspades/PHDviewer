@@ -198,7 +198,7 @@ public class PhDViewer extends JFrame {
 	 * Called when you are using the InfoPanel
 	 * @param info the Information to be displayed in the panel
 	 * @param table what table is this table from
-	 * @param b weather we are editing of adding to the table.
+	 * @param b whether we are editing of adding to the table.
 	 */
 	protected void UpInfo(String[][] info, String table, boolean b){
 
