@@ -53,7 +53,7 @@ public class PhDViewer extends JFrame {
 		DATA = pas;
 		this.setMinimumSize(new Dimension(800,600));
 		Table = new Table(DATA,
-				DATA.getPreferences().getHeadersForMode("default")
+				DATA.getPreferences().getHeadersForMode("Default view")
 				,DATA.getHeaders(), this);
 		Info = new InfoPanel(this.getSize(),this);
 		Head = new HeaderPanel(this.getSize(),this);

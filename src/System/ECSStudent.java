@@ -1,12 +1,13 @@
 package System;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
-* Limitations
-*/
+ * Limitations
+ */
 public class ECSStudent implements Student {
 
 	private String name;
@@ -67,7 +68,7 @@ public class ECSStudent implements Student {
 		// Need to try convert the date
 		Date stDate = convertToDate(startDate);
 		this.startDate = stDate;
-		if(!stDate.isConverted()){
+		if (!stDate.isConverted()) {
 			isIncorrectlyFormatted = true;
 		}
 
@@ -85,7 +86,7 @@ public class ECSStudent implements Student {
 		this.timeSinceStartDate = generateTimeSinceStartDate();
 	}
 
-	public ECSStudent(String[][] headersAndValues){
+	public ECSStudent(String[][] headersAndValues) {
 		String value = null;
 		int valueInt = 0;
 		Date valueDate = null;
@@ -126,7 +127,7 @@ public class ECSStudent implements Student {
 		value = findValueForHeader("Start Date", headersAndValues);
 		valueDate = convertToDate(convertDateString(value));
 		this.startDate = valueDate;
-		if(!this.startDate.isConverted()){
+		if (!this.startDate.isConverted()) {
 			this.isIncorrectlyFormatted = true;
 		}
 
@@ -136,16 +137,20 @@ public class ECSStudent implements Student {
 		value = findValueForHeader("PhD Proposal Seminar", headersAndValues);
 		this.phdProposalSeminar = value;
 
-		value = findValueForHeader("PhD Proposal Confirmation Date", headersAndValues);
+		value = findValueForHeader("PhD Proposal Confirmation Date",
+				headersAndValues);
 		this.phdProposalConfirmationDate = value;
 
 		value = findValueForHeader("Suspension Dates", headersAndValues);
 		this.suspensionDates = value;
 
-		value = findValueForHeader("Thesis Submission+Examiners Appointed Date", headersAndValues);
+		value = findValueForHeader(
+				"Thesis Submission+Examiners Appointed Date",
+				headersAndValues);
 		this.thesisSubmissionAndExaminersAppointedDate = value;
 
-		value = findValueForHeader("FGR Completes Examination", headersAndValues);
+		value = findValueForHeader("FGR Completes Examination",
+				headersAndValues);
 		this.fgrCompletesExamination = value;
 
 		value = findValueForHeader("Revisions Finalised", headersAndValues);
@@ -165,32 +170,38 @@ public class ECSStudent implements Student {
 
 	/**
 	 * Maps the header to a value in the 2D array
-	 * @param header to look for in the 2D array
-	 * @param student which is the value that corresponds to the header
+	 *
+	 * @param header
+	 *            to look for in the 2D array
+	 * @param student
+	 *            which is the value that corresponds to the header
 	 * @return the value
 	 */
-	public String findValueForHeader(String header, String[][] student){
+	public String findValueForHeader(String header, String[][] student) {
 		// Go through the student 2D array looking for header
 		String value = null;
-		for(int i = 0; i<student.length; i++){
-			if(student[i][0].equalsIgnoreCase(header)){
+		for (int i = 0; i < student.length; i++) {
+			if (student[i][0].equalsIgnoreCase(header)) {
 				value = student[i][1];
 			}
 		}
-		if(value == null){
+		if (value == null) {
 			System.out.println("Couldn't find value for header: " + header);
 		}
 		return value;
 	}
 
 	/**
-	 * When editing a student, the date String that GUI uses is of a readable format.
-	 * The Student object stores the date String in a different format, so need to convert it
-	 * the readable string back into the format that the Student class recognizes.
+	 * When editing a student, the date String that GUI uses is of a readable
+	 * format. The Student object stores the date String in a different format,
+	 * so need to convert it the readable string back into the format that the
+	 * Student class recognizes.
+	 *
 	 * @param date
 	 * @return the String reformated in the way the ECSStudent class understands
 	 */
-	public String convertDateString(String date) throws StringIndexOutOfBoundsException {
+	public String convertDateString(String date)
+			throws StringIndexOutOfBoundsException {
 		// TODO error checking to make sure date is of correct format... in case
 		// the user changes it
 		String day = date.substring(0, 2);
@@ -200,32 +211,32 @@ public class ECSStudent implements Student {
 	}
 
 	/**
-	 * First converts the suspended dates field into Dates.
-	 * Then calculates the number of days that the user has suspended their PHD for
+	 * First converts the suspended dates field into Dates. Then calculates the
+	 * number of days that the user has suspended their PHD for
 	 */
-	public int suspendedMonths(){
+	public int suspendedMonths() {
 		// Must be in the format YYYYMMDD - YYYYMMDD, ....
 		int monthsSuspended = 0;
-		if(!suspensionDates.equals("")){
+		if (!suspensionDates.equals("")) {
 			String[] suspendedDatesPeriods = suspensionDates.split(",");
 
-			for(int i = 0; i < suspendedDatesPeriods.length; i++){
+			for (int i = 0; i < suspendedDatesPeriods.length; i++) {
 				String period = suspendedDatesPeriods[i];
 				// Format for period YYYYMMDD - YYYYMMDD
 				String[] dates = period.split("-");
-				if(dates.length != 2){
+				if (dates.length != 2) {
 					isIncorrectlyFormatted = true;
 					return 0;
 				}
 
 				Date startDate = convertToDate(dates[0].trim());
-				if(!startDate.isConverted()){
+				if (!startDate.isConverted()) {
 					isIncorrectlyFormatted = true;
 					return 0;
 				}
 
 				Date endDate = convertToDate(dates[1].trim());
-				if(!endDate.isConverted()){
+				if (!endDate.isConverted()) {
 					isIncorrectlyFormatted = true;
 					return 0;
 				}
@@ -234,18 +245,18 @@ public class ECSStudent implements Student {
 				int dayDiff = endDate.getDay() - startDate.getDay();
 
 				// Edge Cases begin --------
-				if(dayDiff == 0 && monthDiff == 0 && yearDiff == 0){
+				if (dayDiff == 0 && monthDiff == 0 && yearDiff == 0) {
 					isIncorrectlyFormatted = true;
 					return 0;
 				}
-				if(yearDiff < 0){
+				if (yearDiff < 0) {
 					isIncorrectlyFormatted = true;
 				}
-				if(monthDiff < 0  && yearDiff == 0){
+				if (monthDiff < 0 && yearDiff == 0) {
 					isIncorrectlyFormatted = true;
 					return 0;
 				}
-				if(dayDiff < 0 && monthDiff == 0 && yearDiff == 0){
+				if (dayDiff < 0 && monthDiff == 0 && yearDiff == 0) {
 					isIncorrectlyFormatted = true;
 					return 0;
 				}
@@ -259,37 +270,45 @@ public class ECSStudent implements Student {
 
 	/**
 	 * Calculates how many months since the student began their PhD.
+	 *
 	 * @return int of how many months since the student began their PhD
 	 */
 	private int generateTimeSinceStartDate() {
-		if(isIncorrectlyFormatted == true){
-			// The startDate has is incorrectly formatted, therefore time cannot be calculated
+		if (isIncorrectlyFormatted == true) {
+			// The startDate has is incorrectly formatted, therefore time cannot
+			// be calculated
 			return 0;
 		}
 		// Find the current year and month
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Calendar calobj = Calendar.getInstance();
 		String currentDateString = dateFormat.format(calobj.getTime());
-		String formattedCurrentDate = currentDateString.substring(0, 10).replace("/", "");
+		String formattedCurrentDate = currentDateString.substring(0, 10)
+				.replace("/", "");
 
-		int currentYear = Integer.parseInt(formattedCurrentDate.substring(0, 4));
-		int currentMonth = Integer.parseInt(formattedCurrentDate.substring(4, 6));
+		int currentYear = Integer
+				.parseInt(formattedCurrentDate.substring(0, 4));
+		int currentMonth = Integer.parseInt(formattedCurrentDate
+				.substring(4, 6));
 		int currentDay = Integer.parseInt(formattedCurrentDate.substring(6, 8));
 
 		Date currentDate = new Date(currentDay, currentMonth, currentYear);
 
-		// Get year and month difference and use that to calculate the end result
+		// Get year and month difference and use that to calculate the end
+		// result
 		int yearDiff = currentYear - startDate.getYear();
-		int	monthDiff = currentMonth - startDate.getMonth();
+		int monthDiff = currentMonth - startDate.getMonth();
 
 		int daysSuspended = suspendedMonths();
-		return (yearDiff*12 + monthDiff - suspendedMonths());
+		return (yearDiff * 12 + monthDiff - suspendedMonths());
 	}
 
 	/**
 	 * Converts the date string (which is in the format of YYYYMMDD) into a Date
 	 * object.
-	 * @param dateArgument which is a string that needs to be converted into a Date
+	 *
+	 * @param dateArgument
+	 *            which is a string that needs to be converted into a Date
 	 * @return Date
 	 */
 	public Date convertToDate(String dateArgument) {
@@ -300,7 +319,7 @@ public class ECSStudent implements Student {
 		int day = -1;
 
 		// Format of string YYYYMMDD
-		if(dateArgument.length() != 8){
+		if (dateArgument.length() != 8) {
 			date = new Date(dateArgument);
 			return date;
 		}
@@ -311,15 +330,15 @@ public class ECSStudent implements Student {
 
 		// Go through the date string, and get values for day
 		// month and year
-		for(int i = 0; i<dateArgument.length(); i++){
+		for (int i = 0; i < dateArgument.length(); i++) {
 			char character = dateArgument.charAt(i);
-			if(Character.isDigit(character) == false){
+			if (Character.isDigit(character) == false) {
 				date = new Date(dateArgument);
 				return date;
 			}
 			buffer[pointer] = character;
 			pointer++;
-			if(pointer == 4 && mode == 0){
+			if (pointer == 4 && mode == 0) {
 				// We have finished making the year string
 				String yearString = new String(buffer);
 				year = Integer.parseInt(yearString);
@@ -327,7 +346,7 @@ public class ECSStudent implements Student {
 				buffer = new char[2];
 				pointer = 0;
 			}
-			if(pointer == 2 && mode == 1){
+			if (pointer == 2 && mode == 1) {
 				// We have finished making the month string
 				String monthString = new String(buffer);
 				month = Integer.parseInt(monthString);
@@ -335,7 +354,7 @@ public class ECSStudent implements Student {
 				buffer = new char[2];
 				pointer = 0;
 			}
-			if(pointer == 2 && mode == 2){
+			if (pointer == 2 && mode == 2) {
 				// We have finished making the day string
 				String dayString = new String(buffer);
 				day = Integer.parseInt(dayString);
@@ -344,12 +363,12 @@ public class ECSStudent implements Student {
 		}
 		// If the day, month and year have been assigned correctly
 		// construct a Date object
-		if(day != -1 && month != -1 && year != -2){
+		if (day != -1 && month != -1 && year != -2) {
 			date = new Date(day, month, year);
 		}
 		// If date has still not been assigned, the Date object will
 		// have to just use the dateArgument string
-		if(date == null){
+		if (date == null) {
 			date = new Date(dateArgument);
 		}
 
@@ -359,87 +378,88 @@ public class ECSStudent implements Student {
 	/**
 	 * Uses the list of headers provided as an argument
 	 */
-	public String[] getValues(String[] headers){
+	public String[] getValues(String[] headers) {
 		String[] values = new String[headers.length];
-		for(int i = 0; i<headers.length; i++){
+		for (int i = 0; i < headers.length; i++) {
 			String header = headers[i];
 			String value;
-			switch (header.toUpperCase()){
-				case "NAME":
-					value = name;
-					break;
-				case "ID":
-					value = ""+id;
-					break;
-				case "DEGREE":
-					value = degree;
-					break;
-				case "EFTS":
-					value = efts;
-					break;
-				case "PRIMARY SUPERVISOR":
-					value = primarySupervisor;
-					break;
-				case "SUPERVISION SPLIT 1":
-					value = supervisionSplit1;
-					break;
-				case "SECONDARY SUPERVISOR":
-					value = secondarySupervisor;
-					break;
-				case "SUPERVISION SPLIT 2":
-					value = supervisionSplit2;
-					break;
-				case "THIRD SUPERVISOR":
-					value = thirdSupervisor;
-					break;
-				case "SUPERVISION SPLIT 3":
-					value = supervisionSplit3;
-					break;
-				case "SCHOLARSHIP":
-					value = scholarship;
-					break;
-				case "START DATE":
-					value = startDate.toString();
-					break;
-				case "PHD PROPOSAL SUBMISSION":
-					value = phdProposalSubmission;
-					break;
-				case "PHD PROPOSAL SEMINAR":
-					value = phdProposalSeminar;
-					break;
-				case "PHD PROPOSAL CONFIRMATION DATE":
-					value = phdProposalConfirmationDate.toString();
-					break;
-				case "SUSPENSION DATES":
-					value = "";
-					value = suspensionDates;
-					break;
-				case "THESIS SUBMISSION+EXAMINERS APPOINTED DATE":
-					value = thesisSubmissionAndExaminersAppointedDate;
-					break;
-				case "FGR COMPLETES EXAMINATION":
-					value = fgrCompletesExamination;
-					break;
-				case "REVISIONS FINALISED":
-					value = revisionsFinalised;
-					break;
-				case "DEPOSITED IN LIBRARY":
-					value = depositedInLibrary;
-					break;
-				case "NOTES":
-					value = notes;
-					break;
-				case "ORIGIN":
-					value = origin;
-					break;
-				case "TOTAL TIME TAKEN":
-					value = "" + timeSinceStartDate;
-					break;
-				default:
-					value = null; // added as null cause it will cause an error, which makes the issue easily identifiable
-					System.out.println("Could not find value for header " + header);
-					break;
-				}
+			switch (header.toUpperCase()) {
+			case "NAME":
+				value = name;
+				break;
+			case "ID":
+				value = "" + id;
+				break;
+			case "DEGREE":
+				value = degree;
+				break;
+			case "EFTS":
+				value = efts;
+				break;
+			case "PRIMARY SUPERVISOR":
+				value = primarySupervisor;
+				break;
+			case "SUPERVISION SPLIT 1":
+				value = supervisionSplit1;
+				break;
+			case "SECONDARY SUPERVISOR":
+				value = secondarySupervisor;
+				break;
+			case "SUPERVISION SPLIT 2":
+				value = supervisionSplit2;
+				break;
+			case "THIRD SUPERVISOR":
+				value = thirdSupervisor;
+				break;
+			case "SUPERVISION SPLIT 3":
+				value = supervisionSplit3;
+				break;
+			case "SCHOLARSHIP":
+				value = scholarship;
+				break;
+			case "START DATE":
+				value = startDate.toString();
+				break;
+			case "PHD PROPOSAL SUBMISSION":
+				value = phdProposalSubmission;
+				break;
+			case "PHD PROPOSAL SEMINAR":
+				value = phdProposalSeminar;
+				break;
+			case "PHD PROPOSAL CONFIRMATION DATE":
+				value = phdProposalConfirmationDate.toString();
+				break;
+			case "SUSPENSION DATES":
+				value = "";
+				value = suspensionDates;
+				break;
+			case "THESIS SUBMISSION+EXAMINERS APPOINTED DATE":
+				value = thesisSubmissionAndExaminersAppointedDate;
+				break;
+			case "FGR COMPLETES EXAMINATION":
+				value = fgrCompletesExamination;
+				break;
+			case "REVISIONS FINALISED":
+				value = revisionsFinalised;
+				break;
+			case "DEPOSITED IN LIBRARY":
+				value = depositedInLibrary;
+				break;
+			case "NOTES":
+				value = notes;
+				break;
+			case "ORIGIN":
+				value = origin;
+				break;
+			case "TOTAL TIME TAKEN":
+				value = "" + timeSinceStartDate;
+				break;
+			default:
+				value = null; // added as null cause it will cause an error,
+								// which makes the issue easily identifiable
+				System.out.println("Could not find value for header " + header);
+				break;
+			}
 			values[i] = value;
 		}
 		return values;
@@ -537,7 +557,6 @@ public class ECSStudent implements Student {
 		return startDate.toString();
 	}
 
-
 	public void setStartDate(String startDate) {
 		Date date = new Date(startDate);
 		this.startDate = date;
@@ -625,14 +644,14 @@ public class ECSStudent implements Student {
 		this.origin = origin;
 	}
 
-	public int getTimeSinceStartDate(){
+	public int getTimeSinceStartDate() {
 		return timeSinceStartDate;
 	}
 
-	public String toFoswiki(){
+	public String toFoswiki() {
 		ArrayList<String> foswikiString = new ArrayList<String>();
 		foswikiString.add(name);
-		foswikiString.add(""+id);
+		foswikiString.add("" + id);
 		foswikiString.add(degree);
 		foswikiString.add(efts);
 		foswikiString.add(primarySupervisor);
@@ -655,30 +674,29 @@ public class ECSStudent implements Student {
 		foswikiString.add(origin);
 
 		String list = "|";
-		for(String s : foswikiString){
+		for (String s : foswikiString) {
 			list += s + "|";
 		}
 
 		return list;
 	}
 
-	public boolean isHighlighted(){
+	public boolean isHighlighted() {
 		return isHighlighted;
 	}
 
-	public boolean isMarked(){
+	public boolean isMarked() {
 		return isMarked;
 	}
 
-	public boolean isIncorrectlyFormatted(){
+	public boolean isIncorrectlyFormatted() {
 		return isIncorrectlyFormatted;
 	}
 
-	public void toggleMark(){
-		if(isMarked == true){
+	public void toggleMark() {
+		if (isMarked == true) {
 			isMarked = false;
-		}
-		else{
+		} else {
 			isMarked = true;
 		}
 	}
