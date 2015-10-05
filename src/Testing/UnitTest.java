@@ -17,6 +17,11 @@ import System.PhDTable;
 import System.Student;
 import System.UnderExamination;
 
+/**
+ *
+ * @author Harry King
+ * The class that has some unit tests in it.
+ */
 public class UnitTest {
 
 	private int sizeOfArray = 23;
@@ -305,7 +310,7 @@ public class UnitTest {
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.setUnderExamination(underTable);
 		phd.addEntry(stu, fullyRegiTable);
-		assertTrue(phd.moveStudent(stu, fullyRegiTable));
+		assertTrue(phd.moveStudent(stu, fullyRegiTable, "1234567"));
 	}
 
 	@Test
@@ -321,7 +326,7 @@ public class UnitTest {
 		phd.setCurrentFullyRegistered(regiTable );
 		phd.addEntry(stu, fullyRegiTable);
 		stu[2][1] = "999";
-		assertFalse(phd.moveStudent(stu, fullyRegiTable));
+		assertFalse(phd.moveStudent(stu, fullyRegiTable, "7654321"));
 	}
 
 
@@ -513,6 +518,39 @@ public class UnitTest {
 		phd.addEntry(stu, fullyRegiTable);
 		regiTable.toggleMark(1236);
 		assertFalse(regiTable.getStudents().get(1).isMarked());
+	}
+
+	//testing that the suspendedMonths works correctly
+	@Test
+	public void test22(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
+		}
+		stu[12][1] = "02-02-2015";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		ECSStudent stud = (ECSStudent) stues.get(0);
+		stud.setSuspensionDates("20150202 - 20150302");
+		assertEquals(stud.suspendedMonths(),2);
+	}
+
+	@Test
+	public void test23(){
+		addToArrays();
+		for(int i=0; i<sizeOfArray; i++){
+			stu[i][1] = ""+i;
+			stu[i][0] = headers.get(i);
+		}
+		stu[12][1] = "02-02-2015";
+		PhDData phd = new PhDData(testFile);
+		phd.setCurrentFullyRegistered(regiTable);
+		phd.addEntry(stu, fullyRegiTable);
+		ECSStudent stud = (ECSStudent) stues.get(0);
+		stud.setSuspensionDates("20150201 - 20150201");
+		assertEquals(stud.suspendedMonths(),1);
 	}
 
 
