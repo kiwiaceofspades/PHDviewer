@@ -352,7 +352,7 @@ public class Table extends JPanel {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println("Click PhD Proposal Under Examination");
+					//System.out.println("Click PhD Proposal Under Examination");
 					int col = PhDProposalUnderExaminationTable.columnAtPoint(e.getPoint());
 					String head = PhDProposalUnderExaminationTable.getColumnName(col);
 					sortedBy = head;
@@ -390,7 +390,7 @@ public class Table extends JPanel {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println("Click Current Provisionally Registered Students");
+				//	System.out.println("Click Current Provisionally Registered Students");
 					int col = CurrentProvisionallyRegisteredStudentsTable.columnAtPoint(e.getPoint());
 					String head = CurrentProvisionallyRegisteredStudentsTable.getColumnName(col);
 					sortedBy = head;
@@ -429,7 +429,7 @@ public class Table extends JPanel {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					System.out.println("Click Under Examination");
+					//System.out.println("Click Under Examination");
 					int col = UnderExaminationTable.columnAtPoint(e.getPoint());
 					String head = UnderExaminationTable.getColumnName(col);
 					sortedBy = head;
@@ -477,7 +477,7 @@ public class Table extends JPanel {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					System.out.println("CurrentFullyRegistered");
+				//	System.out.println("CurrentFullyRegistered");
 					NotFullyAdmittedTable.getSelectionModel().clearSelection();
 					PhDProposalUnderExaminationTable.getSelectionModel().clearSelection();
 					UnderExaminationTable.getSelectionModel().clearSelection();
@@ -494,7 +494,7 @@ public class Table extends JPanel {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					System.out.println(string);
+					//System.out.println(string);
 					PhDProposalUnderExaminationTable.getSelectionModel().clearSelection();;
 					UnderExaminationTable.getSelectionModel().clearSelection();;
 					CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
@@ -512,7 +512,7 @@ public class Table extends JPanel {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					System.out.println(string);
+					//System.out.println(string);
 					//PhDProposalUnderExaminationTable.getSelectionModel().clearSelection();;
 					NotFullyAdmittedTable.getSelectionModel().clearSelection();
 					UnderExaminationTable.getSelectionModel().clearSelection();;
@@ -532,7 +532,7 @@ public class Table extends JPanel {
 				public void valueChanged(ListSelectionEvent e) {
 					//System.out.println("Update");
 
-					System.out.println(string);
+					//System.out.println(string);
 					NotFullyAdmittedTable.getSelectionModel().clearSelection();
 					PhDProposalUnderExaminationTable.getSelectionModel().clearSelection();
 					CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
@@ -549,7 +549,7 @@ public class Table extends JPanel {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					System.out.println(string);
+					//System.out.println(string);
 					NotFullyAdmittedTable.getSelectionModel().clearSelection();
 					PhDProposalUnderExaminationTable.getSelectionModel().clearSelection();
 					CurrentFullyRegisteredTable.getSelectionModel().clearSelection();
@@ -777,10 +777,10 @@ public class Table extends JPanel {
 			if(currentTable.equals("UnderExamination"))temp=this.UnderExaminationTable;
 
 			DATA.makeChanges('r',getRemovedData(tempData[temp.getSelectedRow()]),currentTable);
-			System.out.println("Cleaning");
-			for(String a: CurrentFullyRegisteredData[CurrentFullyRegisteredTable.getSelectedRow()]){
-				System.out.println(a);
-			}
+			//System.out.println("Cleaning");
+			//for(String a: CurrentFullyRegisteredData[CurrentFullyRegisteredTable.getSelectedRow()]){
+				//System.out.println(a);
+			//}
 			setupTable();
 		}
 

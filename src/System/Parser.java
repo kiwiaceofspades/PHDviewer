@@ -270,7 +270,7 @@ public class Parser {
 				System.out.println(line);
 				String[] splitHeaders = line.split("\\|", 0);
 
-				for (int i = 2; i < splitHeaders.length-1; i++) {
+				for (int i = 2; i < splitHeaders.length; i++) {
 					String s = splitHeaders[i];
 					if(s.isEmpty() || s.matches("^\\s*$")) {
 						//System.out.print("----------");
