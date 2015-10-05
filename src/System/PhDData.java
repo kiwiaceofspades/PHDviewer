@@ -1,3 +1,23 @@
+/**
+ *
+ * Copyright (C) 2015  Michael Millward
+ *
+ * This file is part of PHDViewer.
+ *
+ * PHDViewer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PHDViewer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package System;
 
 import java.io.IOException;
@@ -10,10 +30,6 @@ public class PhDData {
 	private PhDProposalUnderExamination phDProposalUnderExamination;
 	private CurrentFullyRegistered currentFullyRegistered;
 	private UnderExamination underExamination;
-
-	/* These tables have not been implemented */
-	private OtherSchoolsAtVUW otherSchoolsAtVUW;
-	private OtherUniversities otherUniversities;
 
 	Preferences preferences;
 	private Parser parser;
@@ -56,22 +72,6 @@ public class PhDData {
 
 	public void setNotFullyAdmitted(NotFullyAdmitted notFullyAdmitted) {
 		this.notFullyAdmitted = notFullyAdmitted;
-	}
-
-	public OtherUniversities getOtherUniversities() {
-		return otherUniversities;
-	}
-
-	public void setOtherUniversities(OtherUniversities otherUniversities) {
-		this.otherUniversities = otherUniversities;
-	}
-
-	public OtherSchoolsAtVUW getOtherSchoolsAtVUW() {
-		return otherSchoolsAtVUW;
-	}
-
-	public void setOtherSchoolsAtVUW(OtherSchoolsAtVUW otherSchoolsAtVUW) {
-		this.otherSchoolsAtVUW = otherSchoolsAtVUW;
 	}
 
 	public PhDProposalUnderExamination getPhDProposalUnderExamination() {
@@ -159,12 +159,18 @@ public class PhDData {
 			return currentProvisionallyRegisteredStudents
 					.addStudent(studentMoved);
 		case "CurrentProvisionallyRegisteredStudents":
+			// Only ever will be ECS students in currentProvisionallyRegisteredStudents
+			// so casting it is OK!
 			((ECSStudent) studentMoved).setPhdProposalSubmission(toAdd);
 			return phDProposalUnderExamination.addStudent(studentMoved);
 		case "PhDProposalUnderExamination":
+			// Only ever will be ECS students in PhDProposalUnderExamination
+			// so casting it is OK!
 			((ECSStudent) studentMoved).setPhdProposalConfirmationDate(toAdd);
 			return currentFullyRegistered.addStudent(studentMoved);
 		case "CurrentFullyRegistered":
+			// Only ever will be ECS students in CurrentFullRegistered
+			// so casting it is OK!
 			((ECSStudent) studentMoved).setThesisSubmissionAndExaminersAppointedDate(toAdd);
 			return underExamination.addStudent(studentMoved);
 		default:
@@ -195,8 +201,6 @@ public class PhDData {
 		} else if (table.equalsIgnoreCase("CurrentFullyRegistered")) {
 			return currentFullyRegistered.addStudent(toAdd);
 		} else if (table.equalsIgnoreCase("UnderExamination")) {
-			System.out.println("To add : " + toAdd.toFoswiki());
-			System.out.println("Under exam : " + underExamination);
 			return underExamination.addStudent(toAdd);
 		}
 		System.err.println("Couldn't find " + table + " to add entry to");

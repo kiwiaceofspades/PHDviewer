@@ -1,3 +1,23 @@
+/**
+ *
+ * Copyright (C) 2015  Michael Millward
+ *
+ * This file is part of PHDViewer.
+ *
+ * PHDViewer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PHDViewer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package System;
 
 import java.text.DateFormat;
@@ -125,7 +145,7 @@ public class ECSStudent implements Student {
 		this.scholarship = value;
 
 		value = findValueForHeader("Start Date", headersAndValues);
-		valueDate = convertToDate(convertDateString(value));
+		valueDate = convertToDate(value);
 		this.startDate = valueDate;
 		if (!this.startDate.isConverted()) {
 			this.isIncorrectlyFormatted = true;
@@ -199,7 +219,7 @@ public class ECSStudent implements Student {
 	 *
 	 * @param date
 	 * @return the String reformated in the way the ECSStudent class understands
-	 */
+	 */ /*
 	public String convertDateString(String date)
 			throws StringIndexOutOfBoundsException {
 		// TODO error checking to make sure date is of correct format... in case
@@ -209,7 +229,7 @@ public class ECSStudent implements Student {
 		String year = date.substring(6, 10);
 		return year + month + day;
 	}
-
+*/
 	/**
 	 * First converts the suspended dates field into Dates. Then calculates the
 	 * number of days that the user has suspended their PHD for
@@ -673,9 +693,9 @@ public class ECSStudent implements Student {
 		foswikiString.add(notes);
 		foswikiString.add(origin);
 
-		String list = "|";
+		String list = "| ";
 		for (String s : foswikiString) {
-			list += s + "|";
+			list += s + " | ";
 		}
 
 		return list;

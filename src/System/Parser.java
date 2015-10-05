@@ -176,6 +176,7 @@ public class Parser {
 			// ID special case
 			splitLine[2] = splitLine[2].replace(" ", "");
 			int id = Integer.parseInt(splitLine[2]);
+			System.out.println("split" + splitLine[2]);
 
 			// Make different types of students
 			Student s = new ECSStudent(splitLine[1], id, splitLine[3], splitLine[4],
@@ -339,7 +340,7 @@ public class Parser {
 		// Write headers
 		String headerString = "|";
 		for (String s : headers) {
-			if (!s.isEmpty()) {
+			if (!s.equals("Total Time Taken") && !s.isEmpty()) {
 				//System.out.println(s);
 				headerString += " *" + s + "* |";
 			}

@@ -1,3 +1,23 @@
+/**
+ *
+ * Copyright (C) 2015  Michael Millward
+ *
+ * This file is part of PHDViewer.
+ *
+ * PHDViewer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PHDViewer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package System;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -277,14 +297,14 @@ public abstract class PhDTable {
 						return 1;
 					}
 					try{
-					int o1value = Integer.parseInt(o1val.substring(6, o1val.length()-1));
-					int o2value = Integer.parseInt(o2val.substring(6, o2val.length()-1));
+					int o1value = Integer.parseInt(o1val.substring(0, 4));
+					int o2value = Integer.parseInt(o2val.substring(0, 4));
 					if((o1value -o2value) == 0){
-						o1value = Integer.parseInt(o1val.substring(3, 5));
-						o2value = Integer.parseInt(o2val.substring(3, 5));
+						o1value = Integer.parseInt(o1val.substring(4, 6));
+						o2value = Integer.parseInt(o2val.substring(4, 6));
 						if((o1value -o2value) == 0){
-							o1value = Integer.parseInt(o1val.substring(0, 2));
-							o2value = Integer.parseInt(o2val.substring(0, 2));
+							o1value = Integer.parseInt(o1val.substring(6, 8));
+							o2value = Integer.parseInt(o2val.substring(6, 8));
 							return o1value - o2value;
 						}
 						return o1value - o2value;
