@@ -142,6 +142,10 @@ public class PhDData {
 		// Need to check which table the student is in, so we can remove the
 		// student from
 		// that table and assign it to the new one
+		if(table.equals("UnderExamination")){
+			// Can't move past under Examination
+			return false;
+		}
 		int studentID = Integer.parseInt(findValueForHeader("ID", student));
 		PhDTable phDTable = getTable(table);
 		Student studentMoved = phDTable.removeStudent(studentID);
@@ -155,14 +159,14 @@ public class PhDData {
 			return currentProvisionallyRegisteredStudents
 					.addStudent(studentMoved);
 		case "CurrentProvisionallyRegisteredStudents":
+			((ECSStudent) studentMoved).setPhdProposalSubmission(toAdd);
 			return phDProposalUnderExamination.addStudent(studentMoved);
 		case "PhDProposalUnderExamination":
+			((ECSStudent) studentMoved).setPhdProposalConfirmationDate(toAdd);
 			return currentFullyRegistered.addStudent(studentMoved);
 		case "CurrentFullyRegistered":
+			((ECSStudent) studentMoved).setThesisSubmissionAndExaminersAppointedDate(toAdd);
 			return underExamination.addStudent(studentMoved);
-		case "UnderExamination":
-			// UnderExamination is the highest level
-			return true;
 		default:
 			System.err.println("Couldn't find table: " + table
 					+ " to move Student from");
