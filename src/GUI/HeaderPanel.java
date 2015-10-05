@@ -117,7 +117,7 @@ public class HeaderPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String sTemp[] = new String[currentSelected.size()];
-				TreeSet<heads> local = currentSelected;
+
 				Iterator<heads> iterator = currentSelected.iterator();
 				for(int i =0;i<sTemp.length;i++){
 					sTemp[i]= iterator.next().header;
@@ -132,6 +132,7 @@ public class HeaderPanel extends JPanel {
 					HEADS.getPreferences().addMode(s, sTemp);
 					setupComboBox();
 					UpdateInfo(fullList,sTemp);
+
 				}
 			}});
 
@@ -143,7 +144,7 @@ public class HeaderPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String sTemp[] = new String[currentSelected.size()];
-				TreeSet<heads> local = currentSelected;
+
 				Iterator<heads> iterator = currentSelected.iterator();
 				for(int i =0;i<sTemp.length;i++){
 					sTemp[i]= iterator.next().header;
@@ -153,6 +154,7 @@ public class HeaderPanel extends JPanel {
 				HEADS.getPreferences().deleteMode(list);
 				setupComboBox();
 				UpdateInfo(fullList,sTemp);
+
 			}});
 
 		ButtonsPanel.add(jj);
@@ -163,7 +165,6 @@ public class HeaderPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String sTemp[] = new String[currentSelected.size()];
-				TreeSet<heads> local = currentSelected;
 				Iterator<heads> iterator = currentSelected.iterator();
 				for(int i =0;i<sTemp.length;i++){
 					sTemp[i]= iterator.next().header;
@@ -176,11 +177,20 @@ public class HeaderPanel extends JPanel {
 				setupComboBox();
 				UpdateInfo(fullList,sTemp);
 
-			}});
+			}
+			});
 
 		ButtonsPanel.add(jj);
-
+		Dimension panDimension= new Dimension(getSize().width,100);
+		ButtonsPanel.setMinimumSize(panDimension);
+		ButtonsPanel.setPreferredSize(panDimension);
+		ButtonsPanel.setMaximumSize(panDimension);
 		this.add(ButtonsPanel);
+	}
+
+	protected void refreshSize() {
+		this.setSizeOverride(getSize());
+
 	}
 
 	/**
@@ -221,8 +231,10 @@ public class HeaderPanel extends JPanel {
 		}
 		this.add(Panel);
 
+
 		HOST.hidePanel();
 		HOST.hidePanel();
+
 	}
 
 	/**

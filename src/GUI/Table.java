@@ -884,11 +884,7 @@ private class Render extends DefaultTableCellRenderer{
 			  cell.setBackground(Color.red);
 			  cell.setForeground(Color.WHITE);
 			  other = true;
-		  }else if(RED[row]==1){
-			  cell.setBackground(Color.black);
-			  cell.setForeground(Color.white);
-			  other = true;
-		  }else {
+		  } else {
 			  cell.setBackground(Color.WHITE);
 			  cell.setForeground(Color.BLACK);
 			  if(column== SortedColumn){
@@ -909,7 +905,11 @@ private class Render extends DefaultTableCellRenderer{
 			  }
 			}
 
-
+		  if(RED[row]==1){
+			  cell.setBackground(Color.black);
+			  cell.setForeground(Color.white);
+			  other = true;
+		  }
 
 	    return cell;
 	}
