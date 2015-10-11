@@ -1,5 +1,21 @@
 /**
  *
+ * Copyright (C) 2015  Matthew Schmidt
+ *
+ * This file is part of PHDViewer.
+ *
+ * PHDViewer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PHDViewer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package GUI;
 
@@ -20,7 +36,7 @@ import javax.swing.JPanel;
 import System.PhDData;
 
 /**
- * @author schmidmatt
+ * @author Matthew Schmidt
  *
  */
 public class HeaderPanel extends JPanel {
@@ -240,7 +256,7 @@ public class HeaderPanel extends JPanel {
 	/**
 	 * The Action Listener for the header selection in the header panel.
 	 *
-	 * @author schmidmatt
+	 * @author Matthew Schmidt
 	 *
 	 */
 	private class clickListener implements ActionListener{
@@ -265,7 +281,7 @@ public class HeaderPanel extends JPanel {
 
 	/**
 	 * Is a subclass to help sort the headers so they always appear in order.
-	 * @author schmidmatt
+	 * @author Matthew  Schmidt
 	 *
 	 */
 	private class heads implements Comparable<heads>{
