@@ -684,12 +684,18 @@ public class Student {
 		foswikiString.add(depositedInLibrary);
 		foswikiString.add(notes);
 		foswikiString.add(origin);
+		if(isHighlighted){
+			foswikiString.add("true");
+		}
+		else{
+			foswikiString.add("false");
+		}
 
 		String list = "| ";
 		for (String s : foswikiString) {
 			list += s + " | ";
 		}
-
+		
 		return list;
 	}
 

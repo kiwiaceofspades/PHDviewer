@@ -44,10 +44,10 @@ public class Main {
 			System.out.println("No file specified");
 		}
 		else{
-			File headers = new File("../preferences.txt");
+			File headers = new File("preferences.txt");
 			try {
 				if(headers.createNewFile()){//checks whether there is a headers file containing prefernces
-					System.out.println("File does not exist");
+					System.out.println("Prefrences file does not exist");
 					fillWithDefualts(headers); //if there isn't create one with default values
 				}
 			} catch (IOException e) {

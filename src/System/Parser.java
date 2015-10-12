@@ -88,7 +88,7 @@ public class Parser {
 		data.setNotFullyAdmitted(notFullyAdmitted);
 
 		// Populate empty Preferences object
-		ArrayList<Mode> mode = parsePreferences("../preferences.txt");
+		ArrayList<Mode> mode = parsePreferences("preferences.txt");
 		pref.setModes(mode);
 	}
 

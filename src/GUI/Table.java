@@ -781,22 +781,29 @@ public class Table extends JPanel {
 	 */
 	public void Remove(String currentTable){
 
-		if(CurrentFullyRegisteredTable.getSelectedRow()==-1){
+		if(currentTable==null){
 			JOptionPane.showMessageDialog(HOST, "You have not selected anything to remove!!","ERROR!!",JOptionPane.ERROR_MESSAGE);
 		}else{
 			String[][] tempData=null;
 			if(currentTable.equals("CurrentProvisionallyRegisteredStudents")) tempData = this.CurrentProvisionallyRegisteredStudentsData;
-			if(currentTable.equals("CurrentFullyRegistered"))tempData=this.CurrentFullyRegisteredData;
-			if(currentTable.equals("UnderExamination"))tempData=this.UnderExaminationData;
-
+			else if(currentTable.equals("CurrentFullyRegistered"))tempData=this.CurrentFullyRegisteredData;
+			else if(currentTable.equals("UnderExamination"))tempData=this.UnderExaminationData;
+			else if(currentTable.equalsIgnoreCase("NotFullyAdmitted"))tempData=this.NotFullyAdmittedData;
+			else if(currentTable.equalsIgnoreCase("PhDProposalUnderExamination"))tempData=this.PhDProposalUnderExaminationData;
 
 
 			JTable temp=null;
 			if(currentTable.equals("CurrentProvisionallyRegisteredStudents")) temp = this.CurrentProvisionallyRegisteredStudentsTable;
-			if(currentTable.equals("CurrentFullyRegistered"))temp=this.CurrentFullyRegisteredTable;
-			if(currentTable.equals("UnderExamination"))temp=this.UnderExaminationTable;
-
-			DATA.makeChanges('r',getRemovedData(tempData[temp.getSelectedRow()]),currentTable);
+			else if(currentTable.equals("CurrentFullyRegistered"))temp=this.CurrentFullyRegisteredTable;
+			else if(currentTable.equals("UnderExamination"))temp=this.UnderExaminationTable;
+			else if(currentTable.equalsIgnoreCase("NotFullyAdmitted"))temp=this.NotFullyAdmittedTable;
+			else if(currentTable.equalsIgnoreCase("PhDProposalUnderExamination"))temp=this.PhDProposalUnderExaminationTable;
+			int index = temp.getSelectedRow();
+			if(index<0){
+				JOptionPane.showMessageDialog(HOST, "You have not selected anything to remove!!","ERROR!!",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			DATA.makeChanges('r',getRemovedData(tempData[index]),currentTable);
 			//System.out.println("Cleaning");
 			//for(String a: CurrentFullyRegisteredData[CurrentFullyRegisteredTable.getSelectedRow()]){
 				//System.out.println(a);
