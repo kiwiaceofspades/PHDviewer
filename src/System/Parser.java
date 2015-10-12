@@ -171,6 +171,9 @@ public class Parser {
 				if (s.equalsIgnoreCase("Supervision Split")) {
 					s = s + " " + count++;
 				}
+				if(s.equalsIgnoreCase("Highlighted")){
+					continue;
+				}
 				headers.add(s);
 				//System.out.println(s);
 			}
@@ -199,6 +202,8 @@ public class Parser {
 			int id = Integer.parseInt(splitLine[2]);
 
 			// Make different types of students
+//			System.out.println(splitLine.length);
+			if(splitLine.length >23){
 			Student s = new Student(splitLine[1], id, splitLine[3], splitLine[4],
 					splitLine[5], splitLine[6], splitLine[7], splitLine[8], splitLine[9], splitLine[10],
 					splitLine[11], splitLine[12],
@@ -206,6 +211,16 @@ public class Parser {
 					splitLine[18], splitLine[19], splitLine[20], splitLine[21], splitLine[22], splitLine[23]);
 
 			students.add(s);
+			}
+			else{
+				Student s = new Student(splitLine[1], id, splitLine[3], splitLine[4],
+						splitLine[5], splitLine[6], splitLine[7], splitLine[8], splitLine[9], splitLine[10],
+						splitLine[11], splitLine[12],
+						splitLine[13], splitLine[14], splitLine[15], splitLine[16], splitLine[17],
+						splitLine[18], splitLine[19], splitLine[20], splitLine[21], splitLine[22], "false");
+				
+				students.add(s);
+			}
 		}
 		else {// Parse table break line and set enum (we've hit a new table)
 			splitLine[1] = splitLine[1].replace(" ", "");
@@ -364,6 +379,7 @@ public class Parser {
 				headerString += " *" + s + "* |";
 			}
 		}
+		headerString +=" Highlighted |";
 
 		pw.println(headerString);
 
