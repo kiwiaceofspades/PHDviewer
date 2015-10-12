@@ -34,8 +34,14 @@ public class CurrentProvisionallyRegisteredStudents extends PhDTable {
 		int[] highlighting = new int[students.size()];
 		for(int i = 0; i<students.size(); i++){
 			// Fetch the time taken
-			ECSStudent student = (ECSStudent) students.get(i);
+			Student student = students.get(i);
 			int monthsSinceStart = student.getTimeSinceStartDate();
+
+			// Take into account whether the student is part time or not
+			if(student.isPartTime()){
+				monthsSinceStart = monthsSinceStart / 2;
+			}
+
 			if(monthsSinceStart >= 15){
 				highlighting[i] = 3;
 			}

@@ -161,17 +161,17 @@ public class PhDData {
 		case "CurrentProvisionallyRegisteredStudents":
 			// Only ever will be ECS students in currentProvisionallyRegisteredStudents
 			// so casting it is OK!
-			((ECSStudent) studentMoved).setPhdProposalSubmission(toAdd);
+			studentMoved.setPhdProposalSubmission(toAdd);
 			return phDProposalUnderExamination.addStudent(studentMoved);
 		case "PhDProposalUnderExamination":
 			// Only ever will be ECS students in PhDProposalUnderExamination
 			// so casting it is OK!
-			((ECSStudent) studentMoved).setPhdProposalConfirmationDate(toAdd);
+			studentMoved.setPhdProposalConfirmationDate(toAdd);
 			return currentFullyRegistered.addStudent(studentMoved);
 		case "CurrentFullyRegistered":
 			// Only ever will be ECS students in CurrentFullRegistered
 			// so casting it is OK!
-			((ECSStudent) studentMoved).setThesisSubmissionAndExaminersAppointedDate(toAdd);
+			studentMoved.setThesisSubmissionAndExaminersAppointedDate(toAdd);
 			return underExamination.addStudent(studentMoved);
 		default:
 			System.err.println("Couldn't find table: " + table
@@ -189,7 +189,7 @@ public class PhDData {
 	 * @return boolean as to whether the student was added or not
 	 */
 	public boolean addEntry(String[][] student, String table) {
-		Student toAdd = new ECSStudent(student);
+		Student toAdd = new Student(student);
 		// Add it to the right table
 		if (table.equalsIgnoreCase("NotFullyAdmitted")) {
 			return notFullyAdmitted.addStudent(toAdd);
@@ -216,7 +216,7 @@ public class PhDData {
 	 * @return boolean as to whether or not the student was edited successfully
 	 */
 	public boolean editEntry(String[][] student, String table) {
-		Student toAdd = new ECSStudent(student);
+		Student toAdd = new Student(student);
 		int studentID = Integer.parseInt(findValueForHeader("ID", student));
 		PhDTable phDTable = getTable(table);
 		return phDTable.editStudent(toAdd, studentID);
@@ -363,7 +363,6 @@ public class PhDData {
 
 		for (int i = 0; i < notFullyAdmitted.getHeaders().size(); i++) {
 			headers[i] = notFullyAdmitted.getHeaders().get(i);
-			System.out.println("Header: " + headers[i]);
 		}
 
 		return headers;

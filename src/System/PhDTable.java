@@ -44,14 +44,6 @@ public abstract class PhDTable {
 
 	public ArrayList<String> getHeaders() {
 		return headers;
-		// Previously used an arraylist of headers
-		/*
-		ArrayList<String> headersFormatted = new ArrayList<String>();
-		for(int i = 0; i<headers.size(); i++){
-			headersFormatted.add(i, formatHeader(headers.get(i)));
-
-		}
-		return headersFormatted;*/
 	}
 
 	public String formatHeader(String header){
@@ -120,7 +112,7 @@ public abstract class PhDTable {
 			student.toggleMark();
 		}
 		if(index == -1){
-			System.out.println("Couldn't find the student with ID: " + studentID);
+			System.err.println("Couldn't find the student with ID: " + studentID);
 			// throw some sort of error?
 		}
 		else{
@@ -133,7 +125,7 @@ public abstract class PhDTable {
 	public int findStudent(int studentID){
 		int index = -1;
 		for(int i = 0; i<students.size(); i++){
-			ECSStudent pupil = (ECSStudent) students.get(i);
+			Student pupil = students.get(i);
 			if(pupil.getId() == studentID){
 				index = i;
 				break;
@@ -150,7 +142,7 @@ public abstract class PhDTable {
 	public Student removeStudent(int studentID){
 		int index = findStudent(studentID);
 		if(index == -1){
-			System.out.println("Couldn't find the student with ID: " + studentID);
+			System.err.println("Couldn't find the student with ID: " + studentID);
 			// throw some sort of error?
 		}
 		else{
@@ -224,10 +216,9 @@ public abstract class PhDTable {
 	 * @return whether the table was sorted successfully
 	 */
 	public boolean sort(String header){
-		System.out.println("Sorting");
 		// Need to make sure the table has the header.
 		if(!headers.contains(header)){
-			System.out.println("Couldn't find header " + header + " to sort by");
+			System.err.println("Couldn't find header " + header + " to sort by");
 			return false;
 		}
 
@@ -252,20 +243,20 @@ public abstract class PhDTable {
 			@Override
 			public int compare(Student o1, Student o2) {
 				if(type.equals("String")){
-					String o1value = ((ECSStudent) o1).getValues(finalHeader)[0];
-					String o2value = ((ECSStudent) o2).getValues(finalHeader)[0];
+					String o1value = o1.getValues(finalHeader)[0];
+					String o2value = o2.getValues(finalHeader)[0];
 					// Just get the first entry
 					return o1value.compareTo(o2value);
 				}
 				else if(type.equals("Integer")){
-					int o1value = Integer.parseInt(((ECSStudent) o1).getValues(finalHeader)[0]);
-					int o2value = Integer.parseInt(((ECSStudent) o2).getValues(finalHeader)[0]);
+					int o1value = Integer.parseInt(o1.getValues(finalHeader)[0]);
+					int o2value = Integer.parseInt(o2.getValues(finalHeader)[0]);
 					// Just get the first entry
 					return o1value - o2value;
 				}
 				else if(type.equals("Percentage")){
-					String o1val = ((ECSStudent)o1).getValues(finalHeader)[0];
-					String o2val = ((ECSStudent)o2).getValues(finalHeader)[0];
+					String o1val = o1.getValues(finalHeader)[0];
+					String o2val = o2.getValues(finalHeader)[0];
 
 					//the following if statements are to keep it inline with the general contract
 					if(o1val.isEmpty() && o2val.isEmpty()){
@@ -283,8 +274,8 @@ public abstract class PhDTable {
 
 				}
 				else if(type.equals("StDay")){
-					String o1val = ((ECSStudent)o1).getValues(finalHeader)[0];
-					String o2val = ((ECSStudent)o2).getValues(finalHeader)[0];
+					String o1val = o1.getValues(finalHeader)[0];
+					String o2val = o2.getValues(finalHeader)[0];
 
 					//the following if statements are to keep it inline with the general contract
 					if(o1val.isEmpty() && o2val.isEmpty()){
@@ -342,7 +333,7 @@ public abstract class PhDTable {
 	public void toggleMark(int studentID){
 		int index = findStudent(studentID);
 		if(index == -1){
-			System.out.println("Couldn't find studentID " + studentID);
+			System.err.println("Couldn't find studentID " + studentID);
 		}
 		students.get(index).toggleMark();
 	}

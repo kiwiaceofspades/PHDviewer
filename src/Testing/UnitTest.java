@@ -28,7 +28,6 @@ import org.junit.Test;
 
 import System.CurrentFullyRegistered;
 import System.CurrentProvisionallyRegisteredStudents;
-import System.ECSStudent;
 import System.NotFullyAdmitted;
 import System.Parser;
 import System.PhDData;
@@ -51,10 +50,10 @@ public class UnitTest {
 	private String fullyRegiTable = "CurrentFullyRegistered";
 	private String underExamTable = "UnderExamination";
 
-	private Student student1 = new ECSStudent("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "20150930", "20151031", "Prolly", "20160225", "", "20170101", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
-	private Student student2 = new ECSStudent("Harry", 1232, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "20150930", "20151031", "Prolly", "20160225", "", "20170101", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
-	private Student student3 = new ECSStudent("Alistair Eichler", 1, "COMP690", "EFTSdata", "Person:JamesNoble", "50%", "Person:NicholasCameron", "50%", "", "",  "Telstra Clear Postgraduate Scholarship", "20090427", " SUBMITTED", "PRESENTED",  "CONFIRMED", "20150116", "", "20150518", "", "", " Revisions: 20150901.", "D");
-	private Student student4 = new ECSStudent("Homer Simpson", 5, "NWEN690", "", "Person:IanWelch", "70%", " Person:WinstonSeah", " 30%", "", "", "", "20100719", "20120904", "20121019" , "20121220" ,"20130601 - 20130630 , 20130801 - 20130913, 20150101 - 20150228 ", "", "", "", "", "Expected submission date: 20150531.", "I ");
+	private Student student1 = new Student("Harry", 1236, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "20150930", "20151031", "Prolly", "20160225", "", "20170101", "sds", "Nop", "Nope", "Why is the rum gone?", "Wellington");
+	private Student student2 = new Student("Harry", 1232, "Comp", "Yes", "Jim", "50", "Jess", "50", "", "", "Awesome", "20150930", "20151031", "Prolly", "20160225", "", "20170101", "sds", "Nop", "Nope", "Why is the rum gone?", "Auckland");
+	private Student student3 = new Student("Alistair Eichler", 1, "COMP690", "EFTSdata", "Person:JamesNoble", "50%", "Person:NicholasCameron", "50%", "", "",  "Telstra Clear Postgraduate Scholarship", "20090427", " SUBMITTED", "PRESENTED",  "CONFIRMED", "20150116", "", "20150518", "", "", " Revisions: 20150901.", "D");
+	private Student student4 = new Student("Homer Simpson", 5, "NWEN690", "", "Person:IanWelch", "70%", " Person:WinstonSeah", " 30%", "", "", "", "20100719", "20120904", "20121019" , "20121220" ,"20130601 - 20130630 , 20130801 - 20130913, 20150101 - 20150228 ", "", "", "", "", "Expected submission date: 20150531.", "I ");
 
 	private ArrayList<Student> stues = new ArrayList<Student>();
 	private ArrayList<String> headers = new ArrayList<String>();
@@ -552,7 +551,7 @@ public class UnitTest {
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
-		ECSStudent stud = (ECSStudent) stues.get(0);
+		Student stud =  stues.get(0);
 		stud.setSuspensionDates("20150202 - 20150302");
 		assertEquals(stud.suspendedMonths(),2);
 	}
@@ -568,7 +567,7 @@ public class UnitTest {
 		PhDData phd = new PhDData(testFile);
 		phd.setCurrentFullyRegistered(regiTable);
 		phd.addEntry(stu, fullyRegiTable);
-		ECSStudent stud = (ECSStudent) stues.get(0);
+		Student stud = stues.get(0);
 		stud.setSuspensionDates("20150201 - 20150201");
 		assertEquals(stud.suspendedMonths(),1);
 	}

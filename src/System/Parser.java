@@ -89,7 +89,6 @@ public class Parser {
 
 		// Populate empty Preferences object
 		ArrayList<Mode> mode = parsePreferences("../preferences.txt");
-		System.out.println("Modes length " + mode.size());
 		pref.setModes(mode);
 	}
 
@@ -198,10 +197,9 @@ public class Parser {
 			// ID special case
 			splitLine[2] = splitLine[2].replace(" ", "");
 			int id = Integer.parseInt(splitLine[2]);
-			System.out.println("split" + splitLine[2]);
 
 			// Make different types of students
-			Student s = new ECSStudent(splitLine[1], id, splitLine[3], splitLine[4],
+			Student s = new Student(splitLine[1], id, splitLine[3], splitLine[4],
 					splitLine[5], splitLine[6], splitLine[7], splitLine[8], splitLine[9], splitLine[10],
 					splitLine[11], splitLine[12],
 					splitLine[13], splitLine[14], splitLine[15], splitLine[16], splitLine[17],
@@ -290,7 +288,6 @@ public class Parser {
 			while (sc.hasNextLine()) {
 				ArrayList<String> modeHeaderList = new ArrayList<String>();
 				String line = sc.nextLine();
-				System.out.println(line);
 				String[] splitHeaders = line.split("\\|", 0);
 
 				for (int i = 2; i < splitHeaders.length; i++) {
