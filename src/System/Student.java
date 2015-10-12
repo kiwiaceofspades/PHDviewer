@@ -75,7 +75,7 @@ public class Student {
 			String suspensionDates,
 			String thesisSubmissionAndExaminersAppointedDate,
 			String fgrCompletesExamination, String revisionsFinalised,
-			String depositedInLibrary, String notes, String origin) {
+			String depositedInLibrary, String notes, String origin, String highlighted) {
 		this.name = name;
 		this.id = id;
 		this.degree = degree;
@@ -105,6 +105,12 @@ public class Student {
 		this.depositedInLibrary = depositedInLibrary;
 		this.notes = notes;
 		this.origin = origin;
+		if(highlighted.equalsIgnoreCase("true")){
+			this.isMarked = true;
+		}
+		else{
+			this.isMarked = false;
+		}
 
 		this.timeSinceStartDate = generateTimeSinceStartDate();
 	}
@@ -684,7 +690,7 @@ public class Student {
 		foswikiString.add(depositedInLibrary);
 		foswikiString.add(notes);
 		foswikiString.add(origin);
-		if(isHighlighted){
+		if(isMarked){
 			foswikiString.add("true");
 		}
 		else{

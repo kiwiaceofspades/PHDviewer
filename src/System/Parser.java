@@ -203,7 +203,7 @@ public class Parser {
 					splitLine[5], splitLine[6], splitLine[7], splitLine[8], splitLine[9], splitLine[10],
 					splitLine[11], splitLine[12],
 					splitLine[13], splitLine[14], splitLine[15], splitLine[16], splitLine[17],
-					splitLine[18], splitLine[19], splitLine[20], splitLine[21], splitLine[22]);
+					splitLine[18], splitLine[19], splitLine[20], splitLine[21], splitLine[22], splitLine[23]);
 
 			students.add(s);
 		}
